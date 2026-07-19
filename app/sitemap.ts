@@ -4,10 +4,11 @@ import { careerResources } from '../lib/career-data';
 import { resourceTypes } from '../lib/resource-data';
 import { operationsGuides } from '../lib/operations-data';
 import { governanceGuides } from '../lib/governance-data';
+import { deliveryGuides } from '../lib/delivery-data';
 
 const baseUrl = 'https://learn.omsaravanabhava.org';
 const coreRoutes = [
-  '', '/academies/', '/career/', '/resources/', '/operations/', '/governance/', '/tracks/', '/tracks/devops/', '/tracks/azure-cloud/', '/tracks/platform-engineering/', '/tracks/cloud-security/',
+  '', '/academies/', '/career/', '/resources/', '/operations/', '/governance/', '/delivery/', '/tracks/', '/tracks/devops/', '/tracks/azure-cloud/', '/tracks/platform-engineering/', '/tracks/cloud-security/',
   '/dashboard/', '/search/', '/login/', '/register/', '/profile/', '/settings/', '/devops/', '/devops/roadmap/', '/devops/labs/',
   '/devops/interview/', '/devops/glossary/', '/devops/commands/', '/devops/scenarios/', '/devops/checklist/', '/devops/git/',
   '/devops/github-actions/', '/devops/docker/', '/devops/terraform/', '/devops/kubernetes/', '/devops/azure-devops/',
@@ -19,27 +20,16 @@ const academyRoutes = academies.flatMap((academy) => [
   ...academy.topics.map((topic) => `/${academy.slug}/${topic.slug}/`),
   ...practiceRoutes.map((practice) => `/${academy.slug}/${practice}/`),
 ]);
-const careerRoutes = academies.flatMap((academy) => [
-  `/career/${academy.slug}/`,
-  ...careerResources.map((resource) => `/career/${academy.slug}/${resource.slug}/`),
-]);
-const resourceRoutes = academies.flatMap((academy) => [
-  `/resources/${academy.slug}/`,
-  ...resourceTypes.map((resource) => `/resources/${academy.slug}/${resource.slug}/`),
-]);
-const operationsRoutes = academies.flatMap((academy) => [
-  `/operations/${academy.slug}/`,
-  ...operationsGuides.map((guide) => `/operations/${academy.slug}/${guide.slug}/`),
-]);
-const governanceRoutes = academies.flatMap((academy) => [
-  `/governance/${academy.slug}/`,
-  ...governanceGuides.map((guide) => `/governance/${academy.slug}/${guide.slug}/`),
-]);
+const careerRoutes = academies.flatMap((academy) => [`/career/${academy.slug}/`, ...careerResources.map((resource) => `/career/${academy.slug}/${resource.slug}/`)]);
+const resourceRoutes = academies.flatMap((academy) => [`/resources/${academy.slug}/`, ...resourceTypes.map((resource) => `/resources/${academy.slug}/${resource.slug}/`)]);
+const operationsRoutes = academies.flatMap((academy) => [`/operations/${academy.slug}/`, ...operationsGuides.map((guide) => `/operations/${academy.slug}/${guide.slug}/`)]);
+const governanceRoutes = academies.flatMap((academy) => [`/governance/${academy.slug}/`, ...governanceGuides.map((guide) => `/governance/${academy.slug}/${guide.slug}/`)]);
+const deliveryRoutes = academies.flatMap((academy) => [`/delivery/${academy.slug}/`, ...deliveryGuides.map((guide) => `/delivery/${academy.slug}/${guide.slug}/`)]);
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [...coreRoutes, ...academyRoutes, ...careerRoutes, ...resourceRoutes, ...operationsRoutes, ...governanceRoutes].map((route) => ({
+  return [...coreRoutes, ...academyRoutes, ...careerRoutes, ...resourceRoutes, ...operationsRoutes, ...governanceRoutes, ...deliveryRoutes].map((route) => ({
     url: `${baseUrl}${route}`,
     changeFrequency: route === '' ? ('weekly' as const) : ('monthly' as const),
-    priority: route === '' ? 1 : ['/academies/','/career/','/resources/','/operations/','/governance/'].includes(route) ? 0.9 : 0.8,
+    priority: route === '' ? 1 : ['/academies/','/career/','/resources/','/operations/','/governance/','/delivery/'].includes(route) ? 0.9 : 0.8,
   }));
 }
