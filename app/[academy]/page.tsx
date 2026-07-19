@@ -24,6 +24,13 @@ export default function AcademyPage({ params }: { params: { academy: string } })
             <span>{academy.topics.length} structured modules</span>
             <span>{academy.audience}</span>
           </div>
+          <div className="actions academyActions">
+            <a className="primary" href={`/${academy.slug}/labs/`}>Start hands-on labs</a>
+            <a className="secondary" href={`/${academy.slug}/assessment/`}>Take assessment</a>
+            <a className="secondary" href={`/${academy.slug}/flashcards/`}>Review flashcards</a>
+            <a className="secondary" href={`/${academy.slug}/interview/`}>Interview drills</a>
+            <a className="secondary" href={`/${academy.slug}/scenarios/`}>Architecture scenarios</a>
+          </div>
         </section>
         <section className="section">
           <div className="grid academyGrid">
