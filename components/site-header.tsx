@@ -13,6 +13,7 @@ export function SiteHeader() {
         <a href="/governance/">Governance</a>
         <a href="/delivery/">Delivery</a>
         <a href="/leadership/">Leadership</a>
+        <a href="/workshops/">Workshops</a>
         <a href="/tracks/">Tracks</a>
         <a href="/search/">Search</a>
         <a href="/dashboard/">Dashboard</a>
