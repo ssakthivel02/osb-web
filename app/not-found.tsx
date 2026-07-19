@@ -1,0 +1,2 @@
+import SiteHeader from '../components/site-header';
+export default function NotFound(){return <><SiteHeader/><main className="authShell"><section className="authPanel"><p className="eyebrow">404</p><h1>That learning route does not exist.</h1><p>Return to the catalogue instead of continuing through a broken path.</p><div className="actions"><a className="primary" href="/tracks/">Open learning tracks</a><a className="secondary" href="/">Return home</a></div></section></main></>}
