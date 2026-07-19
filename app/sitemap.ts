@@ -7,10 +7,11 @@ import { governanceGuides } from '../lib/governance-data';
 import { deliveryGuides } from '../lib/delivery-data';
 import { leadershipGuides } from '../lib/leadership-data';
 import { workshopGuides } from '../lib/workshop-data';
+import { interviewGuides, runbookGuides, patternGuides, architectureGuides } from '../lib/enterprise-center-data';
 
 const baseUrl = 'https://learn.omsaravanabhava.org';
 const coreRoutes = [
-  '', '/academies/', '/career/', '/resources/', '/operations/', '/governance/', '/delivery/', '/leadership/', '/workshops/', '/tracks/', '/tracks/devops/', '/tracks/azure-cloud/', '/tracks/platform-engineering/', '/tracks/cloud-security/',
+  '', '/academies/', '/career/', '/resources/', '/operations/', '/governance/', '/delivery/', '/leadership/', '/workshops/', '/interview/', '/runbooks/', '/patterns/', '/architecture/', '/tracks/', '/tracks/devops/', '/tracks/azure-cloud/', '/tracks/platform-engineering/', '/tracks/cloud-security/',
   '/dashboard/', '/search/', '/login/', '/register/', '/profile/', '/settings/', '/devops/', '/devops/roadmap/', '/devops/labs/',
   '/devops/interview/', '/devops/glossary/', '/devops/commands/', '/devops/scenarios/', '/devops/checklist/', '/devops/git/',
   '/devops/github-actions/', '/devops/docker/', '/devops/terraform/', '/devops/kubernetes/', '/devops/azure-devops/',
@@ -29,11 +30,15 @@ const governanceRoutes = academies.flatMap((academy) => [`/governance/${academy.
 const deliveryRoutes = academies.flatMap((academy) => [`/delivery/${academy.slug}/`, ...deliveryGuides.map((guide) => `/delivery/${academy.slug}/${guide.slug}/`)]);
 const leadershipRoutes = academies.flatMap((academy) => [`/leadership/${academy.slug}/`, ...leadershipGuides.map((guide) => `/leadership/${academy.slug}/${guide.slug}/`)]);
 const workshopRoutes = academies.flatMap((academy) => [`/workshops/${academy.slug}/`, ...workshopGuides.map((guide) => `/workshops/${academy.slug}/${guide.slug}/`)]);
+const interviewRoutes = academies.flatMap((academy) => [`/interview/${academy.slug}/`, ...interviewGuides.map((guide) => `/interview/${academy.slug}/${guide.slug}/`)]);
+const runbookRoutes = academies.flatMap((academy) => [`/runbooks/${academy.slug}/`, ...runbookGuides.map((guide) => `/runbooks/${academy.slug}/${guide.slug}/`)]);
+const patternRoutes = academies.flatMap((academy) => [`/patterns/${academy.slug}/`, ...patternGuides.map((guide) => `/patterns/${academy.slug}/${guide.slug}/`)]);
+const architectureRoutes = academies.flatMap((academy) => [`/architecture/${academy.slug}/`, ...architectureGuides.map((guide) => `/architecture/${academy.slug}/${guide.slug}/`)]);
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [...coreRoutes, ...academyRoutes, ...careerRoutes, ...resourceRoutes, ...operationsRoutes, ...governanceRoutes, ...deliveryRoutes, ...leadershipRoutes, ...workshopRoutes].map((route) => ({
+  return [...coreRoutes, ...academyRoutes, ...careerRoutes, ...resourceRoutes, ...operationsRoutes, ...governanceRoutes, ...deliveryRoutes, ...leadershipRoutes, ...workshopRoutes, ...interviewRoutes, ...runbookRoutes, ...patternRoutes, ...architectureRoutes].map((route) => ({
     url: `${baseUrl}${route}`,
     changeFrequency: route === '' ? ('weekly' as const) : ('monthly' as const),
-    priority: route === '' ? 1 : ['/academies/','/career/','/resources/','/operations/','/governance/','/delivery/','/leadership/','/workshops/'].includes(route) ? 0.9 : 0.8,
+    priority: route === '' ? 1 : ['/academies/','/career/','/resources/','/operations/','/governance/','/delivery/','/leadership/','/workshops/','/interview/','/runbooks/','/patterns/','/architecture/'].includes(route) ? 0.9 : 0.8,
   }));
 }
