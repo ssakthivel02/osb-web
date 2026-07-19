@@ -11,6 +11,7 @@ export function SiteHeader() {
         <a href="/resources/">Resources</a>
         <a href="/operations/">Operations</a>
         <a href="/governance/">Governance</a>
+        <a href="/delivery/">Delivery</a>
         <a href="/tracks/">Tracks</a>
         <a href="/search/">Search</a>
         <a href="/dashboard/">Dashboard</a>
