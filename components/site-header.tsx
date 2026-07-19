@@ -8,6 +8,7 @@ export function SiteHeader() {
       <nav className="siteNav" aria-label="Main navigation">
         <a href="/academies/">Academies</a>
         <a href="/career/">Career</a>
+        <a href="/resources/">Resources</a>
         <a href="/tracks/">Tracks</a>
         <a href="/search/">Search</a>
         <a href="/dashboard/">Dashboard</a>
