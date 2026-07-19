@@ -1,8 +1,10 @@
 import type { MetadataRoute } from 'next';
+import { academies } from '../lib/academy-data';
 
 const baseUrl = 'https://learn.omsaravanabhava.org';
-const routes = [
+const coreRoutes = [
   '',
+  '/academies/',
   '/tracks/',
   '/tracks/devops/',
   '/tracks/azure-cloud/',
@@ -30,12 +32,17 @@ const routes = [
   '/devops/azure-devops/',
   '/devops/monitoring/',
   '/devops/troubleshooting/',
-] as const;
+];
+
+const academyRoutes = academies.flatMap((academy) => [
+  `/${academy.slug}/`,
+  ...academy.topics.map((topic) => `/${academy.slug}/${topic.slug}/`),
+]);
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return routes.map((route) => ({
+  return [...coreRoutes, ...academyRoutes].map((route) => ({
     url: `${baseUrl}${route}`,
     changeFrequency: route === '' ? ('weekly' as const) : ('monthly' as const),
-    priority: route === '' ? 1 : 0.8,
+    priority: route === '' ? 1 : route === '/academies/' ? 0.9 : 0.8,
   }));
 }
