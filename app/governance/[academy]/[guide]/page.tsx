@@ -25,9 +25,9 @@ export default function GovernanceGuidePage({ params }: { params: { academy: str
           <div className="academyMeta"><span>Enterprise control pattern</span><span>Evidence-led review</span></div>
         </section>
         <section className="section">
-          <div className="governanceSections">
+          <div className="careerSections">
             {guide.sections.map((section, index) => (
-              <article className="governanceSection" key={section.title}>
+              <article className="careerSection" key={section.title}>
                 <span className="eyebrow">{String(index + 1).padStart(2, '0')}</span>
                 <div>
                   <h2>{section.title}</h2>
