@@ -9,6 +9,7 @@ export function SiteHeader() {
         <a href="/academies/">Academies</a>
         <a href="/career/">Career</a>
         <a href="/resources/">Resources</a>
+        <a href="/operations/">Operations</a>
         <a href="/tracks/">Tracks</a>
         <a href="/search/">Search</a>
         <a href="/dashboard/">Dashboard</a>
