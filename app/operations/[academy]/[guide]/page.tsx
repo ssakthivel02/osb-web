@@ -1,0 +1,9 @@
+import { notFound } from 'next/navigation';
+import SiteHeader from '../../../../components/site-header';
+import { academies, academyMap } from '../../../../lib/academy-data';
+import { operationsGuides, operationsGuideMap } from '../../../../lib/operations-data';
+
+export const dynamicParams=false;
+export function generateStaticParams(){return academies.flatMap((academy)=>operationsGuides.map((guide)=>({academy:academy.slug,guide:guide.slug})));}
+
+export default function OperationsGuidePage({params}:{params:{academy:string;guide:string}}){const academy=academyMap[params.academy];const guide=operationsGuideMap[params.guide];if(!academy||!guide)notFound();return <><SiteHeader/><main><section className="pageHero compactHero"><p className="eyebrow">{academy.name} · Production operations</p><h1>{guide.title}</h1><p className="lead">{guide.summary}</p><div className="academyMeta"><span>{academy.audience}</span><span>Operational evidence required</span></div></section><section className="section"><div className="operationsSections">{guide.sections.map((section,index)=><article className="operationsSection" key={section.title}><span className="eyebrow">{String(index+1).padStart(2,'0')}</span><div><h2>{section.title}</h2><ul className="checkList">{section.items.map((item)=><li key={item}>✓ {item}</li>)}</ul></div></article>)}</div></section><section className="section"><div className="decisionBox"><h2>Evidence standard</h2><p>Do not mark this guide complete because a document exists. Completion requires reviewed configuration, test evidence, named ownership, known-risk decisions and a repeatable operating procedure.</p></div><div className="actions"><a className="secondary" href={`/operations/${academy.slug}/`}>Back to operations pack</a><a className="primary" href={`/${academy.slug}/`}>Return to academy</a></div></section></main></>}
