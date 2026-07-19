@@ -1,0 +1,5 @@
+import SiteHeader from '../../components/site-header';
+import { academies } from '../../lib/academy-data';
+import { operationsGuides } from '../../lib/operations-data';
+
+export default function OperationsHub(){return <><SiteHeader/><main><section className="pageHero"><p className="eyebrow">Production operations</p><h1>Build systems that can survive real operations.</h1><p className="lead">Use readiness, security, observability, recovery and incident-management guidance across every OSB academy.</p><div className="academyMeta"><span>{academies.length} technology domains</span><span>{operationsGuides.length} operational disciplines</span></div></section><section className="section"><div className="grid">{academies.map((academy)=><article className="card" key={academy.slug}><p className="eyebrow">{academy.eyebrow}</p><h2>{academy.name}</h2><p>Apply production operations controls to {academy.description.toLowerCase()}</p><a className="textLink" href={`/operations/${academy.slug}/`}>Open operations pack →</a></article>)}</div></section></main></>}
