@@ -1,0 +1,4 @@
+import SiteHeader from '../../components/site-header';
+import { academies } from '../../lib/academy-data';
+
+export default function DeliveryHub(){return <><SiteHeader/><main><section className="pageHero"><p className="eyebrow">Architecture and delivery</p><h1>Design clearly. Deliver safely. Prove the outcome.</h1><p className="lead">Use reference architectures, implementation blueprints, acceptance criteria and decision tools across every academy.</p></section><section className="section"><div className="grid">{academies.map((academy)=><article className="card" key={academy.slug}><p className="eyebrow">{academy.eyebrow}</p><h2>{academy.name}</h2><p>{academy.description}</p><a className="textLink" href={`/delivery/${academy.slug}/`}>Open delivery pack →</a></article>)}</div></section></main></>;}
