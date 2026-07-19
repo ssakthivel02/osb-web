@@ -22,6 +22,14 @@ const routes = [
   '/devops/commands/',
   '/devops/scenarios/',
   '/devops/checklist/',
+  '/devops/git/',
+  '/devops/github-actions/',
+  '/devops/docker/',
+  '/devops/terraform/',
+  '/devops/kubernetes/',
+  '/devops/azure-devops/',
+  '/devops/monitoring/',
+  '/devops/troubleshooting/',
 ] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
