@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function SkillMatrixPage(){return <EnterpriseHub basePath="skill-matrix" eyebrow="Capability assurance" title="Skill Matrix" description="Evidence-based capability baselines, role readiness, team coverage and development planning."/>;}
