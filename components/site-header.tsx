@@ -27,6 +27,7 @@ export function SiteHeader() {
         <a href="/troubleshooting/">Troubleshooting</a>
         <a href="/checklists/">Checklists</a>
         <a href="/labs/">Labs</a>
+        <a href="/interactive-labs/">Interactive Labs</a>
         <a href="/scenarios/">Scenarios</a>
         <a href="/commands/">Commands</a>
         <a href="/glossary/">Glossary</a>
