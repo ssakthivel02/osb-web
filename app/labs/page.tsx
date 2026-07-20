@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function LabsPage(){return <EnterpriseHub basePath="labs" eyebrow="Hands-on engineering" title="Labs Center" description="Build practical capability through guided, integration, failure, security and capstone labs across every academy."/>;}
