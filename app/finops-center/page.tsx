@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function FinOpsCenterPage(){return <EnterpriseHub basePath="finops-center" eyebrow="Cloud economics" title="FinOps Center" description="Cost allocation, forecasting, optimization and unit-economics guidance for accountable cloud delivery."/>;}
