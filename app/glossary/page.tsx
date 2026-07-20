@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function GlossaryPage(){return <EnterpriseHub basePath="glossary" eyebrow="Shared vocabulary" title="Glossary Center" description="Learn core, architecture, operations, security and delivery terminology for every academy."/>;}
