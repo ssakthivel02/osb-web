@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function Page(){return <EnterpriseHub basePath="enterprise-documentation" eyebrow="Batch D" title="Enterprise Documentation" description="Create architecture RFCs, operating procedures, disaster-recovery runbooks, continuity plans and production handover packs."/>;}
