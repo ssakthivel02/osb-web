@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function Page(){return <EnterpriseHub basePath="interview-simulator" eyebrow="Batch C" title="Interactive Interview Simulator" description="Practise cloud architecture, DevOps, Wintel, leadership and incident-command interviews with structured evidence and scoring."/>;}
