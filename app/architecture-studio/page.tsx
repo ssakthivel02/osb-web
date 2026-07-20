@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function ArchitectureStudioPage(){return <EnterpriseHub basePath="architecture-studio" eyebrow="Batch A" title="Interactive Architecture Studio" description="Explore structured cloud topology, landing-zone, network-flow, security-boundary and resilience design exercises."/>;}
