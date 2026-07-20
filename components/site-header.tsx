@@ -23,6 +23,7 @@ export function SiteHeader() {
         <a href="/certifications/">Certifications</a>
         <a href="/learning-plans/">Learning Plans</a>
         <a href="/assessments/">Assessments</a>
+        <a href="/assessment-center/">Assessment Center</a>
         <a href="/downloads/">Downloads</a>
         <a href="/projects/">Projects</a>
         <a href="/portfolio/">Portfolio</a>
