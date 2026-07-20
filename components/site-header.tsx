@@ -38,6 +38,10 @@ export function SiteHeader() {
         <a href="/finops-center/">FinOps</a>
         <a href="/architecture-diagrams/">Diagrams</a>
         <a href="/infrastructure-templates/">Templates</a>
+        <a href="/architecture-studio/">Studio</a>
+        <a href="/template-library/">Template Library</a>
+        <a href="/interview-simulator/">Simulator</a>
+        <a href="/enterprise-documentation/">Documentation</a>
         <a href="/tracks/">Tracks</a>
         <a href="/search/">Search</a>
         <a href="/dashboard/">Dashboard</a>
