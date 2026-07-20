@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function ArchitectureDiagramsPage(){return <EnterpriseHub basePath="architecture-diagrams" eyebrow="Visual architecture" title="Architecture Diagrams" description="Create precise context, network, deployment, data-flow and resilience diagrams for enterprise reviews."/>;}
