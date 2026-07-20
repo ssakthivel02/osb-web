@@ -11,10 +11,11 @@ import { interviewGuides, runbookGuides, patternGuides, architectureGuides } fro
 import { certificationGuides, learningPlanGuides, assessmentGuides, downloadGuides } from '../lib/learning-center-data';
 import { projectGuides, portfolioGuides, troubleshootingGuides, checklistGuides } from '../lib/practice-center-data';
 import { labGuides, scenarioGuides, commandGuides, glossaryGuides } from '../lib/reference-center-data';
+import { knowledgeGuides, aiAssistantGuides, caseStudyGuides, dashboardGuides } from '../lib/intelligence-center-data';
 
 const baseUrl = 'https://learn.omsaravanabhava.org';
 const coreRoutes = [
-  '', '/academies/', '/career/', '/resources/', '/operations/', '/governance/', '/delivery/', '/leadership/', '/workshops/', '/interview/', '/runbooks/', '/patterns/', '/architecture/', '/certifications/', '/learning-plans/', '/assessments/', '/downloads/', '/projects/', '/portfolio/', '/troubleshooting/', '/checklists/', '/labs/', '/scenarios/', '/commands/', '/glossary/', '/tracks/', '/tracks/devops/', '/tracks/azure-cloud/', '/tracks/platform-engineering/', '/tracks/cloud-security/',
+  '', '/academies/', '/career/', '/resources/', '/operations/', '/governance/', '/delivery/', '/leadership/', '/workshops/', '/interview/', '/runbooks/', '/patterns/', '/architecture/', '/certifications/', '/learning-plans/', '/assessments/', '/downloads/', '/projects/', '/portfolio/', '/troubleshooting/', '/checklists/', '/labs/', '/scenarios/', '/commands/', '/glossary/', '/knowledge/', '/ai-assistant/', '/case-studies/', '/operations-dashboard/', '/tracks/', '/tracks/devops/', '/tracks/azure-cloud/', '/tracks/platform-engineering/', '/tracks/cloud-security/',
   '/dashboard/', '/search/', '/login/', '/register/', '/profile/', '/settings/', '/devops/', '/devops/roadmap/', '/devops/labs/',
   '/devops/interview/', '/devops/glossary/', '/devops/commands/', '/devops/scenarios/', '/devops/checklist/', '/devops/git/',
   '/devops/github-actions/', '/devops/docker/', '/devops/terraform/', '/devops/kubernetes/', '/devops/azure-devops/',
@@ -49,11 +50,15 @@ const labRoutes = academies.flatMap((academy) => [`/labs/${academy.slug}/`, ...l
 const scenarioRoutes = academies.flatMap((academy) => [`/scenarios/${academy.slug}/`, ...scenarioGuides.map((guide) => `/scenarios/${academy.slug}/${guide.slug}/`)]);
 const commandRoutes = academies.flatMap((academy) => [`/commands/${academy.slug}/`, ...commandGuides.map((guide) => `/commands/${academy.slug}/${guide.slug}/`)]);
 const glossaryRoutes = academies.flatMap((academy) => [`/glossary/${academy.slug}/`, ...glossaryGuides.map((guide) => `/glossary/${academy.slug}/${guide.slug}/`)]);
+const knowledgeRoutes = academies.flatMap((academy) => [`/knowledge/${academy.slug}/`, ...knowledgeGuides.map((guide) => `/knowledge/${academy.slug}/${guide.slug}/`)]);
+const aiAssistantRoutes = academies.flatMap((academy) => [`/ai-assistant/${academy.slug}/`, ...aiAssistantGuides.map((guide) => `/ai-assistant/${academy.slug}/${guide.slug}/`)]);
+const caseStudyRoutes = academies.flatMap((academy) => [`/case-studies/${academy.slug}/`, ...caseStudyGuides.map((guide) => `/case-studies/${academy.slug}/${guide.slug}/`)]);
+const dashboardRoutes = academies.flatMap((academy) => [`/operations-dashboard/${academy.slug}/`, ...dashboardGuides.map((guide) => `/operations-dashboard/${academy.slug}/${guide.slug}/`)]);
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [...coreRoutes, ...academyRoutes, ...careerRoutes, ...resourceRoutes, ...operationsRoutes, ...governanceRoutes, ...deliveryRoutes, ...leadershipRoutes, ...workshopRoutes, ...interviewRoutes, ...runbookRoutes, ...patternRoutes, ...architectureRoutes, ...certificationRoutes, ...learningPlanRoutes, ...assessmentRoutes, ...downloadRoutes, ...projectRoutes, ...portfolioRoutes, ...troubleshootingRoutes, ...checklistRoutes, ...labRoutes, ...scenarioRoutes, ...commandRoutes, ...glossaryRoutes].map((route) => ({
+  return [...coreRoutes, ...academyRoutes, ...careerRoutes, ...resourceRoutes, ...operationsRoutes, ...governanceRoutes, ...deliveryRoutes, ...leadershipRoutes, ...workshopRoutes, ...interviewRoutes, ...runbookRoutes, ...patternRoutes, ...architectureRoutes, ...certificationRoutes, ...learningPlanRoutes, ...assessmentRoutes, ...downloadRoutes, ...projectRoutes, ...portfolioRoutes, ...troubleshootingRoutes, ...checklistRoutes, ...labRoutes, ...scenarioRoutes, ...commandRoutes, ...glossaryRoutes, ...knowledgeRoutes, ...aiAssistantRoutes, ...caseStudyRoutes, ...dashboardRoutes].map((route) => ({
     url: `${baseUrl}${route}`,
     changeFrequency: route === '' ? ('weekly' as const) : ('monthly' as const),
-    priority: route === '' ? 1 : ['/academies/','/career/','/resources/','/operations/','/governance/','/delivery/','/leadership/','/workshops/','/interview/','/runbooks/','/patterns/','/architecture/','/certifications/','/learning-plans/','/assessments/','/downloads/','/projects/','/portfolio/','/troubleshooting/','/checklists/','/labs/','/scenarios/','/commands/','/glossary/'].includes(route) ? 0.9 : 0.8,
+    priority: route === '' ? 1 : ['/academies/','/career/','/resources/','/operations/','/governance/','/delivery/','/leadership/','/workshops/','/interview/','/runbooks/','/patterns/','/architecture/','/certifications/','/learning-plans/','/assessments/','/downloads/','/projects/','/portfolio/','/troubleshooting/','/checklists/','/labs/','/scenarios/','/commands/','/glossary/','/knowledge/','/ai-assistant/','/case-studies/','/operations-dashboard/'].includes(route) ? 0.9 : 0.8,
   }));
 }
