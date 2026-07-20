@@ -42,6 +42,10 @@ export function SiteHeader() {
         <a href="/template-library/">Template Library</a>
         <a href="/interview-simulator/">Simulator</a>
         <a href="/enterprise-documentation/">Documentation</a>
+        <a href="/learning-paths/">Learning Paths</a>
+        <a href="/skill-matrix/">Skill Matrix</a>
+        <a href="/release-readiness/">Release Readiness</a>
+        <a href="/service-catalogue/">Service Catalogue</a>
         <a href="/tracks/">Tracks</a>
         <a href="/search/">Search</a>
         <a href="/dashboard/">Dashboard</a>
