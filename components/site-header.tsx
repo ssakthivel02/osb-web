@@ -34,6 +34,10 @@ export function SiteHeader() {
         <a href="/ai-assistant/">AI Assistant</a>
         <a href="/case-studies/">Case Studies</a>
         <a href="/operations-dashboard/">Ops Dashboard</a>
+        <a href="/security-playbooks/">Security</a>
+        <a href="/finops-center/">FinOps</a>
+        <a href="/architecture-diagrams/">Diagrams</a>
+        <a href="/infrastructure-templates/">Templates</a>
         <a href="/tracks/">Tracks</a>
         <a href="/search/">Search</a>
         <a href="/dashboard/">Dashboard</a>
