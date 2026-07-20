@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function ServiceCataloguePage(){return <EnterpriseHub basePath="service-catalogue" eyebrow="Platform products" title="Service Catalogue" description="Clear technical service definitions, service levels, request models, support and lifecycle governance."/>;}
