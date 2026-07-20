@@ -22,6 +22,10 @@ export function SiteHeader() {
         <a href="/learning-plans/">Learning Plans</a>
         <a href="/assessments/">Assessments</a>
         <a href="/downloads/">Downloads</a>
+        <a href="/projects/">Projects</a>
+        <a href="/portfolio/">Portfolio</a>
+        <a href="/troubleshooting/">Troubleshooting</a>
+        <a href="/checklists/">Checklists</a>
         <a href="/tracks/">Tracks</a>
         <a href="/search/">Search</a>
         <a href="/dashboard/">Dashboard</a>
