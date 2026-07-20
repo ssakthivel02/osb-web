@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function SecurityPlaybooksPage(){return <EnterpriseHub basePath="security-playbooks" eyebrow="Security response" title="Security Playbooks" description="Practical containment, recovery and hardening guidance for enterprise cloud and platform services."/>;}
