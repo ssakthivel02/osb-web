@@ -46,6 +46,10 @@ export function SiteHeader() {
         <a href="/skill-matrix/">Skill Matrix</a>
         <a href="/release-readiness/">Release Readiness</a>
         <a href="/service-catalogue/">Service Catalogue</a>
+        <a href="/observability-center/">Observability</a>
+        <a href="/disaster-recovery/">Disaster Recovery</a>
+        <a href="/compliance-center/">Compliance</a>
+        <a href="/platform-operations/">Platform Ops</a>
         <a href="/tracks/">Tracks</a>
         <a href="/search/">Search</a>
         <a href="/dashboard/">Dashboard</a>
