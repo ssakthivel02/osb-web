@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function CommandsPage(){return <EnterpriseHub basePath="commands" eyebrow="Operational reference" title="Command Reference" description="Use essential, diagnostic, deployment, recovery and automation command guidance across every academy."/>;}
