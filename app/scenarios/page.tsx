@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function ScenariosPage(){return <EnterpriseHub basePath="scenarios" eyebrow="Decision practice" title="Scenario Center" description="Practise outage, migration, security, scaling and governance decisions using realistic technical situations."/>;}
