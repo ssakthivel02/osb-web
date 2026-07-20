@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function LearningPathsPage(){return <EnterpriseHub basePath="learning-paths" eyebrow="Structured progression" title="Learning Paths" description="Role-aligned progression from foundations through practitioner, architecture, specialist and leadership capability."/>;}
