@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function InfrastructureTemplatesPage(){return <EnterpriseHub basePath="infrastructure-templates" eyebrow="Reusable engineering" title="Infrastructure Templates" description="Governed landing zones, service modules, delivery pipelines, monitoring baselines and handover templates."/>;}
