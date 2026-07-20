@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function ProjectsPage(){return <EnterpriseHub basePath="projects" eyebrow="Applied delivery" title="Project Center" description="Build portfolio-grade projects that prove architecture, engineering, automation and production-readiness capability."/>;}
