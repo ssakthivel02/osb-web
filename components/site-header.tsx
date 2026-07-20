@@ -18,6 +18,10 @@ export function SiteHeader() {
         <a href="/runbooks/">Runbooks</a>
         <a href="/patterns/">Patterns</a>
         <a href="/architecture/">Architecture</a>
+        <a href="/certifications/">Certifications</a>
+        <a href="/learning-plans/">Learning Plans</a>
+        <a href="/assessments/">Assessments</a>
+        <a href="/downloads/">Downloads</a>
         <a href="/tracks/">Tracks</a>
         <a href="/search/">Search</a>
         <a href="/dashboard/">Dashboard</a>
