@@ -18,6 +18,7 @@ export function SiteHeader() {
         <a href="/runbooks/">Runbooks</a>
         <a href="/patterns/">Patterns</a>
         <a href="/architecture/">Architecture</a>
+        <a href="/architecture-explorer/">Architecture Explorer</a>
         <a href="/certifications/">Certifications</a>
         <a href="/learning-plans/">Learning Plans</a>
         <a href="/assessments/">Assessments</a>
