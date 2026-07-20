@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function ChecklistsPage(){return <EnterpriseHub basePath="checklists" eyebrow="Quality control" title="Checklist Center" description="Use concise review gates for design, deployment, production readiness, incident learning and technical handover."/>;}
