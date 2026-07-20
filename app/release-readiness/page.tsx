@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function ReleaseReadinessPage(){return <EnterpriseHub basePath="release-readiness" eyebrow="Production assurance" title="Release Readiness" description="Design, deployment, production, change and closure reviews for controlled releases."/>;}
