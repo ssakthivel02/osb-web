@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function PortfolioPage(){return <EnterpriseHub basePath="portfolio" eyebrow="Professional evidence" title="Portfolio Center" description="Turn technical work into credible case studies, architecture evidence, delivery proof and operational portfolios."/>;}
