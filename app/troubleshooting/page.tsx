@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function TroubleshootingPage(){return <EnterpriseHub basePath="troubleshooting" eyebrow="Operational diagnosis" title="Troubleshooting Center" description="Use evidence-based diagnostic sequences for connectivity, deployment, performance, identity and service failures."/>;}
