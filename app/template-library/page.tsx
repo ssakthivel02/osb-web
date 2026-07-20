@@ -1,0 +1,2 @@
+import { EnterpriseHub } from '../../components/enterprise-center';
+export default function Page(){return <EnterpriseHub basePath="template-library" eyebrow="Batch B" title="Enterprise Template Library" description="Use governed Terraform, Bicep, pipeline, container-platform and observability starter packs."/>;}
