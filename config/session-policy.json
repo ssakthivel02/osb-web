@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "sameSiteCookies": "Strict",
+  "secureCookies": true,
+  "httpOnlyCookies": true,
+  "sessionRotationRequired": true,
+  "idleTimeoutMinutes": 30,
+  "absoluteTimeoutHours": 12,
+  "logoutInvalidatesSession": true,
+  "sensitiveActionsRequireReauthentication": true,
+  "clientRoleClaimsTrusted": false
+}
