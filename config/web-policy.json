@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "requiredLocales": ["en-GB", "ta-IN"],
+  "accessibilityTarget": "WCAG-2.2-AA",
+  "secureHeadersRequired": true,
+  "contentSecurityPolicyRequired": true,
+  "csrfProtectionRequired": true,
+  "serverAuthoritativeTenantScope": true,
+  "privacyByDefault": true,
+  "offlineFallbackRequired": true,
+  "errorRecoveryRequired": true,
+  "performanceBudgets": {"lcpMs": 2500, "inpMs": 200, "cls": 0.1}
+}
