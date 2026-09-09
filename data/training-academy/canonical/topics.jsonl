@@ -1,0 +1,6 @@
+{"topic_id": "OSB-TOPIC-AD-REPLICATION", "track_id": "OSB-TRACK-AD", "name": "Active Directory Replication", "created_batch": "BATCH-001-AD-PILOT"}
+{"topic_id": "OSB-TOPIC-AD-FSMO", "track_id": "OSB-TRACK-AD", "name": "FSMO Roles", "created_batch": "BATCH-001-AD-PILOT"}
+{"topic_id": "OSB-TOPIC-AD-FOREST-RECOVERY", "track_id": "OSB-TRACK-AD", "name": "AD Forest Recovery", "created_batch": "BATCH-001-AD-PILOT"}
+{"topic_id": "OSB-TOPIC-AD-KERBEROS", "track_id": "OSB-TRACK-AD", "name": "Kerberos Authentication", "created_batch": "BATCH-001-AD-PILOT"}
+{"topic_id": "OSB-TOPIC-AD-GMSA", "track_id": "OSB-TRACK-AD", "name": "Group Managed Service Accounts", "created_batch": "BATCH-001-AD-PILOT"}
+{"topic_id": "OSB-TOPIC-AD-CAPSTONE-HEALTH-RECOVERY", "track_id": "OSB-TRACK-AD", "name": "AD Forest Health & Recovery Readiness (capstone topic)", "created_batch": "BATCH-001-AD-PILOT"}
