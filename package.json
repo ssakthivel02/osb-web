@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "lint": "next lint"
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "validate:corpus": "node scripts/validate-training-academy.mjs"
   },
   "dependencies": {
     "next": "14.2.31",
