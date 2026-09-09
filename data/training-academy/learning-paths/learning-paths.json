@@ -1,0 +1,26 @@
+{
+  "schema": "osb.learningpath.v1",
+  "note": "Only one path is populated this batch, and only because real content now exists to back every milestone. All other paths remain DRAFT_STUB until their own tracks get real content batches - no path is claimed CONTENT_COMPLETE without every milestone resolving to a real record id physically present on disk.",
+  "paths": [
+    {
+      "path_id": "OSB-PATH-AD-SPECIALIST",
+      "title": "Active Directory Specialist (Pilot Slice)",
+      "target_role": "AD Specialist / Senior Wintel Engineer",
+      "entry_prerequisites": ["Working knowledge of Windows Server administration basics"],
+      "milestones": [
+        {"milestone_id": "M1", "record_ids": ["OSB-AD-EASY-0001", "OSB-AD-LESSON-0001", "OSB-AD-DEEP-0001", "OSB-AD-LAB-0001", "OSB-AD-TS-0001", "OSB-AD-ASSESS-0001", "OSB-AD-ASSESS-0002"], "rationale": "Replication is the foundation everything else in AD operations depends on."},
+        {"milestone_id": "M2", "record_ids": ["OSB-AD-EASY-0002", "OSB-AD-LESSON-0002", "OSB-AD-DEEP-0002", "OSB-AD-LAB-0002", "OSB-AD-TS-0002", "OSB-AD-ASSESS-0003", "OSB-AD-ASSESS-0004"], "rationale": "FSMO roles build directly on understanding multi-master replication's limits."},
+        {"milestone_id": "M3", "record_ids": ["OSB-AD-EASY-0004", "OSB-AD-LESSON-0004", "OSB-AD-DEEP-0004", "OSB-AD-LAB-0004", "OSB-AD-TS-0004", "OSB-AD-ASSESS-0007", "OSB-AD-ASSESS-0008"], "rationale": "Kerberos authentication is a daily-operations skill independent of, but informed by, the DC-management concepts above."},
+        {"milestone_id": "M4", "record_ids": ["OSB-AD-EASY-0005", "OSB-AD-LESSON-0005", "OSB-AD-DEEP-0005", "OSB-AD-LAB-0005", "OSB-AD-TS-0005", "OSB-AD-ASSESS-0009", "OSB-AD-ASSESS-0010"], "rationale": "gMSA is a practical automation-adjacent skill that depends on basic AD object management competence."},
+        {"milestone_id": "M5", "record_ids": ["OSB-AD-EASY-0003", "OSB-AD-LESSON-0003", "OSB-AD-DEEP-0003", "OSB-AD-LAB-0003", "OSB-AD-TS-0003", "OSB-AD-ASSESS-0005", "OSB-AD-ASSESS-0006"], "rationale": "Forest recovery is the highest-stakes, most advanced milestone and is placed last, after the learner has the replication and FSMO grounding it depends on."}
+      ],
+      "dependency_notes": "M5 (forest recovery) assumes M1 and M2 are complete; M3 and M4 are independent of each other and of M5's prerequisites, and could be reordered relative to each other without breaking the chain.",
+      "capstone_id": "OSB-AD-CAPSTONE-0001",
+      "assessment_ids": ["OSB-AD-ASSESS-0001", "OSB-AD-ASSESS-0002", "OSB-AD-ASSESS-0003", "OSB-AD-ASSESS-0004", "OSB-AD-ASSESS-0005", "OSB-AD-ASSESS-0006", "OSB-AD-ASSESS-0007", "OSB-AD-ASSESS-0008", "OSB-AD-ASSESS-0009", "OSB-AD-ASSESS-0010"],
+      "interview_ids": ["OSB-AD-INTERVIEW-0001", "OSB-AD-INTERVIEW-0002", "OSB-AD-INTERVIEW-0003", "OSB-AD-INTERVIEW-0004", "OSB-AD-INTERVIEW-0005"],
+      "estimated_effort_hours": 14,
+      "status": "PARTIALLY_POPULATED",
+      "status_rationale": "Every milestone resolves to real, physically-written records (verified in 16_VALIDATION), so this is not a stub - but it covers only 5 of the ~15-20 topics a genuine AD Specialist path should eventually include (e.g. DNS/DHCP integration, Group Policy, trusts, DFSR beyond SYSVOL, AD security hardening are not yet built), so it is marked PARTIALLY_POPULATED rather than CONTENT_COMPLETE."
+    }
+  ]
+}
