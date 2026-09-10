@@ -1,26 +1,30 @@
 {
   "schema": "osb.learningpath.v1",
-  "note": "Only one path is populated this batch, and only because real content now exists to back every milestone. All other paths remain DRAFT_STUB until their own tracks get real content batches - no path is claimed CONTENT_COMPLETE without every milestone resolving to a real record id physically present on disk.",
+  "note": "This file only claims milestones backed by physical repository records. The Active Directory path is considered CORE_CONTENT_COMPLETE for the present evidence-backed core, not an assertion that every possible Microsoft AD DS feature or organization-specific procedure is covered.",
   "paths": [
     {
       "path_id": "OSB-PATH-AD-SPECIALIST",
-      "title": "Active Directory Specialist (Pilot Slice)",
-      "target_role": "AD Specialist / Senior Wintel Engineer",
-      "entry_prerequisites": ["Working knowledge of Windows Server administration basics"],
+      "title": "Active Directory Specialist / Senior Wintel Engineer",
+      "target_role": "AD Specialist / Senior Wintel Engineer / Infrastructure Engineer",
+      "entry_prerequisites": ["Working knowledge of Windows Server administration, TCP/IP and enterprise change control"],
       "milestones": [
-        {"milestone_id": "M1", "record_ids": ["OSB-AD-EASY-0001", "OSB-AD-LESSON-0001", "OSB-AD-DEEP-0001", "OSB-AD-LAB-0001", "OSB-AD-TS-0001", "OSB-AD-ASSESS-0001", "OSB-AD-ASSESS-0002"], "rationale": "Replication is the foundation everything else in AD operations depends on."},
-        {"milestone_id": "M2", "record_ids": ["OSB-AD-EASY-0002", "OSB-AD-LESSON-0002", "OSB-AD-DEEP-0002", "OSB-AD-LAB-0002", "OSB-AD-TS-0002", "OSB-AD-ASSESS-0003", "OSB-AD-ASSESS-0004"], "rationale": "FSMO roles build directly on understanding multi-master replication's limits."},
-        {"milestone_id": "M3", "record_ids": ["OSB-AD-EASY-0004", "OSB-AD-LESSON-0004", "OSB-AD-DEEP-0004", "OSB-AD-LAB-0004", "OSB-AD-TS-0004", "OSB-AD-ASSESS-0007", "OSB-AD-ASSESS-0008"], "rationale": "Kerberos authentication is a daily-operations skill independent of, but informed by, the DC-management concepts above."},
-        {"milestone_id": "M4", "record_ids": ["OSB-AD-EASY-0005", "OSB-AD-LESSON-0005", "OSB-AD-DEEP-0005", "OSB-AD-LAB-0005", "OSB-AD-TS-0005", "OSB-AD-ASSESS-0009", "OSB-AD-ASSESS-0010"], "rationale": "gMSA is a practical automation-adjacent skill that depends on basic AD object management competence."},
-        {"milestone_id": "M5", "record_ids": ["OSB-AD-EASY-0003", "OSB-AD-LESSON-0003", "OSB-AD-DEEP-0003", "OSB-AD-LAB-0003", "OSB-AD-TS-0003", "OSB-AD-ASSESS-0005", "OSB-AD-ASSESS-0006"], "rationale": "Forest recovery is the highest-stakes, most advanced milestone and is placed last, after the learner has the replication and FSMO grounding it depends on."}
+        {"milestone_id":"M1","record_ids":["OSB-AD-EASY-0001","OSB-AD-LESSON-0001","OSB-AD-DEEP-0001","OSB-AD-LAB-0001","OSB-AD-TS-0001","OSB-AD-LESSON-0018","OSB-AD-TS-0011"],"rationale":"Start with replication because AD consistency, DNS-integrated data, Group Policy and recovery all depend on understanding convergence and failure age."},
+        {"milestone_id":"M2","record_ids":["OSB-AD-EASY-0006","OSB-AD-LESSON-0006","OSB-AD-DEEP-0006","OSB-AD-LAB-0006","OSB-AD-TS-0006","OSB-AD-LESSON-0008"],"rationale":"Add DNS/DC Locator and site/subnet topology so authentication and replication symptoms can be traced through their network dependencies."},
+        {"milestone_id":"M3","record_ids":["OSB-AD-EASY-0002","OSB-AD-LESSON-0002","OSB-AD-DEEP-0002","OSB-AD-LAB-0002","OSB-AD-TS-0002","OSB-AD-LESSON-0016","OSB-AD-LAB-0009"],"rationale":"Build operations-master and time-hierarchy competence before advanced lifecycle or recovery decisions."},
+        {"milestone_id":"M4","record_ids":["OSB-AD-EASY-0004","OSB-AD-LESSON-0004","OSB-AD-DEEP-0004","OSB-AD-LAB-0004","OSB-AD-TS-0004","OSB-AD-LESSON-0017","OSB-AD-TS-0010"],"rationale":"Combine Kerberos and secure-channel evidence so learners can separate identity, time, DNS and machine-trust failures."},
+        {"milestone_id":"M5","record_ids":["OSB-AD-LESSON-0007","OSB-AD-LESSON-0009","OSB-AD-LESSON-0011"],"rationale":"Cover Group Policy architecture, LDAP protections and delegated OU administration as the main policy and least-privilege control plane."},
+        {"milestone_id":"M6","record_ids":["OSB-AD-EASY-0005","OSB-AD-LESSON-0005","OSB-AD-DEEP-0005","OSB-AD-LAB-0005","OSB-AD-TS-0005"],"rationale":"Develop service-account hygiene and automation-aware identity administration with gMSA."},
+        {"milestone_id":"M7","record_ids":["OSB-AD-LESSON-0014","OSB-AD-EASY-0009","OSB-AD-DEEP-0009","OSB-AD-LESSON-0015","OSB-AD-TS-0009"],"rationale":"Cover branch RODC design, functional levels, Global Catalog considerations and domain-controller lifecycle/metadata-cleanup boundaries."},
+        {"milestone_id":"M8","record_ids":["OSB-AD-EASY-0003","OSB-AD-LESSON-0003","OSB-AD-DEEP-0003","OSB-AD-LAB-0003","OSB-AD-TS-0003","OSB-AD-LESSON-0010","OSB-AD-EASY-0007","OSB-AD-DEEP-0007","OSB-AD-LAB-0007","OSB-AD-TS-0007"],"rationale":"Finish technical progression with trusted backups, object/domain recovery semantics and forest-recovery readiness."},
+        {"milestone_id":"M9","record_ids":["OSB-AD-ASSESS-0011","OSB-AD-ASSESS-0012","OSB-AD-ASSESS-0013","OSB-AD-ASSESS-0014","OSB-AD-INTERVIEW-0006","OSB-AD-INTERVIEW-0007","OSB-AD-INTERVIEW-0008","OSB-AD-INTERVIEW-0009","OSB-AD-INTERVIEW-0010","OSB-AD-CAPSTONE-0001"],"rationale":"Conclude with cross-domain assessment, senior interview judgement and an enterprise health/recovery capstone rather than isolated factual recall."}
       ],
-      "dependency_notes": "M5 (forest recovery) assumes M1 and M2 are complete; M3 and M4 are independent of each other and of M5's prerequisites, and could be reordered relative to each other without breaking the chain.",
+      "dependency_notes": "M1-M4 establish core directory, discovery, FSMO/time and authentication reasoning. M5-M7 add policy, security and lifecycle design. M8 is intentionally late because recovery is high-impact and assumes the learner can reason about replication, DNS, FSMO and authentication dependencies. M9 is the integrated evidence gate.",
       "capstone_id": "OSB-AD-CAPSTONE-0001",
-      "assessment_ids": ["OSB-AD-ASSESS-0001", "OSB-AD-ASSESS-0002", "OSB-AD-ASSESS-0003", "OSB-AD-ASSESS-0004", "OSB-AD-ASSESS-0005", "OSB-AD-ASSESS-0006", "OSB-AD-ASSESS-0007", "OSB-AD-ASSESS-0008", "OSB-AD-ASSESS-0009", "OSB-AD-ASSESS-0010"],
-      "interview_ids": ["OSB-AD-INTERVIEW-0001", "OSB-AD-INTERVIEW-0002", "OSB-AD-INTERVIEW-0003", "OSB-AD-INTERVIEW-0004", "OSB-AD-INTERVIEW-0005"],
-      "estimated_effort_hours": 14,
-      "status": "PARTIALLY_POPULATED",
-      "status_rationale": "Every milestone resolves to real, physically-written records (verified in 16_VALIDATION), so this is not a stub - but it covers only 5 of the ~15-20 topics a genuine AD Specialist path should eventually include (e.g. DNS/DHCP integration, Group Policy, trusts, DFSR beyond SYSVOL, AD security hardening are not yet built), so it is marked PARTIALLY_POPULATED rather than CONTENT_COMPLETE."
+      "assessment_ids": ["OSB-AD-ASSESS-0001","OSB-AD-ASSESS-0002","OSB-AD-ASSESS-0003","OSB-AD-ASSESS-0004","OSB-AD-ASSESS-0005","OSB-AD-ASSESS-0006","OSB-AD-ASSESS-0007","OSB-AD-ASSESS-0008","OSB-AD-ASSESS-0009","OSB-AD-ASSESS-0010","OSB-AD-ASSESS-0011","OSB-AD-ASSESS-0012","OSB-AD-ASSESS-0013","OSB-AD-ASSESS-0014"],
+      "interview_ids": ["OSB-AD-INTERVIEW-0001","OSB-AD-INTERVIEW-0002","OSB-AD-INTERVIEW-0003","OSB-AD-INTERVIEW-0004","OSB-AD-INTERVIEW-0005","OSB-AD-INTERVIEW-0006","OSB-AD-INTERVIEW-0007","OSB-AD-INTERVIEW-0008","OSB-AD-INTERVIEW-0009","OSB-AD-INTERVIEW-0010"],
+      "estimated_effort_hours": 28,
+      "status": "CORE_CONTENT_COMPLETE",
+      "status_rationale": "The path now has physical coverage across replication, DNS/DC Locator, sites/subnets, FSMO, time hierarchy, Kerberos, secure channels, Group Policy, LDAP security, OU delegation, gMSA, RODC, functional levels/Global Catalog, DC lifecycle, backup/restore and forest recovery, with integrated assessments, interviews and capstone evidence. Organization-specific procedures and the long tail of AD DS features remain future enrichment rather than being falsely claimed complete."
     }
   ]
 }
