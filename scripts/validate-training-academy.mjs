@@ -5,10 +5,10 @@ const ROOT = path.join(process.cwd(), 'data', 'training-academy');
 const recordFiles = [
   'lessons/lessons.jsonl','easy-learn/easy-learn.jsonl','deep-dive/deep-dive.jsonl','labs/labs.jsonl',
   'troubleshooting/troubleshooting.jsonl','assessments/assessments.jsonl','interviews/interviews.jsonl',
-  'capstones/capstones.jsonl','visual-specs/visual-specs.jsonl','expansion/batch020r3/records.jsonl',
+  'capstones/capstones.jsonl','visual-specs/visual-specs.jsonl','expansion/batch020r3/records.jsonl','expansion/batch020r3b/records.jsonl',
 ];
-const topicFiles = ['canonical/topics.jsonl','expansion/batch020r3/topics.jsonl'];
-const sourceFiles = ['sources/source-register.jsonl','expansion/batch020r3/sources.jsonl'];
+const topicFiles = ['canonical/topics.jsonl','expansion/batch020r3/topics.jsonl','expansion/batch020r3b/topics.jsonl'];
+const sourceFiles = ['sources/source-register.jsonl','expansion/batch020r3/sources.jsonl','expansion/batch020r3b/sources.jsonl'];
 const readJson = (p) => JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8'));
 const readJsonl = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8').split(/\r?\n/).map((x) => x.trim()).filter(Boolean).map((line, i) => { try { return JSON.parse(line); } catch (e) { throw new Error(`${p}:${i + 1}: ${e.message}`); } });
 
@@ -71,9 +71,9 @@ const safetyBreakdown = {};
 for (const record of records) if (record.safety_classification) safetyBreakdown[record.safety_classification] = (safetyBreakdown[record.safety_classification] ?? 0) + 1;
 
 const expected = {
-  records:54, tracks:19, populatedTracks:1, paths:1, sources:19, relationships:177,
-  relationshipTypeBreakdown:{ PREREQUISITE_OF:61, CROSS_LINK:116 },
-  typeBreakdown:{ ASSESSMENT:11, CAPSTONE:1, DEEP_DIVE:6, EASY_LEARN:6, INTERVIEW:6, LAB:6, LESSON:9, TROUBLESHOOTING:6, VISUAL_SPEC:3 },
+  records:62, tracks:19, populatedTracks:1, paths:1, sources:23, relationships:199,
+  relationshipTypeBreakdown:{ PREREQUISITE_OF:71, CROSS_LINK:128 },
+  typeBreakdown:{ ASSESSMENT:12, CAPSTONE:1, DEEP_DIVE:7, EASY_LEARN:7, INTERVIEW:7, LAB:7, LESSON:11, TROUBLESHOOTING:7, VISUAL_SPEC:3 },
 };
 if (records.length !== expected.records) errors.push(`record count ${records.length} != ${expected.records}`);
 if (tracks.length !== expected.tracks) errors.push(`track count ${tracks.length} != ${expected.tracks}`);
@@ -84,7 +84,7 @@ if (relationships.length !== expected.relationships) errors.push(`relationship c
 for (const [type,count] of Object.entries(expected.typeBreakdown)) if ((typeBreakdown[type] ?? 0) !== count) errors.push(`${type} count ${typeBreakdown[type] ?? 0} != ${count}`);
 for (const [type,count] of Object.entries(expected.relationshipTypeBreakdown)) if ((relationshipTypeBreakdown[type] ?? 0) !== count) errors.push(`${type} relationship count ${relationshipTypeBreakdown[type] ?? 0} != ${count}`);
 
-// Preserve and continuously verify the independently hashed 44-record seed provenance.
+// Independently hashed seed remains immutable and separately verifiable.
 if (provenance.relationship_count !== 142) errors.push('seed relationship provenance count mismatch');
 if (provenance.relationship_type_counts?.PREREQUISITE_OF !== 50 || provenance.relationship_type_counts?.CROSS_LINK !== 92) errors.push('seed relationship provenance type-count mismatch');
 if (provenance.source_relationship_file_sha256 !== '321ff03683441ff8d0aa75abdaa70a4dd98d9f41ad6dd4550efda9b5bd79ec58') errors.push('seed relationship provenance SHA mismatch');
@@ -98,7 +98,7 @@ const result = {
   duplicateRelationshipIds:relationships.length-relationshipIds.size,
   brokenReferences:errors.filter((e)=>e.includes('references missing')||e.includes('unknown ')||e.includes('broken endpoint')).length,
   safetyBreakdown, seedRelationshipSourceSha256:provenance.source_relationship_file_sha256,
-  seedZipSha256:provenance.source_zip_sha256, expansionBatch:'BATCH-020R3-AD-EXPANSION', errors,
+  seedZipSha256:provenance.source_zip_sha256, expansionBatch:'BATCH-020R3B-AD-RECOVERY-HARDENING', errors,
 };
 console.log(JSON.stringify(result,null,2));
 if (errors.length) process.exit(1);
