@@ -72,8 +72,8 @@ const safetyBreakdown = {};
 for (const record of records) if (record.safety_classification) safetyBreakdown[record.safety_classification] = (safetyBreakdown[record.safety_classification] ?? 0) + 1;
 
 const expected = {
-  records:84, tracks:19, populatedTracks:1, paths:1, sources:36, relationships:269,
-  relationshipTypeBreakdown:{ PREREQUISITE_OF:103, CROSS_LINK:166 },
+  records:84, tracks:19, populatedTracks:1, paths:1, sources:36, relationships:279,
+  relationshipTypeBreakdown:{ PREREQUISITE_OF:109, CROSS_LINK:170 },
   typeBreakdown:{ ASSESSMENT:14, CAPSTONE:1, DEEP_DIVE:9, EASY_LEARN:9, INTERVIEW:10, LAB:9, LESSON:18, TROUBLESHOOTING:11, VISUAL_SPEC:3 },
 };
 if (records.length !== expected.records) errors.push(`record count ${records.length} != ${expected.records}`);
