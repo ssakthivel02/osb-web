@@ -1,0 +1,3 @@
+{"topic_id":"OSB-TOPIC-AWS-ORG-IAM","track_id":"OSB-TRACK-AWS","name":"AWS Organizations, IAM and Account Guardrails","status":"CANONICAL_CANDIDATE"}
+{"topic_id":"OSB-TOPIC-AWS-VPC-SECURITY","track_id":"OSB-TRACK-AWS","name":"Amazon VPC, Routing and Network Security","status":"CANONICAL_CANDIDATE"}
+{"topic_id":"OSB-TOPIC-AWS-OBSERVABILITY-AUDIT","track_id":"OSB-TRACK-AWS","name":"CloudWatch, CloudTrail and Operational Evidence","status":"CANONICAL_CANDIDATE"}

@@ -61,9 +61,9 @@ const safetyBreakdown={};
 for(const record of records)if(record.safety_classification)safetyBreakdown[record.safety_classification]=(safetyBreakdown[record.safety_classification]??0)+1;
 
 const expected={
-  records:229,tracks:19,populatedTracks:8,paths:2,sources:142,relationships:847,
-  relationshipTypeBreakdown:{PREREQUISITE_OF:365,CROSS_LINK:482},
-  typeBreakdown:{ASSESSMENT:32,CAPSTONE:2,DEEP_DIVE:27,EASY_LEARN:26,INTERVIEW:28,LAB:27,LESSON:55,TROUBLESHOOTING:29,VISUAL_SPEC:3}
+  records:237,tracks:19,populatedTracks:9,paths:2,sources:149,relationships:887,
+  relationshipTypeBreakdown:{PREREQUISITE_OF:385,CROSS_LINK:502},
+  typeBreakdown:{ASSESSMENT:33,CAPSTONE:2,DEEP_DIVE:28,EASY_LEARN:27,INTERVIEW:29,LAB:28,LESSON:57,TROUBLESHOOTING:30,VISUAL_SPEC:3}
 };
 if(records.length!==expected.records)errors.push(`record count ${records.length} != ${expected.records}`);
 if(tracks.length!==expected.tracks)errors.push(`track count ${tracks.length} != ${expected.tracks}`);
@@ -98,7 +98,8 @@ else{
 }
 for(const [trackId,label] of [
   ['OSB-TRACK-WIN','Windows Server / Wintel'],['OSB-TRACK-HYPERV','Hyper-V'],['OSB-TRACK-HGS','HGS / Shielded VMs'],
-  ['OSB-TRACK-SCVMM','SCVMM'],['OSB-TRACK-PS','PowerShell'],['OSB-TRACK-AZ','Microsoft Azure'],['OSB-TRACK-DEVOPS','DevOps / AZ-400']
+  ['OSB-TRACK-SCVMM','SCVMM'],['OSB-TRACK-PS','PowerShell'],['OSB-TRACK-AZ','Microsoft Azure'],
+  ['OSB-TRACK-DEVOPS','DevOps / AZ-400'],['OSB-TRACK-AWS','AWS']
 ]) if(!populatedTrackIds.includes(trackId))errors.push(`${label} track is not physically populated`);
 
 const result={
@@ -109,7 +110,7 @@ const result={
   duplicateRelationshipIds:relationships.length-relationshipIds.size,
   brokenReferences:errors.filter(e=>e.includes('references missing')||e.includes('unknown ')||e.includes('broken endpoint')).length,
   safetyBreakdown,seedRelationshipSourceSha256:provenance.source_relationship_file_sha256,seedZipSha256:provenance.source_zip_sha256,
-  expansionBatch:'BATCH-020R10-DEVOPS-AZ400',errors
+  expansionBatch:'BATCH-020R11-AWS-FOUNDATIONS',errors
 };
 console.log(JSON.stringify(result,null,2));
 if(errors.length)process.exit(1);
