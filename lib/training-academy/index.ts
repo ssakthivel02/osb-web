@@ -21,7 +21,10 @@ const RECORD_FILES = [
   'interviews/interviews.jsonl',
   'capstones/capstones.jsonl',
   'visual-specs/visual-specs.jsonl',
+  'expansion/batch020r3/records.jsonl',
 ] as const;
+const TOPIC_FILES = ['canonical/topics.jsonl', 'expansion/batch020r3/topics.jsonl'] as const;
+const SOURCE_FILES = ['sources/source-register.jsonl', 'expansion/batch020r3/sources.jsonl'] as const;
 
 function readJson<T>(relativePath: string): T {
   return JSON.parse(fs.readFileSync(path.join(ROOT, relativePath), 'utf8')) as T;
@@ -36,6 +39,16 @@ function readJsonl(relativePath: string): JsonRecord[] {
       try { return JSON.parse(line) as JsonRecord; }
       catch (error) { throw new Error(`Malformed JSONL at ${relativePath}:${index + 1}: ${(error as Error).message}`); }
     });
+}
+
+function assertUnique(records: JsonRecord[], key: string, label: string) {
+  const seen = new Set<string>();
+  for (const record of records) {
+    const value = String(record[key] ?? '');
+    if (!value) throw new Error(`${label} is missing ${key}`);
+    if (seen.has(value)) throw new Error(`Duplicate ${label} ${key}: ${value}`);
+    seen.add(value);
+  }
 }
 
 export function deriveTrainingRelationships(records: JsonRecord[]): TrainingRelationship[] {
@@ -55,18 +68,28 @@ export function deriveTrainingRelationships(records: JsonRecord[]): TrainingRela
 
 export function getTrainingAcademyCorpus() {
   const tracks = readJson<{ tracks: JsonRecord[] }>('canonical/tracks.json').tracks;
-  const topics = readJsonl('canonical/topics.jsonl');
-  const sources = readJsonl('sources/source-register.jsonl');
+  const topics = TOPIC_FILES.flatMap(readJsonl);
+  const sources = SOURCE_FILES.flatMap(readJsonl);
   const learningPaths = readJson<{ paths: JsonRecord[] }>('learning-paths/learning-paths.json').paths;
   const relationshipProvenance = readJson<JsonRecord>('canonical/relationship-provenance.json');
   const records = RECORD_FILES.flatMap(readJsonl).sort((a, b) => String(a.id).localeCompare(String(b.id)));
 
-  const ids = new Set<string>();
+  assertUnique(records, 'id', 'Training Academy record');
+  assertUnique(tracks, 'track_id', 'Training Academy track');
+  assertUnique(topics, 'topic_id', 'Training Academy topic');
+  assertUnique(sources, 'source_id', 'Training Academy source');
+
+  const ids = new Set(records.map((record) => String(record.id)));
+  const trackIds = new Set(tracks.map((track) => String(track.track_id)));
+  const topicIds = new Set(topics.map((topic) => String(topic.topic_id)));
+  const sourceIds = new Set(sources.map((source) => String(source.source_id)));
+
   for (const record of records) {
-    const id = String(record.id ?? '');
-    if (!id) throw new Error('Training Academy record is missing id');
-    if (ids.has(id)) throw new Error(`Duplicate Training Academy record id: ${id}`);
-    ids.add(id);
+    if (!trackIds.has(String(record.track_id))) throw new Error(`${record.id}: unknown track ${record.track_id}`);
+    if (!topicIds.has(String(record.topic_id))) throw new Error(`${record.id}: unknown topic ${record.topic_id}`);
+    for (const sourceId of (record.sources as string[] | undefined) ?? []) {
+      if (!sourceIds.has(sourceId)) throw new Error(`${record.id}: unknown source ${sourceId}`);
+    }
   }
 
   const relationships = deriveTrainingRelationships(records);
