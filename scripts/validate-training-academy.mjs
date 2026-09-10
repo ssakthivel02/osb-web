@@ -5,10 +5,10 @@ const ROOT = path.join(process.cwd(), 'data', 'training-academy');
 const recordFiles = [
   'lessons/lessons.jsonl','easy-learn/easy-learn.jsonl','deep-dive/deep-dive.jsonl','labs/labs.jsonl',
   'troubleshooting/troubleshooting.jsonl','assessments/assessments.jsonl','interviews/interviews.jsonl',
-  'capstones/capstones.jsonl','visual-specs/visual-specs.jsonl','expansion/batch020r3/records.jsonl','expansion/batch020r3b/records.jsonl',
+  'capstones/capstones.jsonl','visual-specs/visual-specs.jsonl','expansion/batch020r3/records.jsonl','expansion/batch020r3b/records.jsonl','expansion/batch020r3c/records.jsonl',
 ];
-const topicFiles = ['canonical/topics.jsonl','expansion/batch020r3/topics.jsonl','expansion/batch020r3b/topics.jsonl'];
-const sourceFiles = ['sources/source-register.jsonl','expansion/batch020r3/sources.jsonl','expansion/batch020r3b/sources.jsonl'];
+const topicFiles = ['canonical/topics.jsonl','expansion/batch020r3/topics.jsonl','expansion/batch020r3b/topics.jsonl','expansion/batch020r3c/topics.jsonl'];
+const sourceFiles = ['sources/source-register.jsonl','expansion/batch020r3/sources.jsonl','expansion/batch020r3b/sources.jsonl','expansion/batch020r3c/sources.jsonl'];
 const readJson = (p) => JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8'));
 const readJsonl = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8').split(/\r?\n/).map((x) => x.trim()).filter(Boolean).map((line, i) => { try { return JSON.parse(line); } catch (e) { throw new Error(`${p}:${i + 1}: ${e.message}`); } });
 
@@ -71,9 +71,9 @@ const safetyBreakdown = {};
 for (const record of records) if (record.safety_classification) safetyBreakdown[record.safety_classification] = (safetyBreakdown[record.safety_classification] ?? 0) + 1;
 
 const expected = {
-  records:62, tracks:19, populatedTracks:1, paths:1, sources:23, relationships:199,
-  relationshipTypeBreakdown:{ PREREQUISITE_OF:71, CROSS_LINK:128 },
-  typeBreakdown:{ ASSESSMENT:12, CAPSTONE:1, DEEP_DIVE:7, EASY_LEARN:7, INTERVIEW:7, LAB:7, LESSON:11, TROUBLESHOOTING:7, VISUAL_SPEC:3 },
+  records:70, tracks:19, populatedTracks:1, paths:1, sources:28, relationships:228,
+  relationshipTypeBreakdown:{ PREREQUISITE_OF:84, CROSS_LINK:144 },
+  typeBreakdown:{ ASSESSMENT:13, CAPSTONE:1, DEEP_DIVE:8, EASY_LEARN:8, INTERVIEW:8, LAB:8, LESSON:13, TROUBLESHOOTING:8, VISUAL_SPEC:3 },
 };
 if (records.length !== expected.records) errors.push(`record count ${records.length} != ${expected.records}`);
 if (tracks.length !== expected.tracks) errors.push(`track count ${tracks.length} != ${expected.tracks}`);
@@ -98,7 +98,7 @@ const result = {
   duplicateRelationshipIds:relationships.length-relationshipIds.size,
   brokenReferences:errors.filter((e)=>e.includes('references missing')||e.includes('unknown ')||e.includes('broken endpoint')).length,
   safetyBreakdown, seedRelationshipSourceSha256:provenance.source_relationship_file_sha256,
-  seedZipSha256:provenance.source_zip_sha256, expansionBatch:'BATCH-020R3B-AD-RECOVERY-HARDENING', errors,
+  seedZipSha256:provenance.source_zip_sha256, expansionBatch:'BATCH-020R3C-AD-SECURITY-HARDENING', errors,
 };
 console.log(JSON.stringify(result,null,2));
 if (errors.length) process.exit(1);
