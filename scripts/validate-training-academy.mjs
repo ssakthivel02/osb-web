@@ -5,15 +5,17 @@ const ROOT = path.join(process.cwd(), 'data', 'training-academy');
 const recordFiles = [
   'lessons/lessons.jsonl','easy-learn/easy-learn.jsonl','deep-dive/deep-dive.jsonl','labs/labs.jsonl',
   'troubleshooting/troubleshooting.jsonl','assessments/assessments.jsonl','interviews/interviews.jsonl',
-  'capstones/capstones.jsonl','visual-specs/visual-specs.jsonl',
+  'capstones/capstones.jsonl','visual-specs/visual-specs.jsonl','expansion/batch020r3/records.jsonl',
 ];
+const topicFiles = ['canonical/topics.jsonl','expansion/batch020r3/topics.jsonl'];
+const sourceFiles = ['sources/source-register.jsonl','expansion/batch020r3/sources.jsonl'];
 const readJson = (p) => JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8'));
 const readJsonl = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8').split(/\r?\n/).map((x) => x.trim()).filter(Boolean).map((line, i) => { try { return JSON.parse(line); } catch (e) { throw new Error(`${p}:${i + 1}: ${e.message}`); } });
 
 const errors = [];
 const tracks = readJson('canonical/tracks.json').tracks;
-const topics = readJsonl('canonical/topics.jsonl');
-const sources = readJsonl('sources/source-register.jsonl');
+const topics = topicFiles.flatMap(readJsonl);
+const sources = sourceFiles.flatMap(readJsonl);
 const paths = readJson('learning-paths/learning-paths.json').paths;
 const provenance = readJson('canonical/relationship-provenance.json');
 const records = recordFiles.flatMap(readJsonl);
@@ -21,6 +23,18 @@ const trackIds = new Set(tracks.map((x) => x.track_id));
 const topicIds = new Set(topics.map((x) => x.topic_id));
 const sourceIds = new Set(sources.map((x) => x.source_id));
 const recordIds = new Set();
+
+const assertUnique = (items, key, label) => {
+  const seen = new Set();
+  for (const item of items) {
+    if (!item[key]) errors.push(`${label} missing ${key}`);
+    else if (seen.has(item[key])) errors.push(`duplicate ${label} ${key}: ${item[key]}`);
+    else seen.add(item[key]);
+  }
+};
+assertUnique(tracks,'track_id','track');
+assertUnique(topics,'topic_id','topic');
+assertUnique(sources,'source_id','source');
 
 for (const record of records) {
   if (!record.id) errors.push('record missing id');
@@ -57,9 +71,9 @@ const safetyBreakdown = {};
 for (const record of records) if (record.safety_classification) safetyBreakdown[record.safety_classification] = (safetyBreakdown[record.safety_classification] ?? 0) + 1;
 
 const expected = {
-  records:44, tracks:19, populatedTracks:1, paths:1, sources:13, relationships:142,
-  relationshipTypeBreakdown:{ PREREQUISITE_OF:50, CROSS_LINK:92 },
-  typeBreakdown:{ ASSESSMENT:10, CAPSTONE:1, DEEP_DIVE:5, EASY_LEARN:5, INTERVIEW:5, LAB:5, LESSON:5, TROUBLESHOOTING:5, VISUAL_SPEC:3 },
+  records:54, tracks:19, populatedTracks:1, paths:1, sources:19, relationships:177,
+  relationshipTypeBreakdown:{ PREREQUISITE_OF:61, CROSS_LINK:116 },
+  typeBreakdown:{ ASSESSMENT:11, CAPSTONE:1, DEEP_DIVE:6, EASY_LEARN:6, INTERVIEW:6, LAB:6, LESSON:9, TROUBLESHOOTING:6, VISUAL_SPEC:3 },
 };
 if (records.length !== expected.records) errors.push(`record count ${records.length} != ${expected.records}`);
 if (tracks.length !== expected.tracks) errors.push(`track count ${tracks.length} != ${expected.tracks}`);
@@ -69,17 +83,22 @@ if (sources.length !== expected.sources) errors.push(`source count ${sources.len
 if (relationships.length !== expected.relationships) errors.push(`relationship count ${relationships.length} != ${expected.relationships}`);
 for (const [type,count] of Object.entries(expected.typeBreakdown)) if ((typeBreakdown[type] ?? 0) !== count) errors.push(`${type} count ${typeBreakdown[type] ?? 0} != ${count}`);
 for (const [type,count] of Object.entries(expected.relationshipTypeBreakdown)) if ((relationshipTypeBreakdown[type] ?? 0) !== count) errors.push(`${type} relationship count ${relationshipTypeBreakdown[type] ?? 0} != ${count}`);
-if (provenance.relationship_count !== expected.relationships) errors.push('relationship provenance count mismatch');
-if (provenance.source_relationship_file_sha256 !== '321ff03683441ff8d0aa75abdaa70a4dd98d9f41ad6dd4550efda9b5bd79ec58') errors.push('relationship provenance SHA mismatch');
+
+// Preserve and continuously verify the independently hashed 44-record seed provenance.
+if (provenance.relationship_count !== 142) errors.push('seed relationship provenance count mismatch');
+if (provenance.relationship_type_counts?.PREREQUISITE_OF !== 50 || provenance.relationship_type_counts?.CROSS_LINK !== 92) errors.push('seed relationship provenance type-count mismatch');
+if (provenance.source_relationship_file_sha256 !== '321ff03683441ff8d0aa75abdaa70a4dd98d9f41ad6dd4550efda9b5bd79ec58') errors.push('seed relationship provenance SHA mismatch');
+if (provenance.source_zip_sha256 !== 'a1d53ee3f4650e3304ea32d38d830d79743d01e17cb6ce628c662d195f58b0ce') errors.push('seed ZIP provenance SHA mismatch');
 
 const result = {
   gate: errors.length === 0 ? 'PASS' : 'FAIL', learnerRecords:records.length, typeBreakdown,
-  trackTaxonomy:tracks.length, populatedTracks:populatedTrackIds.length, populatedTrackIds,
+  trackTaxonomy:tracks.length, topicTaxonomy:topics.length, populatedTracks:populatedTrackIds.length, populatedTrackIds,
   learningPaths:paths.length, sources:sources.length, relationships:relationships.length,
   relationshipTypeBreakdown, duplicateIds:records.length-recordIds.size,
   duplicateRelationshipIds:relationships.length-relationshipIds.size,
   brokenReferences:errors.filter((e)=>e.includes('references missing')||e.includes('unknown ')||e.includes('broken endpoint')).length,
-  safetyBreakdown, relationshipSourceSha256:provenance.source_relationship_file_sha256, errors,
+  safetyBreakdown, seedRelationshipSourceSha256:provenance.source_relationship_file_sha256,
+  seedZipSha256:provenance.source_zip_sha256, expansionBatch:'BATCH-020R3-AD-EXPANSION', errors,
 };
 console.log(JSON.stringify(result,null,2));
 if (errors.length) process.exit(1);
