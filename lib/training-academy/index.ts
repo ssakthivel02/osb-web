@@ -33,6 +33,7 @@ const RECORD_FILES = [
   'expansion/batch020r4e/records.jsonl',
   'expansion/batch020r5/records.jsonl',
   'expansion/batch020r5b/records.jsonl',
+  'expansion/batch020r5c/records.jsonl',
 ] as const;
 const TOPIC_FILES = [
   'canonical/topics.jsonl',
@@ -48,6 +49,7 @@ const TOPIC_FILES = [
   'expansion/batch020r4e/topics.jsonl',
   'expansion/batch020r5/topics.jsonl',
   'expansion/batch020r5b/topics.jsonl',
+  'expansion/batch020r5c/topics.jsonl',
 ] as const;
 const SOURCE_FILES = [
   'sources/source-register.jsonl',
@@ -63,6 +65,7 @@ const SOURCE_FILES = [
   'expansion/batch020r4e/sources.jsonl',
   'expansion/batch020r5/sources.jsonl',
   'expansion/batch020r5b/sources.jsonl',
+  'expansion/batch020r5c/sources.jsonl',
 ] as const;
 
 function readJson<T>(relativePath: string): T {
