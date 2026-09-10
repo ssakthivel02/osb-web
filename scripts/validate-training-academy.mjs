@@ -6,10 +6,10 @@ const recordFiles = [
   'lessons/lessons.jsonl','easy-learn/easy-learn.jsonl','deep-dive/deep-dive.jsonl','labs/labs.jsonl',
   'troubleshooting/troubleshooting.jsonl','assessments/assessments.jsonl','interviews/interviews.jsonl',
   'capstones/capstones.jsonl','visual-specs/visual-specs.jsonl',
-  'expansion/batch020r3/records.jsonl','expansion/batch020r3b/records.jsonl','expansion/batch020r3c/records.jsonl','expansion/batch020r3d/records.jsonl','expansion/batch020r3e/records.jsonl',
+  'expansion/batch020r3/records.jsonl','expansion/batch020r3b/records.jsonl','expansion/batch020r3c/records.jsonl','expansion/batch020r3d/records.jsonl','expansion/batch020r3e/records.jsonl','expansion/batch020r4/records.jsonl',
 ];
-const topicFiles = ['canonical/topics.jsonl','expansion/batch020r3/topics.jsonl','expansion/batch020r3b/topics.jsonl','expansion/batch020r3c/topics.jsonl','expansion/batch020r3d/topics.jsonl','expansion/batch020r3e/topics.jsonl'];
-const sourceFiles = ['sources/source-register.jsonl','expansion/batch020r3/sources.jsonl','expansion/batch020r3b/sources.jsonl','expansion/batch020r3c/sources.jsonl','expansion/batch020r3d/sources.jsonl','expansion/batch020r3e/sources.jsonl'];
+const topicFiles = ['canonical/topics.jsonl','expansion/batch020r3/topics.jsonl','expansion/batch020r3b/topics.jsonl','expansion/batch020r3c/topics.jsonl','expansion/batch020r3d/topics.jsonl','expansion/batch020r3e/topics.jsonl','expansion/batch020r4/topics.jsonl'];
+const sourceFiles = ['sources/source-register.jsonl','expansion/batch020r3/sources.jsonl','expansion/batch020r3b/sources.jsonl','expansion/batch020r3c/sources.jsonl','expansion/batch020r3d/sources.jsonl','expansion/batch020r3e/sources.jsonl','expansion/batch020r4/sources.jsonl'];
 const readJson = (p) => JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8'));
 const readJsonl = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8').split(/\r?\n/).map((x) => x.trim()).filter(Boolean).map((line, i) => { try { return JSON.parse(line); } catch (e) { throw new Error(`${p}:${i + 1}: ${e.message}`); } });
 
@@ -72,9 +72,9 @@ const safetyBreakdown = {};
 for (const record of records) if (record.safety_classification) safetyBreakdown[record.safety_classification] = (safetyBreakdown[record.safety_classification] ?? 0) + 1;
 
 const expected = {
-  records:84, tracks:19, populatedTracks:1, paths:1, sources:36, relationships:279,
-  relationshipTypeBreakdown:{ PREREQUISITE_OF:109, CROSS_LINK:170 },
-  typeBreakdown:{ ASSESSMENT:14, CAPSTONE:1, DEEP_DIVE:9, EASY_LEARN:9, INTERVIEW:10, LAB:9, LESSON:18, TROUBLESHOOTING:11, VISUAL_SPEC:3 },
+  records:92, tracks:19, populatedTracks:2, paths:1, sources:40, relationships:298,
+  relationshipTypeBreakdown:{ PREREQUISITE_OF:117, CROSS_LINK:181 },
+  typeBreakdown:{ ASSESSMENT:15, CAPSTONE:1, DEEP_DIVE:10, EASY_LEARN:10, INTERVIEW:11, LAB:10, LESSON:20, TROUBLESHOOTING:12, VISUAL_SPEC:3 },
 };
 if (records.length !== expected.records) errors.push(`record count ${records.length} != ${expected.records}`);
 if (tracks.length !== expected.tracks) errors.push(`track count ${tracks.length} != ${expected.tracks}`);
@@ -98,6 +98,7 @@ else {
   if ((adPath.assessment_ids ?? []).length !== 14) errors.push(`AD path assessment count ${(adPath.assessment_ids ?? []).length} != 14`);
   if ((adPath.interview_ids ?? []).length !== 10) errors.push(`AD path interview count ${(adPath.interview_ids ?? []).length} != 10`);
 }
+if (!populatedTrackIds.includes('OSB-TRACK-WIN')) errors.push('Windows Server / Wintel track is not physically populated');
 
 const result = {
   gate: errors.length === 0 ? 'PASS' : 'FAIL', learnerRecords:records.length, typeBreakdown,
@@ -107,7 +108,7 @@ const result = {
   duplicateIds:records.length-recordIds.size, duplicateRelationshipIds:relationships.length-relationshipIds.size,
   brokenReferences:errors.filter((e)=>e.includes('references missing')||e.includes('unknown ')||e.includes('broken endpoint')).length,
   safetyBreakdown, seedRelationshipSourceSha256:provenance.source_relationship_file_sha256,
-  seedZipSha256:provenance.source_zip_sha256, expansionBatch:'BATCH-020R3E-AD-LEARNING-PATH-CLOSURE', errors,
+  seedZipSha256:provenance.source_zip_sha256, expansionBatch:'BATCH-020R4-WINDOWS-FOUNDATION', errors,
 };
 console.log(JSON.stringify(result,null,2));
 if (errors.length) process.exit(1);
