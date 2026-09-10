@@ -7,7 +7,8 @@
     "build": "next build",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "validate:corpus": "node scripts/validate-training-academy.mjs"
+    "validate:corpus": "node scripts/validate-training-academy.mjs",
+    "validate:release": "node scripts/validate-release-gate.mjs"
   },
   "dependencies": {
     "next": "14.2.35",
