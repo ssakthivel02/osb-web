@@ -22,9 +22,18 @@ const RECORD_FILES = [
   'capstones/capstones.jsonl',
   'visual-specs/visual-specs.jsonl',
   'expansion/batch020r3/records.jsonl',
+  'expansion/batch020r3b/records.jsonl',
 ] as const;
-const TOPIC_FILES = ['canonical/topics.jsonl', 'expansion/batch020r3/topics.jsonl'] as const;
-const SOURCE_FILES = ['sources/source-register.jsonl', 'expansion/batch020r3/sources.jsonl'] as const;
+const TOPIC_FILES = [
+  'canonical/topics.jsonl',
+  'expansion/batch020r3/topics.jsonl',
+  'expansion/batch020r3b/topics.jsonl',
+] as const;
+const SOURCE_FILES = [
+  'sources/source-register.jsonl',
+  'expansion/batch020r3/sources.jsonl',
+  'expansion/batch020r3b/sources.jsonl',
+] as const;
 
 function readJson<T>(relativePath: string): T {
   return JSON.parse(fs.readFileSync(path.join(ROOT, relativePath), 'utf8')) as T;
