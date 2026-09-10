@@ -1,0 +1,28 @@
+{
+  "control": "OSB-RELEASE-GATE-001",
+  "canonicalRepository": "ssakthivel02/osb-web",
+  "integrationBranch": "main",
+  "currentMainAtCreation": "f093af5a8f29cb5015b05ea6e25301a4cb727fcd",
+  "productPr": 2,
+  "evidenceBranch": "agent/batch017-website-productization",
+  "verifiedAutomatedChecks": [
+    "web_baseline_validation",
+    "web_safety_cases",
+    "dependency_install",
+    "corpus_integrity",
+    "typescript_typecheck",
+    "production_next_build"
+  ],
+  "manualGates": {
+    "previewUatComplete": false,
+    "accessibilityReviewComplete": false,
+    "responsiveCrossBrowserReviewComplete": false,
+    "criticalLearnerJourneysVerified": false,
+    "fundingClaimsReviewedAgainstOfficialSources": false,
+    "ownerReleaseApproval": false
+  },
+  "githubServerSideProtectionVerified": false,
+  "productionDeploymentApproved": false,
+  "productionReleaseStatus": "HOLD",
+  "claimBoundary": "Automated repository checks passing does not constitute preview/UAT, accessibility certification, production approval, provider approval, funding eligibility or evidence of learner outcomes."
+}
