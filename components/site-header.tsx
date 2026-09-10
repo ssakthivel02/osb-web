@@ -6,6 +6,7 @@ export function SiteHeader() {
         <span>OmSaravanaBhava Learning</span>
       </a>
       <nav className="siteNav" aria-label="Main navigation">
+        <a href="/training-academy/">Verified Academy</a>
         <a href="/academies/">Academies</a>
         <a href="/career/">Career</a>
         <a href="/resources/">Resources</a>
