@@ -6,10 +6,10 @@ const recordFiles = [
   'lessons/lessons.jsonl','easy-learn/easy-learn.jsonl','deep-dive/deep-dive.jsonl','labs/labs.jsonl',
   'troubleshooting/troubleshooting.jsonl','assessments/assessments.jsonl','interviews/interviews.jsonl',
   'capstones/capstones.jsonl','visual-specs/visual-specs.jsonl',
-  'expansion/batch020r3/records.jsonl','expansion/batch020r3b/records.jsonl','expansion/batch020r3c/records.jsonl','expansion/batch020r3d/records.jsonl','expansion/batch020r3e/records.jsonl','expansion/batch020r4/records.jsonl','expansion/batch020r4b/records.jsonl',
+  'expansion/batch020r3/records.jsonl','expansion/batch020r3b/records.jsonl','expansion/batch020r3c/records.jsonl','expansion/batch020r3d/records.jsonl','expansion/batch020r3e/records.jsonl','expansion/batch020r4/records.jsonl','expansion/batch020r4b/records.jsonl','expansion/batch020r4c/records.jsonl',
 ];
-const topicFiles = ['canonical/topics.jsonl','expansion/batch020r3/topics.jsonl','expansion/batch020r3b/topics.jsonl','expansion/batch020r3c/topics.jsonl','expansion/batch020r3d/topics.jsonl','expansion/batch020r3e/topics.jsonl','expansion/batch020r4/topics.jsonl','expansion/batch020r4b/topics.jsonl'];
-const sourceFiles = ['sources/source-register.jsonl','expansion/batch020r3/sources.jsonl','expansion/batch020r3b/sources.jsonl','expansion/batch020r3c/sources.jsonl','expansion/batch020r3d/sources.jsonl','expansion/batch020r3e/sources.jsonl','expansion/batch020r4/sources.jsonl','expansion/batch020r4b/sources.jsonl'];
+const topicFiles = ['canonical/topics.jsonl','expansion/batch020r3/topics.jsonl','expansion/batch020r3b/topics.jsonl','expansion/batch020r3c/topics.jsonl','expansion/batch020r3d/topics.jsonl','expansion/batch020r3e/topics.jsonl','expansion/batch020r4/topics.jsonl','expansion/batch020r4b/topics.jsonl','expansion/batch020r4c/topics.jsonl'];
+const sourceFiles = ['sources/source-register.jsonl','expansion/batch020r3/sources.jsonl','expansion/batch020r3b/sources.jsonl','expansion/batch020r3c/sources.jsonl','expansion/batch020r3d/sources.jsonl','expansion/batch020r3e/sources.jsonl','expansion/batch020r4/sources.jsonl','expansion/batch020r4b/sources.jsonl','expansion/batch020r4c/sources.jsonl'];
 const readJson = (p) => JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8'));
 const readJsonl = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8').split(/\r?\n/).map((x) => x.trim()).filter(Boolean).map((line, i) => { try { return JSON.parse(line); } catch (e) { throw new Error(`${p}:${i + 1}: ${e.message}`); } });
 
@@ -72,9 +72,9 @@ const safetyBreakdown = {};
 for (const record of records) if (record.safety_classification) safetyBreakdown[record.safety_classification] = (safetyBreakdown[record.safety_classification] ?? 0) + 1;
 
 const expected = {
-  records:100, tracks:19, populatedTracks:2, paths:1, sources:45, relationships:322,
-  relationshipTypeBreakdown:{ PREREQUISITE_OF:127, CROSS_LINK:195 },
-  typeBreakdown:{ ASSESSMENT:16, CAPSTONE:1, DEEP_DIVE:11, EASY_LEARN:11, INTERVIEW:12, LAB:11, LESSON:22, TROUBLESHOOTING:13, VISUAL_SPEC:3 },
+  records:108, tracks:19, populatedTracks:2, paths:1, sources:49, relationships:346,
+  relationshipTypeBreakdown:{ PREREQUISITE_OF:139, CROSS_LINK:207 },
+  typeBreakdown:{ ASSESSMENT:17, CAPSTONE:1, DEEP_DIVE:12, EASY_LEARN:11, INTERVIEW:13, LAB:12, LESSON:25, TROUBLESHOOTING:14, VISUAL_SPEC:3 },
 };
 if (records.length !== expected.records) errors.push(`record count ${records.length} != ${expected.records}`);
 if (tracks.length !== expected.tracks) errors.push(`track count ${tracks.length} != ${expected.tracks}`);
@@ -108,7 +108,7 @@ const result = {
   duplicateIds:records.length-recordIds.size, duplicateRelationshipIds:relationships.length-relationshipIds.size,
   brokenReferences:errors.filter((e)=>e.includes('references missing')||e.includes('unknown ')||e.includes('broken endpoint')).length,
   safetyBreakdown, seedRelationshipSourceSha256:provenance.source_relationship_file_sha256,
-  seedZipSha256:provenance.source_zip_sha256, expansionBatch:'BATCH-020R4B-WINDOWS-OPERATIONS-CORE', errors,
+  seedZipSha256:provenance.source_zip_sha256, expansionBatch:'BATCH-020R4C-WINDOWS-STORAGE-NETWORK-PERFORMANCE', errors,
 };
 console.log(JSON.stringify(result,null,2));
 if (errors.length) process.exit(1);
