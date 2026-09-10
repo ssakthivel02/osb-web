@@ -6,10 +6,10 @@ const recordFiles = [
   'lessons/lessons.jsonl','easy-learn/easy-learn.jsonl','deep-dive/deep-dive.jsonl','labs/labs.jsonl',
   'troubleshooting/troubleshooting.jsonl','assessments/assessments.jsonl','interviews/interviews.jsonl',
   'capstones/capstones.jsonl','visual-specs/visual-specs.jsonl',
-  'expansion/batch020r3/records.jsonl','expansion/batch020r3b/records.jsonl','expansion/batch020r3c/records.jsonl','expansion/batch020r3d/records.jsonl','expansion/batch020r3e/records.jsonl','expansion/batch020r4/records.jsonl','expansion/batch020r4b/records.jsonl','expansion/batch020r4c/records.jsonl','expansion/batch020r4d/records.jsonl','expansion/batch020r4e/records.jsonl',
+  'expansion/batch020r3/records.jsonl','expansion/batch020r3b/records.jsonl','expansion/batch020r3c/records.jsonl','expansion/batch020r3d/records.jsonl','expansion/batch020r3e/records.jsonl','expansion/batch020r4/records.jsonl','expansion/batch020r4b/records.jsonl','expansion/batch020r4c/records.jsonl','expansion/batch020r4d/records.jsonl','expansion/batch020r4e/records.jsonl','expansion/batch020r5/records.jsonl',
 ];
-const topicFiles = ['canonical/topics.jsonl','expansion/batch020r3/topics.jsonl','expansion/batch020r3b/topics.jsonl','expansion/batch020r3c/topics.jsonl','expansion/batch020r3d/topics.jsonl','expansion/batch020r3e/topics.jsonl','expansion/batch020r4/topics.jsonl','expansion/batch020r4b/topics.jsonl','expansion/batch020r4c/topics.jsonl','expansion/batch020r4d/topics.jsonl','expansion/batch020r4e/topics.jsonl'];
-const sourceFiles = ['sources/source-register.jsonl','expansion/batch020r3/sources.jsonl','expansion/batch020r3b/sources.jsonl','expansion/batch020r3c/sources.jsonl','expansion/batch020r3d/sources.jsonl','expansion/batch020r3e/sources.jsonl','expansion/batch020r4/sources.jsonl','expansion/batch020r4b/sources.jsonl','expansion/batch020r4c/sources.jsonl','expansion/batch020r4d/sources.jsonl','expansion/batch020r4e/sources.jsonl'];
+const topicFiles = ['canonical/topics.jsonl','expansion/batch020r3/topics.jsonl','expansion/batch020r3b/topics.jsonl','expansion/batch020r3c/topics.jsonl','expansion/batch020r3d/topics.jsonl','expansion/batch020r3e/topics.jsonl','expansion/batch020r4/topics.jsonl','expansion/batch020r4b/topics.jsonl','expansion/batch020r4c/topics.jsonl','expansion/batch020r4d/topics.jsonl','expansion/batch020r4e/topics.jsonl','expansion/batch020r5/topics.jsonl'];
+const sourceFiles = ['sources/source-register.jsonl','expansion/batch020r3/sources.jsonl','expansion/batch020r3b/sources.jsonl','expansion/batch020r3c/sources.jsonl','expansion/batch020r3d/sources.jsonl','expansion/batch020r3e/sources.jsonl','expansion/batch020r4/sources.jsonl','expansion/batch020r4b/sources.jsonl','expansion/batch020r4c/sources.jsonl','expansion/batch020r4d/sources.jsonl','expansion/batch020r4e/sources.jsonl','expansion/batch020r5/sources.jsonl'];
 const readJson = (p) => JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8'));
 const readJsonl = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8').split(/\r?\n/).map((x) => x.trim()).filter(Boolean).map((line, i) => { try { return JSON.parse(line); } catch (e) { throw new Error(`${p}:${i + 1}: ${e.message}`); } });
 
@@ -73,9 +73,9 @@ const safetyBreakdown = {};
 for (const record of records) if (record.safety_classification) safetyBreakdown[record.safety_classification] = (safetyBreakdown[record.safety_classification] ?? 0) + 1;
 
 const expected = {
-  records:125, tracks:19, populatedTracks:2, paths:2, sources:59, relationships:400,
-  relationshipTypeBreakdown:{ PREREQUISITE_OF:161, CROSS_LINK:239 },
-  typeBreakdown:{ ASSESSMENT:19, CAPSTONE:2, DEEP_DIVE:14, EASY_LEARN:13, INTERVIEW:15, LAB:14, LESSON:29, TROUBLESHOOTING:16, VISUAL_SPEC:3 },
+  records:133, tracks:19, populatedTracks:3, paths:2, sources:63, relationships:421,
+  relationshipTypeBreakdown:{ PREREQUISITE_OF:170, CROSS_LINK:251 },
+  typeBreakdown:{ ASSESSMENT:20, CAPSTONE:2, DEEP_DIVE:15, EASY_LEARN:14, INTERVIEW:16, LAB:15, LESSON:31, TROUBLESHOOTING:17, VISUAL_SPEC:3 },
 };
 if (records.length !== expected.records) errors.push(`record count ${records.length} != ${expected.records}`);
 if (tracks.length !== expected.tracks) errors.push(`track count ${tracks.length} != ${expected.tracks}`);
@@ -109,6 +109,7 @@ else {
   if (winPath.capstone_id !== 'OSB-WIN-CAPSTONE-0001') errors.push(`Windows path capstone ${winPath.capstone_id} != OSB-WIN-CAPSTONE-0001`);
 }
 if (!populatedTrackIds.includes('OSB-TRACK-WIN')) errors.push('Windows Server / Wintel track is not physically populated');
+if (!populatedTrackIds.includes('OSB-TRACK-HYPERV')) errors.push('Hyper-V track is not physically populated');
 
 const result = {
   gate: errors.length === 0 ? 'PASS' : 'FAIL', learnerRecords:records.length, typeBreakdown,
@@ -119,7 +120,7 @@ const result = {
   duplicateIds:records.length-recordIds.size, duplicateRelationshipIds:relationships.length-relationshipIds.size,
   brokenReferences:errors.filter((e)=>e.includes('references missing')||e.includes('unknown ')||e.includes('broken endpoint')).length,
   safetyBreakdown, seedRelationshipSourceSha256:provenance.source_relationship_file_sha256,
-  seedZipSha256:provenance.source_zip_sha256, expansionBatch:'BATCH-020R4E-WINDOWS-RECOVERY-CLUSTER-CLOSURE', errors,
+  seedZipSha256:provenance.source_zip_sha256, expansionBatch:'BATCH-020R5-HYPERV-FOUNDATION', errors,
 };
 console.log(JSON.stringify(result,null,2));
 if (errors.length) process.exit(1);
