@@ -61,9 +61,9 @@ const safetyBreakdown={};
 for(const record of records)if(record.safety_classification)safetyBreakdown[record.safety_classification]=(safetyBreakdown[record.safety_classification]??0)+1;
 
 const expected={
-  records:309,tracks:19,populatedTracks:18,paths:2,sources:212,relationships:1254,
-  relationshipTypeBreakdown:{PREREQUISITE_OF:572,CROSS_LINK:682},
-  typeBreakdown:{ASSESSMENT:42,CAPSTONE:2,DEEP_DIVE:37,EASY_LEARN:36,INTERVIEW:38,LAB:37,LESSON:75,TROUBLESHOOTING:39,VISUAL_SPEC:3}
+  records:317,tracks:19,populatedTracks:19,paths:2,sources:219,relationships:1294,
+  relationshipTypeBreakdown:{PREREQUISITE_OF:592,CROSS_LINK:702},
+  typeBreakdown:{ASSESSMENT:43,CAPSTONE:2,DEEP_DIVE:38,EASY_LEARN:37,INTERVIEW:39,LAB:38,LESSON:77,TROUBLESHOOTING:40,VISUAL_SPEC:3}
 };
 if(records.length!==expected.records)errors.push(`record count ${records.length} != ${expected.records}`);
 if(tracks.length!==expected.tracks)errors.push(`track count ${tracks.length} != ${expected.tracks}`);
@@ -101,7 +101,8 @@ for(const [trackId,label] of [
   ['OSB-TRACK-SCVMM','SCVMM'],['OSB-TRACK-PS','PowerShell'],['OSB-TRACK-AZ','Microsoft Azure'],
   ['OSB-TRACK-DEVOPS','DevOps / AZ-400'],['OSB-TRACK-AWS','AWS'],['OSB-TRACK-HYBRID','Hybrid / Multi-cloud'],
   ['OSB-TRACK-BACKUP','Backup / Disaster Recovery'],['OSB-TRACK-VMW','VMware / Broadcom'],['OSB-TRACK-FINOPS','FinOps'],
-  ['OSB-TRACK-ARCH','Infrastructure Architecture / SRE / Operations'],['OSB-TRACK-PMP','PMP / Project Management'],['OSB-TRACK-PMO','PMO'],['OSB-TRACK-SCRUM','Scrum'],['OSB-TRACK-AGILE','Agile']
+  ['OSB-TRACK-ARCH','Infrastructure Architecture / SRE / Operations'],['OSB-TRACK-PMP','PMP / Project Management'],['OSB-TRACK-PMO','PMO'],
+  ['OSB-TRACK-SCRUM','Scrum'],['OSB-TRACK-AGILE','Agile'],['OSB-TRACK-ITIL','ITIL / IT Service Management']
 ]) if(!populatedTrackIds.includes(trackId))errors.push(`${label} track is not physically populated`);
 
 const result={
@@ -112,7 +113,7 @@ const result={
   duplicateRelationshipIds:relationships.length-relationshipIds.size,
   brokenReferences:errors.filter(e=>e.includes('references missing')||e.includes('unknown ')||e.includes('broken endpoint')).length,
   safetyBreakdown,seedRelationshipSourceSha256:provenance.source_relationship_file_sha256,seedZipSha256:provenance.source_zip_sha256,
-  expansionBatch:'BATCH-020R20-AGILE',errors
+  expansionBatch:'BATCH-020R21-ITIL',errors
 };
 console.log(JSON.stringify(result,null,2));
 if(errors.length)process.exit(1);
