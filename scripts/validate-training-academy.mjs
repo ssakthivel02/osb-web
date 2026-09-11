@@ -11,6 +11,7 @@ const expansionFiles=filename=>fs.existsSync(EXPANSION_ROOT)
 const recordFiles=['lessons/lessons.jsonl','easy-learn/easy-learn.jsonl','deep-dive/deep-dive.jsonl','labs/labs.jsonl','troubleshooting/troubleshooting.jsonl','assessments/assessments.jsonl','interviews/interviews.jsonl','capstones/capstones.jsonl','visual-specs/visual-specs.jsonl',...expansionFiles('records.jsonl')];
 const topicFiles=['canonical/topics.jsonl',...expansionFiles('topics.jsonl')];
 const sourceFiles=['sources/source-register.jsonl',...expansionFiles('sources.jsonl')];
+const pathFiles=['learning-paths/learning-paths.json',...expansionFiles('learning-paths.json')];
 const readJson=p=>JSON.parse(fs.readFileSync(path.join(ROOT,p),'utf8'));
 const readJsonl=p=>fs.readFileSync(path.join(ROOT,p),'utf8').split(/\r?\n/).map(x=>x.trim()).filter(Boolean).map((line,i)=>{try{return JSON.parse(line)}catch(e){throw new Error(`${p}:${i+1}: ${e.message}`)}});
 
@@ -18,7 +19,7 @@ const errors=[];
 const tracks=readJson('canonical/tracks.json').tracks;
 const topics=topicFiles.flatMap(readJsonl);
 const sources=sourceFiles.flatMap(readJsonl);
-const paths=readJson('learning-paths/learning-paths.json').paths;
+const paths=pathFiles.flatMap(file=>readJson(file).paths);
 const provenance=readJson('canonical/relationship-provenance.json');
 const records=recordFiles.flatMap(readJsonl);
 const trackIds=new Set(tracks.map(x=>x.track_id));
@@ -61,9 +62,9 @@ const safetyBreakdown={};
 for(const record of records)if(record.safety_classification)safetyBreakdown[record.safety_classification]=(safetyBreakdown[record.safety_classification]??0)+1;
 
 const expected={
-  records:317,tracks:19,populatedTracks:19,paths:2,sources:219,relationships:1294,
-  relationshipTypeBreakdown:{PREREQUISITE_OF:592,CROSS_LINK:702},
-  typeBreakdown:{ASSESSMENT:43,CAPSTONE:2,DEEP_DIVE:38,EASY_LEARN:37,INTERVIEW:39,LAB:38,LESSON:77,TROUBLESHOOTING:40,VISUAL_SPEC:3}
+  records:321,tracks:19,populatedTracks:19,paths:6,sources:219,relationships:1334,
+  relationshipTypeBreakdown:{PREREQUISITE_OF:620,CROSS_LINK:714},
+  typeBreakdown:{ASSESSMENT:43,CAPSTONE:6,DEEP_DIVE:38,EASY_LEARN:37,INTERVIEW:39,LAB:38,LESSON:77,TROUBLESHOOTING:40,VISUAL_SPEC:3}
 };
 if(records.length!==expected.records)errors.push(`record count ${records.length} != ${expected.records}`);
 if(tracks.length!==expected.tracks)errors.push(`track count ${tracks.length} != ${expected.tracks}`);
@@ -79,22 +80,24 @@ if(provenance.relationship_type_counts?.PREREQUISITE_OF!==50||provenance.relatio
 if(provenance.source_relationship_file_sha256!=='321ff03683441ff8d0aa75abdaa70a4dd98d9f41ad6dd4550efda9b5bd79ec58')errors.push('seed relationship provenance SHA mismatch');
 if(provenance.source_zip_sha256!=='a1d53ee3f4650e3304ea32d38d830d79743d01e17cb6ce628c662d195f58b0ce')errors.push('seed ZIP provenance SHA mismatch');
 
-const adPath=paths.find(p=>p.path_id==='OSB-PATH-AD-SPECIALIST');
-if(!adPath)errors.push('missing AD specialist learning path');
-else{
-  if(adPath.status!=='CORE_CONTENT_COMPLETE')errors.push(`AD path status ${adPath.status} != CORE_CONTENT_COMPLETE`);
-  if((adPath.milestones??[]).length!==9)errors.push(`AD path milestone count ${(adPath.milestones??[]).length} != 9`);
-  if((adPath.assessment_ids??[]).length!==14)errors.push(`AD path assessment count ${(adPath.assessment_ids??[]).length} != 14`);
-  if((adPath.interview_ids??[]).length!==10)errors.push(`AD path interview count ${(adPath.interview_ids??[]).length} != 10`);
-}
-const winPath=paths.find(p=>p.path_id==='OSB-PATH-WIN-SPECIALIST');
-if(!winPath)errors.push('missing Windows specialist learning path');
-else{
-  if(winPath.status!=='CORE_CONTENT_COMPLETE')errors.push(`Windows path status ${winPath.status} != CORE_CONTENT_COMPLETE`);
-  if((winPath.milestones??[]).length!==6)errors.push(`Windows path milestone count ${(winPath.milestones??[]).length} != 6`);
-  if((winPath.assessment_ids??[]).length!==5)errors.push(`Windows path assessment count ${(winPath.assessment_ids??[]).length} != 5`);
-  if((winPath.interview_ids??[]).length!==5)errors.push(`Windows path interview count ${(winPath.interview_ids??[]).length} != 5`);
-  if(winPath.capstone_id!=='OSB-WIN-CAPSTONE-0001')errors.push(`Windows path capstone ${winPath.capstone_id} != OSB-WIN-CAPSTONE-0001`);
+const requiredPaths=[
+  ['OSB-PATH-AD-SPECIALIST',9,14,10,'OSB-AD-CAPSTONE-0001'],
+  ['OSB-PATH-WIN-SPECIALIST',6,5,5,'OSB-WIN-CAPSTONE-0001'],
+  ['OSB-PATH-HYPERV-SPECIALIST',4,1,1,'OSB-HV-CAPSTONE-0001'],
+  ['OSB-PATH-HGS-SPECIALIST',4,1,1,'OSB-HGS-CAPSTONE-0001'],
+  ['OSB-PATH-SCVMM-SPECIALIST',4,1,1,'OSB-SCVMM-CAPSTONE-0001'],
+  ['OSB-PATH-PS-AUTOMATION',4,1,1,'OSB-PS-CAPSTONE-0001']
+];
+for(const [pathId,milestones,assessments,interviews,capstoneId] of requiredPaths){
+  const learningPath=paths.find(p=>p.path_id===pathId);
+  if(!learningPath)errors.push(`missing learning path ${pathId}`);
+  else{
+    if(learningPath.status!=='CORE_CONTENT_COMPLETE')errors.push(`${pathId} status ${learningPath.status} != CORE_CONTENT_COMPLETE`);
+    if((learningPath.milestones??[]).length!==milestones)errors.push(`${pathId} milestone count ${(learningPath.milestones??[]).length} != ${milestones}`);
+    if((learningPath.assessment_ids??[]).length!==assessments)errors.push(`${pathId} assessment count ${(learningPath.assessment_ids??[]).length} != ${assessments}`);
+    if((learningPath.interview_ids??[]).length!==interviews)errors.push(`${pathId} interview count ${(learningPath.interview_ids??[]).length} != ${interviews}`);
+    if(learningPath.capstone_id!==capstoneId)errors.push(`${pathId} capstone ${learningPath.capstone_id} != ${capstoneId}`);
+  }
 }
 for(const [trackId,label] of [
   ['OSB-TRACK-WIN','Windows Server / Wintel'],['OSB-TRACK-HYPERV','Hyper-V'],['OSB-TRACK-HGS','HGS / Shielded VMs'],
@@ -105,6 +108,8 @@ for(const [trackId,label] of [
   ['OSB-TRACK-SCRUM','Scrum'],['OSB-TRACK-AGILE','Agile'],['OSB-TRACK-ITIL','ITIL / IT Service Management']
 ]) if(!populatedTrackIds.includes(trackId))errors.push(`${label} track is not physically populated`);
 
+const adPath=paths.find(p=>p.path_id==='OSB-PATH-AD-SPECIALIST');
+const winPath=paths.find(p=>p.path_id==='OSB-PATH-WIN-SPECIALIST');
 const result={
   gate:errors.length===0?'PASS':'FAIL',learnerRecords:records.length,typeBreakdown,trackTaxonomy:tracks.length,topicTaxonomy:topics.length,
   populatedTracks:populatedTrackIds.length,populatedTrackIds,learningPaths:paths.length,adPathStatus:adPath?.status??null,
@@ -113,7 +118,7 @@ const result={
   duplicateRelationshipIds:relationships.length-relationshipIds.size,
   brokenReferences:errors.filter(e=>e.includes('references missing')||e.includes('unknown ')||e.includes('broken endpoint')).length,
   safetyBreakdown,seedRelationshipSourceSha256:provenance.source_relationship_file_sha256,seedZipSha256:provenance.source_zip_sha256,
-  expansionBatch:'BATCH-020R21-ITIL',errors
+  expansionBatch:'BATCH-020R23-JOURNEY-CLOSURE-INFRA',errors
 };
 console.log(JSON.stringify(result,null,2));
 if(errors.length)process.exit(1);

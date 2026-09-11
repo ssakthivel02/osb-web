@@ -17,7 +17,7 @@ const records = [
   'troubleshooting/troubleshooting.jsonl','assessments/assessments.jsonl','interviews/interviews.jsonl',
   'capstones/capstones.jsonl','visual-specs/visual-specs.jsonl',...expansionFiles('records.jsonl')
 ].flatMap(readJsonl);
-const learningPaths = readJson('learning-paths/learning-paths.json').paths;
+const learningPaths = ['learning-paths/learning-paths.json',...expansionFiles('learning-paths.json')].flatMap((file)=>readJson(file).paths);
 const releaseGate = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'release', 'OSB_RELEASE_GATE.json'), 'utf8'));
 
 const recordById = new Map(records.map((record) => [String(record.id), record]));

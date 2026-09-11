@@ -23,6 +23,7 @@ const RECORD_FILES = [
 ] as const;
 const TOPIC_FILES = ['canonical/topics.jsonl',...expansionFiles('topics.jsonl')] as const;
 const SOURCE_FILES = ['sources/source-register.jsonl',...expansionFiles('sources.jsonl')] as const;
+const LEARNING_PATH_FILES = ['learning-paths/learning-paths.json',...expansionFiles('learning-paths.json')] as const;
 
 function readJson<T>(p:string):T{return JSON.parse(fs.readFileSync(path.join(ROOT,p),'utf8')) as T;}
 function readJsonl(p:string):JsonRecord[]{
@@ -54,13 +55,14 @@ export function getTrainingAcademyCorpus(){
   const tracks=readJson<{tracks:JsonRecord[]}>('canonical/tracks.json').tracks;
   const topics=TOPIC_FILES.flatMap(readJsonl);
   const sources=SOURCE_FILES.flatMap(readJsonl);
-  const learningPaths=readJson<{paths:JsonRecord[]}>('learning-paths/learning-paths.json').paths;
+  const learningPaths=LEARNING_PATH_FILES.flatMap((file)=>readJson<{paths:JsonRecord[]}>(file).paths);
   const relationshipProvenance=readJson<JsonRecord>('canonical/relationship-provenance.json');
   const records=RECORD_FILES.flatMap(readJsonl).sort((a,b)=>String(a.id).localeCompare(String(b.id)));
   assertUnique(records,'id','Training Academy record');
   assertUnique(tracks,'track_id','Training Academy track');
   assertUnique(topics,'topic_id','Training Academy topic');
   assertUnique(sources,'source_id','Training Academy source');
+  assertUnique(learningPaths,'path_id','Training Academy learning path');
   const ids=new Set(records.map(r=>String(r.id)));
   const trackIds=new Set(tracks.map(t=>String(t.track_id)));
   const topicIds=new Set(topics.map(t=>String(t.topic_id)));
@@ -69,6 +71,10 @@ export function getTrainingAcademyCorpus(){
     if(!trackIds.has(String(record.track_id)))throw new Error(`${record.id}: unknown track ${record.track_id}`);
     if(!topicIds.has(String(record.topic_id)))throw new Error(`${record.id}: unknown topic ${record.topic_id}`);
     for(const sourceId of (record.sources as string[]|undefined)??[])if(!sourceIds.has(sourceId))throw new Error(`${record.id}: unknown source ${sourceId}`);
+  }
+  for(const learningPath of learningPaths){
+    for(const milestone of (learningPath.milestones as JsonRecord[]|undefined)??[])for(const recordId of (milestone.record_ids as string[]|undefined)??[])if(!ids.has(recordId))throw new Error(`${learningPath.path_id}: milestone references missing record ${recordId}`);
+    for(const recordId of [learningPath.capstone_id,...((learningPath.assessment_ids as string[]|undefined)??[]),...((learningPath.interview_ids as string[]|undefined)??[])].filter(Boolean).map(String))if(!ids.has(recordId))throw new Error(`${learningPath.path_id}: references missing record ${recordId}`);
   }
   const relationships=deriveTrainingRelationships(records);
   for(const edge of relationships)if(!ids.has(edge.from_id)||!ids.has(edge.to_id))throw new Error(`Broken Training Academy relationship ${edge.relationship_id}: ${edge.from_id} -> ${edge.to_id}`);
