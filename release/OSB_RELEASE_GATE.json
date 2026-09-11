@@ -10,9 +10,29 @@
     "web_safety_cases",
     "dependency_install",
     "corpus_integrity",
+    "learner_journey_closure",
+    "pre_uat_readiness",
+    "uat_evidence_integrity",
     "typescript_typecheck",
-    "production_next_build"
+    "production_next_build",
+    "served_export_runtime_smoke",
+    "chromium_interaction_smoke",
+    "multi_engine_responsive_keyboard_smoke"
   ],
+  "evidenceReviews": {
+    "fundingClaimsOfficialSourceReview": {
+      "complete": true,
+      "reviewedOn": "2026-09-11",
+      "scope": [
+        "ufi-voctech-activate-2027",
+        "solent-skills-bootcamps-2026-27",
+        "apprenticeship-levy-transfer-england-2026",
+        "ktp-2026-27-round-3"
+      ],
+      "evidenceRef": "lib/funding-data.ts",
+      "boundary": "Current public scheme facts were re-checked against official sources. This is not an OSB eligibility decision, provider approval, partnership evidence, application-specific legal review or funding award."
+    }
+  },
   "manualGates": {
     "previewUatComplete": false,
     "accessibilityReviewComplete": false,
@@ -21,8 +41,11 @@
     "fundingClaimsReviewedAgainstOfficialSources": false,
     "ownerReleaseApproval": false
   },
+  "manualGateClarification": {
+    "fundingClaimsReviewedAgainstOfficialSources": "Remains false until the exact release candidate receives the final human/application-context claim review. The separate evidenceReviews field records the completed 2026-09-11 public-source research refresh."
+  },
   "githubServerSideProtectionVerified": false,
   "productionDeploymentApproved": false,
   "productionReleaseStatus": "HOLD",
-  "claimBoundary": "Automated repository checks passing does not constitute preview/UAT, accessibility certification, production approval, provider approval, funding eligibility or evidence of learner outcomes."
+  "claimBoundary": "Automated repository checks and public-source research passing do not constitute preview/UAT, WCAG certification, application-specific funding eligibility, provider approval, partnership evidence, owner release approval or production authorization."
 }

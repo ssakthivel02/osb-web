@@ -1,0 +1,52 @@
+{
+  "schema": "osb.release-evidence-index.v1",
+  "repository": "ssakthivel02/osb-web",
+  "evidenceBranch": "agent/batch017-website-productization",
+  "productPr": 2,
+  "generatedFromPassedHead": "23a00a4d988db8044242b52e625beb32b12a7917",
+  "latestPassedCiRun": 148,
+  "exactManualUatCandidateSha": null,
+  "releaseStatus": "HOLD",
+  "automatedEvidence": [
+    {"id":"corpus_integrity","ref":"scripts/validate-training-academy.mjs"},
+    {"id":"learner_journey_closure","ref":"scripts/validate-closure.mjs"},
+    {"id":"pre_uat_readiness","ref":"scripts/validate-pre-uat-readiness.mjs"},
+    {"id":"uat_evidence_integrity","ref":"scripts/validate-uat-evidence.mjs"},
+    {"id":"served_export_runtime_smoke","ref":"scripts/validate-served-export.mjs"},
+    {"id":"chromium_interaction_smoke","ref":"scripts/validate-browser-smoke.mjs"},
+    {"id":"multi_engine_responsive_keyboard_smoke","ref":"scripts/validate-browser-matrix.mjs"}
+  ],
+  "releaseEvidence": [
+    "release/OSB_RELEASE_GATE.json",
+    "release/OSB_PRE_UAT_READINESS.md",
+    "release/OSB_UAT_EVIDENCE_TEMPLATE.json",
+    "release/OSB_UAT_PROTOCOL.md",
+    "release/OSB_SERVED_EXPORT_SMOKE.md",
+    "release/OSB_BROWSER_INTERACTION_SMOKE.md",
+    "research/r31-multi-engine-responsive-smoke-evidence.md",
+    "lib/funding-data.ts"
+  ],
+  "externalEvidenceReviews": {
+    "fundingPublicSchemeFacts": {
+      "status": "RECHECKED",
+      "reviewedOn": "2026-09-11",
+      "evidenceRef": "lib/funding-data.ts",
+      "claimBoundary": "No OSB eligibility, provider approval, partnership, application approval or funding award is asserted."
+    },
+    "githubServerSideProtection": {
+      "status": "UNVERIFIED",
+      "rulesetsObserved": 0,
+      "claimBoundary": "No server-side branch-protection claim is made."
+    }
+  },
+  "manualOrExternalBlockers": [
+    "manual preview UAT on exact candidate SHA",
+    "manual accessibility and screen-reader/focus-order review",
+    "human responsive/device review where required",
+    "final application-context funding/partnership claim review",
+    "manual UAT defect disposition",
+    "explicit owner release approval",
+    "GitHub/server-side protection evidence"
+  ],
+  "promotionRule": "Do not populate exactManualUatCandidateSha or move releaseStatus away from HOLD until real evidence exists for the exact candidate and all hard gates are deliberately reviewed."
+}
