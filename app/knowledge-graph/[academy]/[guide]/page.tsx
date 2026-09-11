@@ -3,6 +3,7 @@ import { knowledgeGraphGuides } from '../../../../lib/knowledge-graph-data';
 
 export const dynamicParams=false;
 export function generateStaticParams(){return enterpriseGuideParams(knowledgeGraphGuides);}
-export default function KnowledgeGraphGuidePage({params}:{params:{academy:string;guide:string}}){
+export default async function KnowledgeGraphGuidePage(props:{params: Promise<{academy:string;guide:string}>}) {
+  const params = await props.params;
   return <EnterpriseGuidePage academySlug={params.academy} guideSlug={params.guide} category="Enterprise Knowledge Graph" guides={knowledgeGraphGuides}/>;
 }

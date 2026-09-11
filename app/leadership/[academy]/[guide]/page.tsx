@@ -9,7 +9,8 @@ export function generateStaticParams() {
   return academies.flatMap((academy) => leadershipGuides.map((guide) => ({ academy: academy.slug, guide: guide.slug })));
 }
 
-export default function LeadershipGuidePage({ params }: { params: { academy: string; guide: string } }) {
+export default async function LeadershipGuidePage(props: { params: Promise<{ academy: string; guide: string }> }) {
+  const params = await props.params;
   const academy = academyMap[params.academy];
   const guide = leadershipMap[params.guide];
   if (!academy || !guide) notFound();

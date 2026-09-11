@@ -2,4 +2,7 @@ import { EnterpriseGuidePage, enterpriseGuideParams } from '../../../../componen
 import { troubleshootingGuides } from '../../../../lib/practice-center-data';
 export const dynamicParams=false;
 export function generateStaticParams(){return enterpriseGuideParams(troubleshootingGuides);}
-export default function TroubleshootingGuidePage({params}:{params:{academy:string;guide:string}}){return <EnterpriseGuidePage academySlug={params.academy} guideSlug={params.guide} category="Troubleshooting Center" guides={troubleshootingGuides}/>;}
+export default async function TroubleshootingGuidePage(props:{params: Promise<{academy:string;guide:string}>}) {
+  const params = await props.params;
+  return <EnterpriseGuidePage academySlug={params.academy} guideSlug={params.guide} category="Troubleshooting Center" guides={troubleshootingGuides}/>;
+}

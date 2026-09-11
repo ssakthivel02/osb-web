@@ -11,7 +11,8 @@ export function generateStaticParams() {
   return getTrainingAcademyCorpus().records.map((record) => ({ id: String(record.id) }));
 }
 
-export default function TrainingRecordPage({ params }: { params: { id: string } }) {
+export default async function TrainingRecordPage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const record = getTrainingRecordById(params.id);
   if (!record) notFound();
 

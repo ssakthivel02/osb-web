@@ -6,7 +6,8 @@ export function generateStaticParams() {
   return getTrainingAcademyCorpus().tracks.map((track) => ({ trackId: String(track.track_id) }));
 }
 
-export function generateMetadata({ params }: { params: { trackId: string } }) {
+export async function generateMetadata(props: { params: Promise<{ trackId: string }> }) {
+  const params = await props.params;
   const track = getTrainingAcademyCorpus().tracks.find((item) => String(item.track_id) === params.trackId);
   if (!track) return { title: 'Training Academy Track | OSB Learning' };
   return {
@@ -15,7 +16,8 @@ export function generateMetadata({ params }: { params: { trackId: string } }) {
   };
 }
 
-export default function TrainingTrackPage({ params }: { params: { trackId: string } }) {
+export default async function TrainingTrackPage(props: { params: Promise<{ trackId: string }> }) {
+  const params = await props.params;
   const corpus = getTrainingAcademyCorpus();
   const track = corpus.tracks.find((item) => String(item.track_id) === params.trackId);
   if (!track) notFound();
