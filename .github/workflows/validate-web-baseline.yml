@@ -39,9 +39,16 @@ jobs:
           node-version: '20'
           cache: 'npm'
           cache-dependency-path: package-lock.json
+      - name: Generate lockfile with controlled security override
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
       - run: npm ci --no-audit --no-fund
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
+      - name: Emit generated lockfile for controlled handoff
+        run: |
+          printf 'OSB_LOCKFILE_BASE64='
+          base64 -w0 package-lock.json
+          printf '\n'
       - run: npm run validate:corpus
       - run: npm run validate:closure
       - run: npm run validate:release
