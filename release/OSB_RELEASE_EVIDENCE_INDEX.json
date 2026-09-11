@@ -20,7 +20,11 @@
     {"id":"uat_evidence_integrity","ref":"scripts/validate-uat-evidence.mjs"},
     {"id":"served_export_runtime_smoke","ref":"scripts/validate-served-export.mjs"},
     {"id":"chromium_interaction_smoke","ref":"scripts/validate-browser-smoke.mjs"},
-    {"id":"multi_engine_responsive_keyboard_smoke","ref":"scripts/validate-browser-matrix.mjs"}
+    {"id":"multi_engine_responsive_keyboard_smoke","ref":"scripts/validate-browser-matrix.mjs"},
+    {"id":"exact_candidate_checkout_assertion","ref":".github/workflows/validate-web-baseline.yml"},
+    {"id":"production_dependency_high_critical_audit","ref":".github/workflows/validate-web-baseline.yml"},
+    {"id":"complete_locked_dependency_high_critical_audit","ref":".github/workflows/validate-web-baseline.yml"},
+    {"id":"validation_gated_pages_deployment","ref":".github/workflows/deploy-pages.yml"}
   ],
   "releaseEvidence": [
     "release/OSB_RELEASE_GATE.json",
@@ -30,7 +34,9 @@
     "release/OSB_SERVED_EXPORT_SMOKE.md",
     "release/OSB_BROWSER_INTERACTION_SMOKE.md",
     "research/r31-multi-engine-responsive-smoke-evidence.md",
-    "lib/funding-data.ts"
+    "lib/funding-data.ts",
+    ".github/workflows/validate-web-baseline.yml",
+    ".github/workflows/deploy-pages.yml"
   ],
   "externalEvidenceReviews": {
     "fundingPublicSchemeFacts": {
