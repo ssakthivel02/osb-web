@@ -25,6 +25,13 @@ jobs:
           cache: 'npm'
           cache-dependency-path: package.json
       - run: npm install --no-audit --no-fund
+      - name: Emit generated dependency lockfile for controlled capture
+        run: |
+          test -f package-lock.json
+          echo 'OSB_PACKAGE_LOCK_BEGIN'
+          base64 -w0 package-lock.json
+          echo
+          echo 'OSB_PACKAGE_LOCK_END'
       - run: npm run validate:corpus
       - run: npm run validate:closure
       - run: npm run validate:release
