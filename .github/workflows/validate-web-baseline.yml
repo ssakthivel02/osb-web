@@ -25,13 +25,13 @@ jobs:
           cache: 'npm'
           cache-dependency-path: package.json
       - run: npm install --no-audit --no-fund
-      - name: Emit generated dependency lockfile for controlled capture
-        run: |
-          test -f package-lock.json
-          echo 'OSB_PACKAGE_LOCK_BEGIN'
-          base64 -w0 package-lock.json
-          echo
-          echo 'OSB_PACKAGE_LOCK_END'
+      - name: Publish generated dependency lockfile for controlled capture
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: osb-generated-package-lock
+          path: package-lock.json
+          if-no-files-found: error
+          retention-days: 1
       - run: npm run validate:corpus
       - run: npm run validate:closure
       - run: npm run validate:release
