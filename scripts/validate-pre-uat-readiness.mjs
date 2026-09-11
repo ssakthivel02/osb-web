@@ -22,6 +22,7 @@ const searchComponent=read('components/training-academy-search.tsx');
 const trackPage=read('app/training-academy/tracks/[trackId]/page.tsx');
 const recordPage=read('app/training-academy/[id]/page.tsx');
 const academyPage=read('app/training-academy/page.tsx');
+const sitemap=read('app/sitemap.ts');
 
 const trackIds=new Set(tracks.map(t=>String(t.track_id)));
 const pathTrackIds=new Set();
@@ -38,6 +39,8 @@ for(const id of trackIds){if(!pathTrackIds.has(id))errors.push(`track lacks stru
 if(!layout.includes('<html lang="en">'))errors.push('root layout lacks explicit html lang');
 if(!searchPage.includes('getTrainingAcademyCorpus'))errors.push('search page is not corpus-backed');
 if(!academyPage.includes('getTrainingAcademyCorpus'))errors.push('academy catalogue is not corpus-backed');
+if(!sitemap.includes('getTrainingAcademyCorpus'))errors.push('sitemap is not backed by the verified Training Academy corpus');
+for(const marker of ['verifiedTrainingRoutes','trainingAcademyCorpus.tracks.map','trainingAcademyCorpus.records.map'])if(!sitemap.includes(marker))errors.push(`verified sitemap coverage missing: ${marker}`);
 for(const marker of ['role="search"','<label','htmlFor="training-search"','id="training-search"','aria-live="polite"'])if(!searchComponent.includes(marker))errors.push(`search accessibility prerequisite missing: ${marker}`);
 for(const [name,source] of [['track route',trackPage],['record route',recordPage]]){if(!source.includes('generateStaticParams'))errors.push(`${name} does not enumerate static params`);if(!source.includes('notFound()'))errors.push(`${name} lacks notFound boundary`);if(!source.includes('<main>'))errors.push(`${name} lacks main landmark`);if(!source.includes('<h1>'))errors.push(`${name} lacks primary heading`);}
 

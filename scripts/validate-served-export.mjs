@@ -8,6 +8,7 @@ const DATA = path.join(ROOT, 'data', 'training-academy');
 const EXPANSION = path.join(DATA, 'expansion');
 const PORT = Number(process.env.OSB_SMOKE_PORT ?? 4173);
 const BASE = `http://127.0.0.1:${PORT}`;
+const PUBLIC_BASE = 'https://learn.omsaravanabhava.org';
 const errors = [];
 
 function readJson(file) {
@@ -73,15 +74,21 @@ try {
 
   await verifyRoute('/training-academy/', 'Verified Training Academy');
   await verifyRoute('/search/', 'Search all 19 Training Academy tracks');
+  const sitemapResponse = await fetch(`${BASE}/sitemap.xml`);
+  const sitemapBody = await sitemapResponse.text();
+  if (sitemapResponse.status !== 200) errors.push(`/sitemap.xml returned ${sitemapResponse.status}`);
+  if (!sitemapBody.includes(`${PUBLIC_BASE}/training-academy/</loc>`)) errors.push('sitemap lacks Training Academy landing route');
 
   for (const track of tracks) {
     const id = encodeURIComponent(String(track.track_id));
     await verifyRoute(`/training-academy/tracks/${id}/`, 'Verified Training Academy track');
+    if (!sitemapBody.includes(`${PUBLIC_BASE}/training-academy/tracks/${id}/</loc>`)) errors.push(`sitemap lacks verified track route: ${id}`);
   }
 
   for (const record of uniqueRecords) {
     const id = encodeURIComponent(String(record.id));
     await verifyRoute(`/training-academy/${id}/`, 'Verified learner record');
+    if (!sitemapBody.includes(`${PUBLIC_BASE}/training-academy/${id}/</loc>`)) errors.push(`sitemap lacks verified learner route: ${id}`);
   }
 
   const missing = await fetch(`${BASE}/__osb_missing_route__/`, { redirect: 'manual' });
@@ -92,9 +99,9 @@ try {
     classification: 'SERVED_STATIC_EXPORT_RUNTIME_SMOKE',
     canonicalTracks: tracks.length,
     physicalLearnerRoutes: uniqueRecords.length,
-    fixedRoutesChecked: 2,
+    fixedRoutesChecked: 3,
     invalidRouteBoundaryChecked: true,
-    totalSuccessfulSurfaceExpected: tracks.length + uniqueRecords.length + 2,
+    totalSuccessfulSurfaceExpected: tracks.length + uniqueRecords.length + 3,
     claimBoundary: 'This validates the served production export over HTTP. It does not certify client-side interaction, keyboard usability, WCAG conformance, responsive layout, cross-browser behavior, or manual UAT.',
     errors,
   };
