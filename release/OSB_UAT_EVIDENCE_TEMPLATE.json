@@ -1,0 +1,50 @@
+{
+  "schema": "osb.uat-evidence.v1",
+  "status": "NOT_RUN",
+  "candidate": {
+    "repository": "ssakthivel02/osb-web",
+    "branch": "agent/batch017-website-productization",
+    "sha": null,
+    "previewUrl": null,
+    "testedAt": null,
+    "tester": null,
+    "environment": null
+  },
+  "criticalJourneys": [],
+  "accessibility": {
+    "keyboardOnly": "NOT_RUN",
+    "visibleFocus": "NOT_RUN",
+    "headingAndLandmarkReview": "NOT_RUN",
+    "formLabels": "NOT_RUN",
+    "zoomReflow": "NOT_RUN",
+    "keyboardTraps": "NOT_RUN",
+    "evidenceRefs": []
+  },
+  "responsive": {
+    "mobile": "NOT_RUN",
+    "tablet": "NOT_RUN",
+    "desktop": "NOT_RUN",
+    "evidenceRefs": []
+  },
+  "browsers": {
+    "chromium": "NOT_RUN",
+    "firefox": "NOT_RUN",
+    "webkitSafariEquivalent": "NOT_RUN",
+    "evidenceRefs": []
+  },
+  "linksAndClaims": {
+    "internalLinks": "NOT_RUN",
+    "officialExternalLinks": "NOT_RUN",
+    "fundingClaimsReviewed": false,
+    "evidenceRefs": []
+  },
+  "defects": [],
+  "ownerApproval": {
+    "approved": false,
+    "approvedBy": null,
+    "approvedAt": null,
+    "evidenceRef": null
+  },
+  "decision": "HOLD",
+  "notes": "Template only. Do not change any NOT_RUN field to PASS, owner approval to true, or decision away from HOLD without real evidence for the exact candidate SHA."
+}

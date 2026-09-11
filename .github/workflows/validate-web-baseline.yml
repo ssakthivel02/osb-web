@@ -29,5 +29,6 @@ jobs:
       - run: npm run validate:closure
       - run: npm run validate:release
       - run: npm run validate:readiness
+      - run: npm run validate:uat-evidence
       - run: npm run typecheck
       - run: npm run build
