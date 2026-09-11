@@ -1,7 +1,9 @@
 name: Deploy OSB Web to GitHub Pages
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Validate Web Baseline"]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
 
@@ -16,20 +18,39 @@ concurrency:
 
 jobs:
   build:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-      - name: Checkout
+      - name: Checkout exact validated candidate
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Verify exact deployment candidate
+        env:
+          EXPECTED_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+        run: |
+          ACTUAL_SHA="$(git rev-parse HEAD)"
+          echo "Expected deployment SHA: ${EXPECTED_SHA}"
+          echo "Checked-out deployment SHA: ${ACTUAL_SHA}"
+          test "${ACTUAL_SHA}" = "${EXPECTED_SHA}"
 
       - name: Setup Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: 22
+          node-version: 20
           cache: 'npm'
           cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Audit complete locked dependency graph
+        run: npm audit --audit-level=high
 
       - name: Build static site
         run: npm run build
