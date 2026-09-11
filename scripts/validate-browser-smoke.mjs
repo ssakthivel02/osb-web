@@ -41,7 +41,7 @@ try {
   }
 
   await page.goto(`${BASE}/training-academy/`, { waitUntil: 'networkidle' });
-  const trackLink = page.locator('a[href^="/training-academy/tracks/"]').first();
+  const trackLink = page.locator('main a[href^="/training-academy/tracks/"]').first();
   const trackHref = await trackLink.getAttribute('href');
   if (!trackHref) {
     failures.push('catalogue exposes no track navigation link');
@@ -51,15 +51,23 @@ try {
     if (!page.url().includes('/training-academy/tracks/')) failures.push(`track click did not navigate to track page: ${page.url()}`);
     if (!(await page.locator('main h1').isVisible())) failures.push('track page missing visible primary heading');
 
-    const recordLink = page.locator('a[href^="/training-academy/"]:not([href^="/training-academy/tracks/"])').first();
+    const recordLink = page
+      .locator('main a[href^="/training-academy/"]:not([href="/training-academy/"]):not([href^="/training-academy/tracks/"])')
+      .first();
     if ((await recordLink.count()) === 0) {
       failures.push('track page exposes no learner-record link');
     } else {
-      await recordLink.focus();
-      await page.keyboard.press('Enter');
-      await page.waitForLoadState('networkidle');
-      if (page.url().includes('/training-academy/tracks/')) failures.push(`keyboard activation did not leave track route: ${page.url()}`);
-      if (!(await page.locator('main h1').isVisible())) failures.push('record page missing visible primary heading');
+      const recordHref = await recordLink.getAttribute('href');
+      if (!recordHref) {
+        failures.push('track page learner-record link is missing href');
+      } else {
+        await recordLink.focus();
+        await page.keyboard.press('Enter');
+        await page.waitForURL((url) => url.pathname === recordHref || url.pathname === `${recordHref.replace(/\/$/, '')}/`, { timeout: 5000 });
+        await page.waitForLoadState('networkidle');
+        if (page.url().includes('/training-academy/tracks/')) failures.push(`keyboard activation did not leave track route: ${page.url()}`);
+        if (!(await page.locator('main h1').isVisible())) failures.push('record page missing visible primary heading');
+      }
     }
   }
 
