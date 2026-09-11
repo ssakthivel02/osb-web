@@ -9,7 +9,8 @@
     "typecheck": "tsc --noEmit",
     "validate:corpus": "node scripts/validate-training-academy.mjs",
     "validate:closure": "node scripts/audit-training-academy-closure.mjs",
-    "validate:release": "node scripts/validate-release-gate.mjs"
+    "validate:release": "node scripts/validate-release-gate.mjs",
+    "validate:readiness": "node scripts/validate-pre-uat-readiness.mjs"
   },
   "dependencies": {
     "next": "14.2.35",
