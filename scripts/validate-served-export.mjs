@@ -90,7 +90,12 @@ try {
   await verifyRoute('/search/', 'Search all 19 Training Academy tracks');
   const sitemapResponse = await fetch(`${BASE}/sitemap.xml`);
   const sitemapBody = await sitemapResponse.text();
+  const sitemapLocations = [...sitemapBody.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+  const uniqueSitemapLocations = new Set(sitemapLocations);
+  const expectedTrainingLocations = EXPECTED_PHYSICAL_LEARNER_ROUTES + tracks.length + 1;
   if (sitemapResponse.status !== 200) errors.push(`/sitemap.xml returned ${sitemapResponse.status}`);
+  if (sitemapLocations.length !== uniqueSitemapLocations.size) errors.push(`sitemap contains duplicate URLs: ${sitemapLocations.length} entries / ${uniqueSitemapLocations.size} unique URLs`);
+  if (sitemapLocations.filter((location) => location.startsWith(`${PUBLIC_BASE}/training-academy/`)).length !== expectedTrainingLocations) errors.push(`sitemap Training Academy URL count does not equal ${expectedTrainingLocations}`);
   if (!sitemapBody.includes(`${PUBLIC_BASE}/training-academy/</loc>`)) errors.push('sitemap lacks Training Academy landing route');
 
   for (const track of tracks) {
