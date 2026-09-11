@@ -39,15 +39,43 @@ if (fundingReview?.complete !== true) fail('funding public-source evidence revie
 if (fundingReview.reviewedOn !== '2026-09-11') fail('unexpected funding review date');
 if (fundingReview.evidenceRef !== 'lib/funding-data.ts') fail('funding review evidence reference mismatch');
 
-if (index.schema !== 'osb.release-evidence-index.v1') fail('release evidence index schema mismatch');
+if (index.schema !== 'osb.release-evidence-index.v2') fail('release evidence index schema mismatch');
 if (index.repository !== gate.canonicalRepository) fail('release evidence repository mismatch');
 if (index.evidenceBranch !== gate.evidenceBranch) fail('release evidence branch mismatch');
 if (index.productPr !== gate.productPr) fail('release evidence PR mismatch');
-if (!/^[0-9a-f]{40}$/.test(index.generatedFromPassedHead ?? '')) fail('release evidence base SHA missing or invalid');
-if (!Number.isInteger(index.latestPassedCiRun) || index.latestPassedCiRun < 1) fail('latest passed CI run missing');
+
+const snapshot = index.automatedEvidenceSnapshot ?? {};
+if (!/^[0-9a-f]{40}$/.test(snapshot.candidateSha ?? '')) fail('automated evidence snapshot SHA missing or invalid');
+if (!Number.isInteger(snapshot.workflowRun) || snapshot.workflowRun < 1) fail('automated evidence snapshot workflow run missing');
+if (snapshot.workflowName !== 'Validate Web Baseline') fail('unexpected automated evidence workflow name');
+if (snapshot.result !== 'SUCCESS') fail('automated evidence snapshot must record a successful run');
+if (!/^\d{4}-\d{2}-\d{2}$/.test(snapshot.capturedOn ?? '')) fail('automated evidence snapshot date missing or invalid');
+if (typeof snapshot.semantics !== 'string' || !snapshot.semantics.includes('previously passed exact candidate')) fail('automated evidence snapshot semantics missing');
+
 if (index.exactManualUatCandidateSha !== null) fail('manual UAT candidate SHA must remain null until real manual UAT begins');
 if (index.releaseStatus !== 'HOLD') fail('release evidence index must remain HOLD');
 if (index.externalEvidenceReviews?.githubServerSideProtection?.status !== 'UNVERIFIED') fail('server-side protection must remain unverified');
+
+const requiredEvidenceIds = [
+  'corpus_integrity',
+  'learner_journey_closure',
+  'pre_uat_readiness',
+  'uat_evidence_integrity',
+  'served_export_runtime_smoke',
+  'chromium_interaction_smoke',
+  'multi_engine_responsive_keyboard_smoke',
+];
+if (!Array.isArray(index.automatedEvidence)) fail('automated evidence index missing');
+const automatedIds = index.automatedEvidence.map((entry) => entry?.id);
+if (new Set(automatedIds).size !== automatedIds.length) fail('duplicate automated evidence id');
+for (const id of requiredEvidenceIds) {
+  if (!automatedIds.includes(id)) fail(`missing automated evidence index entry: ${id}`);
+}
+for (const entry of index.automatedEvidence) {
+  if (typeof entry?.ref !== 'string' || entry.ref.length === 0) fail(`automated evidence ref missing for ${entry?.id ?? 'unknown id'}`);
+  const refUrl = new URL(`../${entry.ref}`, import.meta.url);
+  if (!existsSync(refUrl)) fail(`missing automated evidence reference: ${entry.ref}`);
+}
 
 for (const evidenceRef of index.releaseEvidence ?? []) {
   const refUrl = new URL(`../${evidenceRef}`, import.meta.url);
@@ -63,5 +91,6 @@ const promotedManualGates = Object.entries(manual).filter(([, value]) => value !
 if (promotedManualGates.length > 0) fail('manual gate values may only be promoted with real evidence and deliberate release update');
 
 console.log('OSB_RELEASE_GATE_PASS');
-console.log(`Release evidence indexed from passed head ${index.generatedFromPassedHead} / CI #${index.latestPassedCiRun}.`);
+console.log(`Automated evidence snapshot: ${snapshot.candidateSha} / ${snapshot.workflowName} #${snapshot.workflowRun} (${snapshot.result}).`);
+console.log('The snapshot is historical evidence; the commit containing this index must independently pass CI before it becomes a validated candidate.');
 console.log('Automated and public-source evidence is controlled; production remains HOLD pending exact-candidate manual UAT, accessibility judgement, final claim review, owner approval and server-side protection evidence.');

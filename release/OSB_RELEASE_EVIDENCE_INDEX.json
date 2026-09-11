@@ -1,15 +1,21 @@
 {
-  "schema": "osb.release-evidence-index.v1",
+  "schema": "osb.release-evidence-index.v2",
   "repository": "ssakthivel02/osb-web",
   "evidenceBranch": "agent/batch017-website-productization",
   "productPr": 2,
-  "generatedFromPassedHead": "23a00a4d988db8044242b52e625beb32b12a7917",
-  "latestPassedCiRun": 148,
+  "automatedEvidenceSnapshot": {
+    "candidateSha": "006116c6d7ab081b83a6d7d51acf64bdbb8d6e2e",
+    "workflowRun": 162,
+    "workflowName": "Validate Web Baseline",
+    "result": "SUCCESS",
+    "capturedOn": "2026-09-11",
+    "semantics": "Immutable record of a previously passed exact candidate. The commit containing this index must independently pass CI before it can become the next validated candidate."
+  },
   "exactManualUatCandidateSha": null,
   "releaseStatus": "HOLD",
   "automatedEvidence": [
     {"id":"corpus_integrity","ref":"scripts/validate-training-academy.mjs"},
-    {"id":"learner_journey_closure","ref":"scripts/validate-closure.mjs"},
+    {"id":"learner_journey_closure","ref":"scripts/audit-training-academy-closure.mjs"},
     {"id":"pre_uat_readiness","ref":"scripts/validate-pre-uat-readiness.mjs"},
     {"id":"uat_evidence_integrity","ref":"scripts/validate-uat-evidence.mjs"},
     {"id":"served_export_runtime_smoke","ref":"scripts/validate-served-export.mjs"},
