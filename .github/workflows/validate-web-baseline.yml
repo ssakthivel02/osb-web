@@ -32,3 +32,4 @@ jobs:
       - run: npm run validate:uat-evidence
       - run: npm run typecheck
       - run: npm run build
+      - run: npm run validate:served-export

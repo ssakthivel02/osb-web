@@ -11,7 +11,8 @@
     "validate:closure": "node scripts/audit-training-academy-closure.mjs",
     "validate:release": "node scripts/validate-release-gate.mjs",
     "validate:readiness": "node scripts/validate-pre-uat-readiness.mjs",
-    "validate:uat-evidence": "node scripts/validate-uat-evidence.mjs"
+    "validate:uat-evidence": "node scripts/validate-uat-evidence.mjs",
+    "validate:served-export": "node scripts/validate-served-export.mjs"
   },
   "dependencies": {
     "next": "14.2.35",
