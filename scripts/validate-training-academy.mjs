@@ -61,9 +61,9 @@ const safetyBreakdown={};
 for(const record of records)if(record.safety_classification)safetyBreakdown[record.safety_classification]=(safetyBreakdown[record.safety_classification]??0)+1;
 
 const expected={
-  records:261,tracks:19,populatedTracks:12,paths:2,sources:170,relationships:1014,
-  relationshipTypeBreakdown:{PREREQUISITE_OF:452,CROSS_LINK:562},
-  typeBreakdown:{ASSESSMENT:36,CAPSTONE:2,DEEP_DIVE:31,EASY_LEARN:30,INTERVIEW:32,LAB:31,LESSON:63,TROUBLESHOOTING:33,VISUAL_SPEC:3}
+  records:269,tracks:19,populatedTracks:13,paths:2,sources:177,relationships:1054,
+  relationshipTypeBreakdown:{PREREQUISITE_OF:472,CROSS_LINK:582},
+  typeBreakdown:{ASSESSMENT:37,CAPSTONE:2,DEEP_DIVE:32,EASY_LEARN:31,INTERVIEW:33,LAB:32,LESSON:65,TROUBLESHOOTING:34,VISUAL_SPEC:3}
 };
 if(records.length!==expected.records)errors.push(`record count ${records.length} != ${expected.records}`);
 if(tracks.length!==expected.tracks)errors.push(`track count ${tracks.length} != ${expected.tracks}`);
@@ -100,7 +100,7 @@ for(const [trackId,label] of [
   ['OSB-TRACK-WIN','Windows Server / Wintel'],['OSB-TRACK-HYPERV','Hyper-V'],['OSB-TRACK-HGS','HGS / Shielded VMs'],
   ['OSB-TRACK-SCVMM','SCVMM'],['OSB-TRACK-PS','PowerShell'],['OSB-TRACK-AZ','Microsoft Azure'],
   ['OSB-TRACK-DEVOPS','DevOps / AZ-400'],['OSB-TRACK-AWS','AWS'],['OSB-TRACK-HYBRID','Hybrid / Multi-cloud'],
-  ['OSB-TRACK-BACKUP','Backup / Disaster Recovery'],['OSB-TRACK-VMW','VMware / Broadcom']
+  ['OSB-TRACK-BACKUP','Backup / Disaster Recovery'],['OSB-TRACK-VMW','VMware / Broadcom'],['OSB-TRACK-FINOPS','FinOps']
 ]) if(!populatedTrackIds.includes(trackId))errors.push(`${label} track is not physically populated`);
 
 const result={
@@ -111,7 +111,7 @@ const result={
   duplicateRelationshipIds:relationships.length-relationshipIds.size,
   brokenReferences:errors.filter(e=>e.includes('references missing')||e.includes('unknown ')||e.includes('broken endpoint')).length,
   safetyBreakdown,seedRelationshipSourceSha256:provenance.source_relationship_file_sha256,seedZipSha256:provenance.source_zip_sha256,
-  expansionBatch:'BATCH-020R14-VMWARE',errors
+  expansionBatch:'BATCH-020R15-FINOPS',errors
 };
 console.log(JSON.stringify(result,null,2));
 if(errors.length)process.exit(1);
