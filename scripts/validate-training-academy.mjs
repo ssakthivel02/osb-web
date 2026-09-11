@@ -61,9 +61,9 @@ const safetyBreakdown={};
 for(const record of records)if(record.safety_classification)safetyBreakdown[record.safety_classification]=(safetyBreakdown[record.safety_classification]??0)+1;
 
 const expected={
-  records:285,tracks:19,populatedTracks:15,paths:2,sources:191,relationships:1134,
-  relationshipTypeBreakdown:{PREREQUISITE_OF:512,CROSS_LINK:622},
-  typeBreakdown:{ASSESSMENT:39,CAPSTONE:2,DEEP_DIVE:34,EASY_LEARN:33,INTERVIEW:35,LAB:34,LESSON:69,TROUBLESHOOTING:36,VISUAL_SPEC:3}
+  records:293,tracks:19,populatedTracks:16,paths:2,sources:198,relationships:1174,
+  relationshipTypeBreakdown:{PREREQUISITE_OF:532,CROSS_LINK:642},
+  typeBreakdown:{ASSESSMENT:40,CAPSTONE:2,DEEP_DIVE:35,EASY_LEARN:34,INTERVIEW:36,LAB:35,LESSON:71,TROUBLESHOOTING:37,VISUAL_SPEC:3}
 };
 if(records.length!==expected.records)errors.push(`record count ${records.length} != ${expected.records}`);
 if(tracks.length!==expected.tracks)errors.push(`track count ${tracks.length} != ${expected.tracks}`);
@@ -101,7 +101,7 @@ for(const [trackId,label] of [
   ['OSB-TRACK-SCVMM','SCVMM'],['OSB-TRACK-PS','PowerShell'],['OSB-TRACK-AZ','Microsoft Azure'],
   ['OSB-TRACK-DEVOPS','DevOps / AZ-400'],['OSB-TRACK-AWS','AWS'],['OSB-TRACK-HYBRID','Hybrid / Multi-cloud'],
   ['OSB-TRACK-BACKUP','Backup / Disaster Recovery'],['OSB-TRACK-VMW','VMware / Broadcom'],['OSB-TRACK-FINOPS','FinOps'],
-  ['OSB-TRACK-ARCH','Infrastructure Architecture / SRE / Operations'],['OSB-TRACK-PMP','PMP / Project Management']
+  ['OSB-TRACK-ARCH','Infrastructure Architecture / SRE / Operations'],['OSB-TRACK-PMP','PMP / Project Management'],['OSB-TRACK-PMO','PMO']
 ]) if(!populatedTrackIds.includes(trackId))errors.push(`${label} track is not physically populated`);
 
 const result={
@@ -112,7 +112,7 @@ const result={
   duplicateRelationshipIds:relationships.length-relationshipIds.size,
   brokenReferences:errors.filter(e=>e.includes('references missing')||e.includes('unknown ')||e.includes('broken endpoint')).length,
   safetyBreakdown,seedRelationshipSourceSha256:provenance.source_relationship_file_sha256,seedZipSha256:provenance.source_zip_sha256,
-  expansionBatch:'BATCH-020R17-PMP',errors
+  expansionBatch:'BATCH-020R18-PMO',errors
 };
 console.log(JSON.stringify(result,null,2));
 if(errors.length)process.exit(1);
