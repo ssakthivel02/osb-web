@@ -42,6 +42,7 @@ for(const learningPath of paths){
   for(const milestone of learningPath.milestones??[])for(const id of milestone.record_ids??[])if(!recordIds.has(id))errors.push(`${learningPath.path_id}: milestone references missing record ${id}`);
   for(const id of [learningPath.capstone_id,...(learningPath.assessment_ids??[]),...(learningPath.interview_ids??[])].filter(Boolean))if(!recordIds.has(id))errors.push(`${learningPath.path_id}: references missing record ${id}`);
 }
+
 const relationships=[];
 let sequence=1;
 for(const record of [...records].sort((a,b)=>String(a.id).localeCompare(String(b.id)))){
@@ -62,9 +63,9 @@ const safetyBreakdown={};
 for(const record of records)if(record.safety_classification)safetyBreakdown[record.safety_classification]=(safetyBreakdown[record.safety_classification]??0)+1;
 
 const expected={
-  records:321,tracks:19,populatedTracks:19,paths:6,sources:219,relationships:1334,
-  relationshipTypeBreakdown:{PREREQUISITE_OF:620,CROSS_LINK:714},
-  typeBreakdown:{ASSESSMENT:43,CAPSTONE:6,DEEP_DIVE:38,EASY_LEARN:37,INTERVIEW:39,LAB:38,LESSON:77,TROUBLESHOOTING:40,VISUAL_SPEC:3}
+  records:325,tracks:19,populatedTracks:19,paths:10,sources:219,relationships:1374,
+  relationshipTypeBreakdown:{PREREQUISITE_OF:648,CROSS_LINK:726},
+  typeBreakdown:{ASSESSMENT:43,CAPSTONE:10,DEEP_DIVE:38,EASY_LEARN:37,INTERVIEW:39,LAB:38,LESSON:77,TROUBLESHOOTING:40,VISUAL_SPEC:3}
 };
 if(records.length!==expected.records)errors.push(`record count ${records.length} != ${expected.records}`);
 if(tracks.length!==expected.tracks)errors.push(`track count ${tracks.length} != ${expected.tracks}`);
@@ -86,7 +87,11 @@ const requiredPaths=[
   ['OSB-PATH-HYPERV-SPECIALIST',4,1,1,'OSB-HV-CAPSTONE-0001'],
   ['OSB-PATH-HGS-SPECIALIST',4,1,1,'OSB-HGS-CAPSTONE-0001'],
   ['OSB-PATH-SCVMM-SPECIALIST',4,1,1,'OSB-SCVMM-CAPSTONE-0001'],
-  ['OSB-PATH-PS-AUTOMATION',4,1,1,'OSB-PS-CAPSTONE-0001']
+  ['OSB-PATH-PS-AUTOMATION',4,1,1,'OSB-PS-CAPSTONE-0001'],
+  ['OSB-PATH-AZURE-SPECIALIST',4,1,1,'OSB-AZ-CAPSTONE-0001'],
+  ['OSB-PATH-DEVOPS-AZ400',4,1,1,'OSB-DEVOPS-CAPSTONE-0001'],
+  ['OSB-PATH-AWS-SPECIALIST',4,1,1,'OSB-AWS-CAPSTONE-0001'],
+  ['OSB-PATH-HYBRID-SPECIALIST',4,1,1,'OSB-HYBRID-CAPSTONE-0001']
 ];
 for(const [pathId,milestones,assessments,interviews,capstoneId] of requiredPaths){
   const learningPath=paths.find(p=>p.path_id===pathId);
@@ -100,12 +105,11 @@ for(const [pathId,milestones,assessments,interviews,capstoneId] of requiredPaths
   }
 }
 for(const [trackId,label] of [
-  ['OSB-TRACK-WIN','Windows Server / Wintel'],['OSB-TRACK-HYPERV','Hyper-V'],['OSB-TRACK-HGS','HGS / Shielded VMs'],
-  ['OSB-TRACK-SCVMM','SCVMM'],['OSB-TRACK-PS','PowerShell'],['OSB-TRACK-AZ','Microsoft Azure'],
-  ['OSB-TRACK-DEVOPS','DevOps / AZ-400'],['OSB-TRACK-AWS','AWS'],['OSB-TRACK-HYBRID','Hybrid / Multi-cloud'],
-  ['OSB-TRACK-BACKUP','Backup / Disaster Recovery'],['OSB-TRACK-VMW','VMware / Broadcom'],['OSB-TRACK-FINOPS','FinOps'],
-  ['OSB-TRACK-ARCH','Infrastructure Architecture / SRE / Operations'],['OSB-TRACK-PMP','PMP / Project Management'],['OSB-TRACK-PMO','PMO'],
-  ['OSB-TRACK-SCRUM','Scrum'],['OSB-TRACK-AGILE','Agile'],['OSB-TRACK-ITIL','ITIL / IT Service Management']
+  ['OSB-TRACK-AD','Active Directory'],['OSB-TRACK-WIN','Windows Server / Wintel'],['OSB-TRACK-HYPERV','Hyper-V'],['OSB-TRACK-HGS','HGS / Shielded VMs'],
+  ['OSB-TRACK-SCVMM','SCVMM'],['OSB-TRACK-PS','PowerShell'],['OSB-TRACK-AZ','Microsoft Azure'],['OSB-TRACK-DEVOPS','DevOps / AZ-400'],
+  ['OSB-TRACK-AWS','AWS'],['OSB-TRACK-HYBRID','Hybrid / Multi-cloud'],['OSB-TRACK-BACKUP','Backup / Disaster Recovery'],['OSB-TRACK-VMW','VMware / Broadcom'],
+  ['OSB-TRACK-FINOPS','FinOps'],['OSB-TRACK-ARCH','Infrastructure Architecture / SRE / Operations'],['OSB-TRACK-PMP','PMP / Project Management'],
+  ['OSB-TRACK-PMO','PMO'],['OSB-TRACK-SCRUM','Scrum'],['OSB-TRACK-AGILE','Agile'],['OSB-TRACK-ITIL','ITIL / IT Service Management']
 ]) if(!populatedTrackIds.includes(trackId))errors.push(`${label} track is not physically populated`);
 
 const adPath=paths.find(p=>p.path_id==='OSB-PATH-AD-SPECIALIST');
@@ -118,7 +122,7 @@ const result={
   duplicateRelationshipIds:relationships.length-relationshipIds.size,
   brokenReferences:errors.filter(e=>e.includes('references missing')||e.includes('unknown ')||e.includes('broken endpoint')).length,
   safetyBreakdown,seedRelationshipSourceSha256:provenance.source_relationship_file_sha256,seedZipSha256:provenance.source_zip_sha256,
-  expansionBatch:'BATCH-020R23-JOURNEY-CLOSURE-INFRA',errors
+  expansionBatch:'BATCH-020R24-JOURNEY-CLOSURE-CLOUD',errors
 };
 console.log(JSON.stringify(result,null,2));
 if(errors.length)process.exit(1);
