@@ -8,6 +8,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "validate:corpus": "node scripts/validate-training-academy.mjs",
+    "validate:closure": "node scripts/audit-training-academy-closure.mjs",
     "validate:release": "node scripts/validate-release-gate.mjs"
   },
   "dependencies": {

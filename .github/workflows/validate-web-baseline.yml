@@ -26,6 +26,7 @@ jobs:
           cache-dependency-path: package.json
       - run: npm install --no-audit --no-fund
       - run: npm run validate:corpus
+      - run: npm run validate:closure
       - run: npm run validate:release
       - run: npm run typecheck
       - run: npm run build
