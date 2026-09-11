@@ -40,7 +40,7 @@ export default function TrainingTrackPage({ params }: { params: { trackId: strin
         <section className="section">
           <p className="eyebrow">Coverage</p>
           <div className="grid">
-            {[...typeCounts.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([type, count]) => (
+            {Array.from(typeCounts.entries()).sort(([a], [b]) => a.localeCompare(b)).map(([type, count]) => (
               <article className="card" key={type}><h2>{type.replaceAll('_', ' ')}</h2><p><strong>{count}</strong> verified records</p></article>
             ))}
           </div>
