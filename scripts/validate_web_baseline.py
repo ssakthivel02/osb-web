@@ -35,6 +35,11 @@ assert "s.bomFormat!=='CycloneDX'" in validate_workflow
 assert 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' in validate_workflow
 assert 'if-no-files-found: error' in validate_workflow
 assert 'retention-days: 7' in validate_workflow
+assert 'npm install --no-save' not in validate_workflow
+assert 'npx playwright install --with-deps chromium firefox webkit' in validate_workflow
+
+package_json = json.loads((root / 'package.json').read_text())
+assert package_json['devDependencies']['playwright'] == '1.55.1'
 
 assert 'workflow_run:' in deploy_workflow
 assert 'workflows: ["Validate Web Baseline"]' in deploy_workflow
