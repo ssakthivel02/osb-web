@@ -30,6 +30,11 @@ assert 'Verify exact candidate checkout' in validate_workflow
 assert 'npm audit --omit=dev --audit-level=high' in validate_workflow
 assert 'npm audit --audit-level=high' in validate_workflow
 assert 'cancel-in-progress: true' in validate_workflow
+assert 'npm sbom --sbom-format cyclonedx > osb-sbom.cdx.json' in validate_workflow
+assert "s.bomFormat!=='CycloneDX'" in validate_workflow
+assert 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' in validate_workflow
+assert 'if-no-files-found: error' in validate_workflow
+assert 'retention-days: 7' in validate_workflow
 
 assert 'workflow_run:' in deploy_workflow
 assert 'workflows: ["Validate Web Baseline"]' in deploy_workflow
