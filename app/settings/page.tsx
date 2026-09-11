@@ -1,2 +1,26 @@
 import SiteHeader from '../../components/site-header';
-export default function Settings(){return <><SiteHeader/><main><section className="pageHero compactHero"><p className="eyebrow">Settings</p><h1>Control your learning experience.</h1><p className="lead">These controls are prepared for the future identity and data services. They are not persisted yet.</p></section><section className="section"><div className="authPanel"><form className="authForm"><label>Display name<input defaultValue="Sakthivel" /></label><label>Primary learning path<select defaultValue="devops"><option value="devops">DevOps</option><option value="azure">Azure Architecture</option><option value="platform">Platform Engineering</option></select></label><label>Daily study target<select defaultValue="90"><option value="30">30 minutes</option><option value="60">60 minutes</option><option value="90">90 minutes</option><option value="120">120 minutes</option></select></label><label><input type="checkbox" defaultChecked /> Show interview practice reminders</label><button className="primary buttonReset" type="button">Save when backend is connected</button></form></div></section></main></>}
+
+export default function Settings() {
+  return (
+    <>
+      <SiteHeader />
+      <main>
+        <section className="pageHero compactHero">
+          <p className="eyebrow">Settings preview</p>
+          <h1>Personal settings are not enabled yet.</h1>
+          <p className="lead">This static release candidate does not identify learners, persist preferences or send reminders.</p>
+        </section>
+        <section className="section">
+          <div className="authPanel">
+            <h2>No personal data is collected here.</h2>
+            <p>Settings will remain unavailable until identity, privacy, storage and account-recovery controls pass their release gates.</p>
+            <div className="actions">
+              <a className="primary" href="/training-academy/">Explore the public academy</a>
+              <a className="secondary" href="/tracks/">Browse learning tracks</a>
+            </div>
+          </div>
+        </section>
+      </main>
+    </>
+  );
+}

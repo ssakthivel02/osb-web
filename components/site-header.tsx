@@ -11,7 +11,7 @@ export function SiteHeader() {
         <a href="/search/">Search</a>
         <a href="/career/">Career</a>
         <a href="/resources/">Resources</a>
-        <a className="navCta" href="/login/">Sign in</a>
+        <a className="navCta" href="/training-academy/">Explore academy</a>
       </nav>
     </header>
   );
