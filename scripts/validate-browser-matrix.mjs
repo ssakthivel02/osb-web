@@ -40,6 +40,31 @@ async function checkNoHorizontalOverflow(page, label) {
   }
 }
 
+async function focusByTab(page, locator, label, maxTabs = 60) {
+  await page.evaluate(() => {
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+  });
+  for (let i = 0; i < maxTabs; i += 1) {
+    await page.keyboard.press('Tab');
+    if (await locator.evaluate((element) => document.activeElement === element)) {
+      const style = await locator.evaluate((element) => {
+        const computed = getComputedStyle(element);
+        return {
+          outlineStyle: computed.outlineStyle,
+          outlineWidth: computed.outlineWidth,
+          boxShadow: computed.boxShadow,
+        };
+      });
+      const outlineVisible = style.outlineStyle !== 'none' && Number.parseFloat(style.outlineWidth) > 0;
+      const shadowVisible = style.boxShadow !== 'none';
+      if (!outlineVisible && !shadowVisible) failures.push(`${label}: keyboard focus has no visible indicator`);
+      return true;
+    }
+  }
+  failures.push(`${label}: target was not reachable by Tab within ${maxTabs} key presses`);
+  return false;
+}
+
 async function runScenario(engineName, browserType, viewportName, viewport) {
   let browser;
   try {
@@ -52,6 +77,7 @@ async function runScenario(engineName, browserType, viewportName, viewport) {
     await page.goto(`${BASE}/search/`, { waitUntil: 'networkidle' });
     await checkNoHorizontalOverflow(page, `${label} search`);
     const searchInput = page.locator('#training-search');
+    if (!(await focusByTab(page, searchInput, `${label} search input`))) return;
     await searchInput.fill('Azure');
     await searchInput.press('Enter');
     const liveText = (await page.locator('[aria-live="polite"]').innerText()).trim();
@@ -68,7 +94,7 @@ async function runScenario(engineName, browserType, viewportName, viewport) {
       failures.push(`${label}: catalogue exposes no track link`);
       return;
     }
-    await trackLink.focus();
+    if (!(await focusByTab(page, trackLink, `${label} track link`))) return;
     await page.keyboard.press('Enter');
     await page.waitForURL((url) => url.pathname.startsWith('/training-academy/tracks/'));
     await checkNoHorizontalOverflow(page, `${label} track`);
@@ -80,7 +106,7 @@ async function runScenario(engineName, browserType, viewportName, viewport) {
       failures.push(`${label}: track exposes no learner-record link`);
       return;
     }
-    await recordLink.focus();
+    if (!(await focusByTab(page, recordLink, `${label} learner-record link`))) return;
     await page.keyboard.press('Enter');
     await page.waitForURL((url) => url.pathname === new URL(recordHref, BASE).pathname);
     await checkNoHorizontalOverflow(page, `${label} record`);
@@ -109,18 +135,20 @@ try {
 
 const result = {
   gate: failures.length ? 'FAIL' : 'PASS',
-  classification: 'AUTOMATED_MULTI_ENGINE_RESPONSIVE_SMOKE_ONLY',
+  classification: 'AUTOMATED_MULTI_ENGINE_RESPONSIVE_KEYBOARD_SMOKE_ONLY',
   engines: engines.map(([name]) => name),
   viewports: viewports.map(([name, viewport]) => ({ name, ...viewport })),
   scenarios: 9,
   checks: [
     'hydrated search and aria-live update',
+    'Tab reachability for search, track and learner-record controls',
+    'visible keyboard focus indication',
     'keyboard activation for track and learner-record navigation',
     'visible primary headings',
     'horizontal-overflow detection at mobile/tablet/desktop widths',
     'basic pageerror detection',
   ],
-  claimBoundary: 'This automated matrix is not manual UAT, WCAG certification, screen-reader testing, exhaustive responsive review, or owner release approval.',
+  claimBoundary: 'This automated matrix is not manual UAT, WCAG certification, screen-reader testing, exhaustive focus-order review, exhaustive responsive review, or owner release approval.',
   failures,
 };
 console.log(JSON.stringify(result, null, 2));
