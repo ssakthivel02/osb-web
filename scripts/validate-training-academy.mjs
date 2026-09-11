@@ -61,9 +61,9 @@ const safetyBreakdown={};
 for(const record of records)if(record.safety_classification)safetyBreakdown[record.safety_classification]=(safetyBreakdown[record.safety_classification]??0)+1;
 
 const expected={
-  records:245,tracks:19,populatedTracks:10,paths:2,sources:156,relationships:932,
-  relationshipTypeBreakdown:{PREREQUISITE_OF:410,CROSS_LINK:522},
-  typeBreakdown:{ASSESSMENT:34,CAPSTONE:2,DEEP_DIVE:29,EASY_LEARN:28,INTERVIEW:30,LAB:29,LESSON:59,TROUBLESHOOTING:31,VISUAL_SPEC:3}
+  records:253,tracks:19,populatedTracks:11,paths:2,sources:163,relationships:974,
+  relationshipTypeBreakdown:{PREREQUISITE_OF:432,CROSS_LINK:542},
+  typeBreakdown:{ASSESSMENT:35,CAPSTONE:2,DEEP_DIVE:30,EASY_LEARN:29,INTERVIEW:31,LAB:30,LESSON:61,TROUBLESHOOTING:32,VISUAL_SPEC:3}
 };
 if(records.length!==expected.records)errors.push(`record count ${records.length} != ${expected.records}`);
 if(tracks.length!==expected.tracks)errors.push(`track count ${tracks.length} != ${expected.tracks}`);
@@ -99,7 +99,8 @@ else{
 for(const [trackId,label] of [
   ['OSB-TRACK-WIN','Windows Server / Wintel'],['OSB-TRACK-HYPERV','Hyper-V'],['OSB-TRACK-HGS','HGS / Shielded VMs'],
   ['OSB-TRACK-SCVMM','SCVMM'],['OSB-TRACK-PS','PowerShell'],['OSB-TRACK-AZ','Microsoft Azure'],
-  ['OSB-TRACK-DEVOPS','DevOps / AZ-400'],['OSB-TRACK-AWS','AWS'],['OSB-TRACK-HYBRID','Hybrid / Multi-cloud']
+  ['OSB-TRACK-DEVOPS','DevOps / AZ-400'],['OSB-TRACK-AWS','AWS'],['OSB-TRACK-HYBRID','Hybrid / Multi-cloud'],
+  ['OSB-TRACK-BACKUP','Backup / Disaster Recovery']
 ]) if(!populatedTrackIds.includes(trackId))errors.push(`${label} track is not physically populated`);
 
 const result={
@@ -110,7 +111,7 @@ const result={
   duplicateRelationshipIds:relationships.length-relationshipIds.size,
   brokenReferences:errors.filter(e=>e.includes('references missing')||e.includes('unknown ')||e.includes('broken endpoint')).length,
   safetyBreakdown,seedRelationshipSourceSha256:provenance.source_relationship_file_sha256,seedZipSha256:provenance.source_zip_sha256,
-  expansionBatch:'BATCH-020R12-HYBRID-MULTICLOUD',errors
+  expansionBatch:'BATCH-020R13-BACKUP-DR',errors
 };
 console.log(JSON.stringify(result,null,2));
 if(errors.length)process.exit(1);
