@@ -19,8 +19,8 @@ export default async function TrackDetailPage(props: { params: Promise<{ slug: s
         <h1>{track.title}</h1>
         <p className="lead">{track.description}</p>
         <div className="actions">
-          <a className="primary" href="/login/">Start this path</a>
-          <a className="secondary" href="/tracks/">Back to catalogue</a>
+          <a className="primary" href="/tracks/">Browse verified catalogue</a>
+          <a className="secondary" href="/training-academy/">Browse physical records</a>
         </div>
       </section>
       <section className="section">

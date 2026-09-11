@@ -1,5 +1,7 @@
 import { SiteHeader } from '../../components/site-header';
 
+export const metadata = { robots: { index: false, follow: false } };
+
 const activities = [
   { title: 'Explore the verified training corpus', href: '/training-academy/' },
   { title: 'Choose a structured learning path', href: '/training-academy/' },

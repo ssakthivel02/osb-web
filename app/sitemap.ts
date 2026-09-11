@@ -27,7 +27,7 @@ import { assessmentCenterGuides } from '../lib/assessment-center-data';
 const baseUrl = 'https://learn.omsaravanabhava.org';
 const coreRoutes = [
   '', '/academies/', '/career/', '/resources/', '/operations/', '/governance/', '/delivery/', '/leadership/', '/workshops/', '/interview/', '/interview-hub/', '/runbooks/', '/patterns/', '/architecture/', '/architecture-explorer/', '/certifications/', '/learning-plans/', '/assessments/', '/assessment-center/', '/downloads/', '/projects/', '/portfolio/', '/troubleshooting/', '/checklists/', '/labs/', '/interactive-labs/', '/scenarios/', '/commands/', '/glossary/', '/knowledge/', '/knowledge-graph/', '/ai-assistant/', '/ai-coach/', '/case-studies/', '/operations-dashboard/', '/security-playbooks/', '/finops-center/', '/architecture-diagrams/', '/infrastructure-templates/', '/architecture-studio/', '/template-library/', '/interview-simulator/', '/enterprise-documentation/', '/learning-paths/', '/skill-matrix/', '/release-readiness/', '/service-catalogue/', '/observability-center/', '/disaster-recovery/', '/compliance-center/', '/platform-operations/', '/tracks/', '/tracks/devops/', '/tracks/azure-cloud/', '/tracks/platform-engineering/', '/tracks/cloud-security/',
-  '/dashboard/', '/search/', '/login/', '/register/', '/profile/', '/settings/', '/devops/', '/devops/roadmap/', '/devops/labs/',
+  '/search/', '/devops/', '/devops/roadmap/', '/devops/labs/',
   '/devops/interview/', '/devops/glossary/', '/devops/commands/', '/devops/scenarios/', '/devops/checklist/', '/devops/git/',
   '/devops/github-actions/', '/devops/docker/', '/devops/terraform/', '/devops/kubernetes/', '/devops/azure-devops/',
   '/devops/monitoring/', '/devops/troubleshooting/',
