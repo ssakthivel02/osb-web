@@ -24,6 +24,7 @@
     {"id":"exact_candidate_checkout_assertion","ref":".github/workflows/validate-web-baseline.yml"},
     {"id":"production_dependency_high_critical_audit","ref":".github/workflows/validate-web-baseline.yml"},
     {"id":"complete_locked_dependency_high_critical_audit","ref":".github/workflows/validate-web-baseline.yml"},
+    {"id":"cyclonedx_sbom_generation_and_artifact","ref":".github/workflows/validate-web-baseline.yml"},
     {"id":"validation_gated_pages_deployment","ref":".github/workflows/deploy-pages.yml"}
   ],
   "releaseEvidence": [
