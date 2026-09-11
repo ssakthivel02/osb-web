@@ -9,6 +9,7 @@ const EXPANSION = path.join(DATA, 'expansion');
 const PORT = Number(process.env.OSB_SMOKE_PORT ?? 4173);
 const BASE = `http://127.0.0.1:${PORT}`;
 const PUBLIC_BASE = 'https://learn.omsaravanabhava.org';
+const EXPECTED_PHYSICAL_LEARNER_ROUTES = 334;
 const errors = [];
 
 function readJson(file) {
@@ -34,12 +35,25 @@ if (!fs.existsSync(OUT)) {
 }
 
 const tracks = readJson('data/training-academy/canonical/tracks.json').tracks;
+const seedRecordFiles = [
+  'lessons/lessons.jsonl',
+  'easy-learn/easy-learn.jsonl',
+  'deep-dive/deep-dive.jsonl',
+  'labs/labs.jsonl',
+  'troubleshooting/troubleshooting.jsonl',
+  'assessments/assessments.jsonl',
+  'interviews/interviews.jsonl',
+  'capstones/capstones.jsonl',
+  'visual-specs/visual-specs.jsonl',
+];
 const records = [
-  ...readJsonl('data/training-academy/capstones/capstones.jsonl'),
+  ...seedRecordFiles.flatMap((file) => readJsonl(`data/training-academy/${file}`)),
   ...expansionFiles('records.jsonl').flatMap(readJsonl),
 ];
-
 const uniqueRecords = [...new Map(records.map((record) => [String(record.id), record])).values()];
+if (records.some((record) => !record.id)) errors.push('physical learner record lacks an id');
+if (records.length !== uniqueRecords.length) errors.push(`physical learner record IDs are not unique: ${records.length} records / ${uniqueRecords.length} unique IDs`);
+if (uniqueRecords.length !== EXPECTED_PHYSICAL_LEARNER_ROUTES) errors.push(`physical learner route count ${uniqueRecords.length} != ${EXPECTED_PHYSICAL_LEARNER_ROUTES}`);
 
 const server = spawn('python3', ['-m', 'http.server', String(PORT), '--bind', '127.0.0.1', '--directory', 'out'], {
   cwd: ROOT,
