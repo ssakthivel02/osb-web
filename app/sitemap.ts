@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+export const dynamic = 'force-static';
 import { academies } from '../lib/academy-data';
 import { careerResources } from '../lib/career-data';
 import { resourceTypes } from '../lib/resource-data';
