@@ -33,9 +33,11 @@ jobs:
       - run: npm run typecheck
       - run: npm run build
       - run: npm run validate:served-export
-      - name: Install pinned Chromium smoke dependency
+      - name: Install pinned browser-smoke dependency
         run: |
           npm install --no-save --no-package-lock playwright@1.55.0
-          npx playwright install --with-deps chromium
+          npx playwright install --with-deps chromium firefox webkit
       - name: Run pinned Chromium interaction smoke
         run: node scripts/validate-browser-smoke.mjs
+      - name: Run multi-engine responsive smoke
+        run: node scripts/validate-browser-matrix.mjs
