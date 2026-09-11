@@ -83,6 +83,28 @@ async function verifyRoute(route, marker) {
   }
 }
 
+async function verifyPublishedSitemapRoutes(locations, concurrency = 24) {
+  let nextIndex = 0;
+  const workers = Array.from({ length: Math.min(concurrency, locations.length) }, async () => {
+    while (nextIndex < locations.length) {
+      const location = locations[nextIndex];
+      nextIndex += 1;
+      try {
+        const url = new URL(location);
+        if (url.origin !== PUBLIC_BASE) {
+          errors.push(`sitemap URL uses unexpected origin: ${location}`);
+          continue;
+        }
+        const response = await fetch(`${BASE}${url.pathname}${url.search}`, { method: 'HEAD', redirect: 'manual' });
+        if (response.status !== 200) errors.push(`published sitemap route returned ${response.status}: ${url.pathname}${url.search}`);
+      } catch (error) {
+        errors.push(`invalid or unreachable sitemap URL ${location}: ${error instanceof Error ? error.message : String(error)}`);
+      }
+    }
+  });
+  await Promise.all(workers);
+}
+
 try {
   await waitForServer();
 
@@ -97,6 +119,7 @@ try {
   if (sitemapLocations.length !== uniqueSitemapLocations.size) errors.push(`sitemap contains duplicate URLs: ${sitemapLocations.length} entries / ${uniqueSitemapLocations.size} unique URLs`);
   if (sitemapLocations.filter((location) => location.startsWith(`${PUBLIC_BASE}/training-academy/`)).length !== expectedTrainingLocations) errors.push(`sitemap Training Academy URL count does not equal ${expectedTrainingLocations}`);
   if (!sitemapBody.includes(`${PUBLIC_BASE}/training-academy/</loc>`)) errors.push('sitemap lacks Training Academy landing route');
+  await verifyPublishedSitemapRoutes(sitemapLocations);
 
   for (const track of tracks) {
     const id = encodeURIComponent(String(track.track_id));
@@ -118,6 +141,7 @@ try {
     classification: 'SERVED_STATIC_EXPORT_RUNTIME_SMOKE',
     canonicalTracks: tracks.length,
     physicalLearnerRoutes: uniqueRecords.length,
+    publishedSitemapRoutesChecked: sitemapLocations.length,
     fixedRoutesChecked: 3,
     invalidRouteBoundaryChecked: true,
     totalSuccessfulSurfaceExpected: tracks.length + uniqueRecords.length + 3,
