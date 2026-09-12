@@ -10,6 +10,7 @@ const PORT = Number(process.env.OSB_SMOKE_PORT ?? 4173);
 const BASE = `http://127.0.0.1:${PORT}`;
 const PUBLIC_BASE = 'https://learn.omsaravanabhava.org';
 const EXPECTED_PHYSICAL_LEARNER_ROUTES = 334;
+const INACTIVE_IDENTITY_ROUTES = ['/login/', '/register/', '/dashboard/', '/profile/', '/settings/'];
 const errors = [];
 
 function readJson(file) {
@@ -83,6 +84,26 @@ async function verifyRoute(route, marker) {
   }
 }
 
+async function verifyInactiveIdentityRoute(route) {
+  try {
+    const response = await fetch(`${BASE}${route}`, { redirect: 'manual' });
+    const body = await response.text();
+    if (response.status !== 200) errors.push(`${route} returned ${response.status}`);
+    if (!body.includes('<main')) errors.push(`${route} lacks <main> in served HTML`);
+    const robotsMeta = body.match(/<meta[^>]+name=["']robots["'][^>]+content=["']([^"']+)["'][^>]*>/i)
+      ?? body.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']robots["'][^>]*>/i);
+    if (!robotsMeta) {
+      errors.push(`${route} lacks generated robots meta`);
+      return;
+    }
+    const directives = robotsMeta[1].toLowerCase().split(',').map((value) => value.trim());
+    if (!directives.includes('noindex')) errors.push(`${route} generated robots meta lacks noindex`);
+    if (!directives.includes('nofollow')) errors.push(`${route} generated robots meta lacks nofollow`);
+  } catch (error) {
+    errors.push(`${route} request failed: ${error instanceof Error ? error.message : String(error)}`);
+  }
+}
+
 async function verifyPublishedSitemapRoutes(locations, concurrency = 24) {
   let nextIndex = 0;
   const workers = Array.from({ length: Math.min(concurrency, locations.length) }, async () => {
@@ -110,6 +131,15 @@ try {
 
   await verifyRoute('/training-academy/', 'Verified Training Academy');
   await verifyRoute('/search/', 'Search all 19 Training Academy tracks');
+
+  const robotsResponse = await fetch(`${BASE}/robots.txt`);
+  const robotsBody = await robotsResponse.text();
+  if (robotsResponse.status !== 200) errors.push(`/robots.txt returned ${robotsResponse.status}`);
+  if (!/^User-Agent:\s*\*/im.test(robotsBody)) errors.push('/robots.txt lacks wildcard user-agent rule');
+  if (!/^Allow:\s*\/$/im.test(robotsBody)) errors.push('/robots.txt lacks root allow directive');
+  if (!new RegExp(`^Host:\\s*${PUBLIC_BASE.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\/?$`, 'im').test(robotsBody)) errors.push('/robots.txt host does not match canonical production origin');
+  if (!new RegExp(`^Sitemap:\\s*${PUBLIC_BASE.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/sitemap\\.xml$`, 'im').test(robotsBody)) errors.push('/robots.txt sitemap directive does not match canonical sitemap');
+
   const sitemapResponse = await fetch(`${BASE}/sitemap.xml`);
   const sitemapBody = await sitemapResponse.text();
   const sitemapLocations = [...sitemapBody.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
@@ -119,6 +149,10 @@ try {
   if (sitemapLocations.length !== uniqueSitemapLocations.size) errors.push(`sitemap contains duplicate URLs: ${sitemapLocations.length} entries / ${uniqueSitemapLocations.size} unique URLs`);
   if (sitemapLocations.filter((location) => location.startsWith(`${PUBLIC_BASE}/training-academy/`)).length !== expectedTrainingLocations) errors.push(`sitemap Training Academy URL count does not equal ${expectedTrainingLocations}`);
   if (!sitemapBody.includes(`${PUBLIC_BASE}/training-academy/</loc>`)) errors.push('sitemap lacks Training Academy landing route');
+  for (const route of INACTIVE_IDENTITY_ROUTES) {
+    const inactiveLocation = `${PUBLIC_BASE}${route}`;
+    if (uniqueSitemapLocations.has(inactiveLocation)) errors.push(`inactive identity route must not appear in sitemap: ${route}`);
+  }
   await verifyPublishedSitemapRoutes(sitemapLocations);
 
   for (const track of tracks) {
@@ -133,6 +167,8 @@ try {
     if (!sitemapBody.includes(`${PUBLIC_BASE}/training-academy/${id}/</loc>`)) errors.push(`sitemap lacks verified learner route: ${id}`);
   }
 
+  for (const route of INACTIVE_IDENTITY_ROUTES) await verifyInactiveIdentityRoute(route);
+
   const missing = await fetch(`${BASE}/__osb_missing_route__/`, { redirect: 'manual' });
   if (missing.status !== 404) errors.push(`missing-route boundary returned ${missing.status}, expected 404`);
 
@@ -142,10 +178,12 @@ try {
     canonicalTracks: tracks.length,
     physicalLearnerRoutes: uniqueRecords.length,
     publishedSitemapRoutesChecked: sitemapLocations.length,
+    inactiveIdentityRoutesChecked: INACTIVE_IDENTITY_ROUTES.length,
+    robotsTxtChecked: true,
     fixedRoutesChecked: 3,
     invalidRouteBoundaryChecked: true,
-    totalSuccessfulSurfaceExpected: tracks.length + uniqueRecords.length + 3,
-    claimBoundary: 'This validates the served production export over HTTP. It does not certify client-side interaction, keyboard usability, WCAG conformance, responsive layout, cross-browser behavior, or manual UAT.',
+    totalSuccessfulSurfaceExpected: tracks.length + uniqueRecords.length + INACTIVE_IDENTITY_ROUTES.length + 4,
+    claimBoundary: 'This validates the served production export over HTTP, including generated crawl controls. It does not certify client-side interaction, keyboard usability, WCAG conformance, responsive layout, cross-browser behavior, or manual UAT.',
     errors,
   };
   console.log(JSON.stringify(result, null, 2));
