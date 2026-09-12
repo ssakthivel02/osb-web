@@ -96,7 +96,18 @@ for (const evidenceRef of index.releaseEvidence ?? []) {
 const manual = gate.manualGates ?? {};
 const allManualComplete = Object.values(manual).length > 0 && Object.values(manual).every((value) => value === true);
 const anyManualComplete = Object.values(manual).some((value) => value === true);
-const protectionStatus = index.externalEvidenceReviews?.githubServerSideProtection?.status;
+const protectionEvidence = index.externalEvidenceReviews?.githubServerSideProtection ?? {};
+const protectionStatus = protectionEvidence.status;
+if (!['UNVERIFIED', 'ABSENT', 'VERIFIED'].includes(protectionStatus)) fail(`invalid server-side protection evidence status: ${protectionStatus}`);
+if (protectionStatus === 'ABSENT') {
+  if (protectionEvidence.branch !== 'main') fail('ABSENT protection evidence must identify main branch');
+  if (protectionEvidence.branchProtected !== false) fail('ABSENT protection evidence must record branchProtected=false');
+  if (protectionEvidence.requiredStatusChecksEnforced !== false) fail('ABSENT protection evidence must record requiredStatusChecksEnforced=false');
+  if (!Number.isInteger(protectionEvidence.rulesetsObserved) || protectionEvidence.rulesetsObserved !== 0) fail('ABSENT protection evidence must record zero observed rulesets');
+  if (gate.githubServerSideProtectionVerified !== false) fail('release gate cannot claim verified server-side protection while evidence status is ABSENT');
+}
+if (protectionStatus === 'VERIFIED' && gate.githubServerSideProtectionVerified !== true) fail('VERIFIED protection evidence requires release gate verification=true');
+if (gate.githubServerSideProtectionVerified === true && protectionStatus !== 'VERIFIED') fail('release gate protection verification requires VERIFIED external evidence');
 const protectionComplete = gate.githubServerSideProtectionVerified === true && protectionStatus === 'VERIFIED';
 
 if (uat.status === 'NOT_RUN') {
@@ -131,6 +142,7 @@ if (index.releaseStatus !== 'PROD_GO' && gate.productionDeploymentApproved !== f
 
 console.log('OSB_RELEASE_GATE_PASS');
 console.log(`phase=${uat.status} release=${index.releaseStatus} manual_candidate=${exactUatSha ?? 'none'}`);
+console.log(`governance=${protectionStatus} rulesets=${protectionEvidence.rulesetsObserved ?? 'unknown'} branch_protected=${protectionEvidence.branchProtected ?? 'unknown'}`);
 console.log(`Automated evidence snapshot: ${snapshot.candidateSha} / ${snapshot.workflowName} #${snapshot.workflowRun} (${snapshot.result}).`);
 console.log('The snapshot is historical evidence; the commit containing this index must independently pass CI before it becomes a validated candidate.');
 console.log('Release authorization remains fail-closed: only a fully evidenced PROD_GO state may approve production deployment.');

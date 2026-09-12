@@ -4,8 +4,8 @@
   "evidenceBranch": "agent/batch017-website-productization",
   "productPr": 2,
   "automatedEvidenceSnapshot": {
-    "candidateSha": "0d05e91974b5cd328995622d27c3cbd841a9604c",
-    "workflowRun": 190,
+    "candidateSha": "149c566c396a100133fab6126099f457e69766e0",
+    "workflowRun": 191,
     "workflowName": "Validate Web Baseline",
     "result": "SUCCESS",
     "capturedOn": "2026-09-12",
@@ -50,9 +50,13 @@
       "claimBoundary": "No OSB eligibility, provider approval, partnership, application approval or funding award is asserted."
     },
     "githubServerSideProtection": {
-      "status": "UNVERIFIED",
+      "status": "ABSENT",
+      "reviewedOn": "2026-09-12",
+      "branch": "main",
+      "branchProtected": false,
+      "requiredStatusChecksEnforced": false,
       "rulesetsObserved": 0,
-      "claimBoundary": "No server-side branch-protection claim is made."
+      "claimBoundary": "Fresh GitHub evidence shows main is not protected, required status-check enforcement is off, and no repository rulesets are configured. Production must remain blocked until equivalent governance is deliberately established and independently re-verified."
     }
   },
   "manualOrExternalBlockers": [
@@ -63,7 +67,7 @@
     "final application-context funding/partnership claim review",
     "manual UAT defect disposition",
     "explicit owner release approval",
-    "GitHub/server-side protection evidence"
+    "GitHub/server-side protection or deliberately approved equivalent governance control"
   ],
   "promotionRule": "Do not populate exactManualUatCandidateSha or move releaseStatus away from HOLD until a real isolated preview exists for the exact validated artifact and the applicable release gates are deliberately evidenced."
 }
