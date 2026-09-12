@@ -12,6 +12,7 @@
     "validate:release": "node scripts/validate-release-gate.mjs",
     "validate:readiness": "node scripts/validate-pre-uat-readiness.mjs",
     "validate:uat-evidence": "node scripts/validate-uat-evidence.mjs",
+    "validate:uat-preview-contract": "node scripts/validate-uat-preview-contract.mjs",
     "validate:served-export": "node scripts/validate-served-export.mjs"
   },
   "dependencies": {

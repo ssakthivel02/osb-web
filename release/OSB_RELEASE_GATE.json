@@ -13,6 +13,7 @@
     "learner_journey_closure",
     "pre_uat_readiness",
     "uat_evidence_integrity",
+    "uat_preview_contract",
     "typescript_typecheck",
     "production_next_build",
     "served_export_runtime_smoke",

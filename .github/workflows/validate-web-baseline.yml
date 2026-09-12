@@ -60,6 +60,7 @@ jobs:
       - run: npm run validate:release
       - run: npm run validate:readiness
       - run: npm run validate:uat-evidence
+      - run: npm run validate:uat-preview-contract
       - run: npm run typecheck
       - run: npm run build
       - run: npm run validate:served-export
