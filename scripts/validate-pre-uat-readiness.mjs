@@ -15,6 +15,7 @@ const recordFiles=['data/training-academy/capstones/capstones.jsonl',...expansio
 const records=recordFiles.flatMap(p=>read(p).split(/\r?\n/).map(x=>x.trim()).filter(Boolean).map(JSON.parse));
 const capstones=records.filter(r=>r.record_type==='CAPSTONE');
 const gate=readJson('release/OSB_RELEASE_GATE.json');
+const uatEvidence=readJson('release/OSB_UAT_EVIDENCE_TEMPLATE.json');
 const uat=read('release/OSB_UAT_PROTOCOL.md');
 const layout=read('app/layout.tsx');
 const searchPage=read('app/search/page.tsx');
@@ -46,10 +47,21 @@ for(const [name,source] of [['track route',trackPage],['record route',recordPage
 
 const manual=gate.manualGates??{};
 const incomplete=Object.entries(manual).filter(([,v])=>v!==true).map(([k])=>k);
-if((incomplete.length>0||gate.githubServerSideProtectionVerified!==true)&&gate.productionReleaseStatus!=='HOLD')errors.push('release must remain HOLD while manual/server-side gates are incomplete');
-if(gate.productionDeploymentApproved===true&&incomplete.length>0)errors.push('production deployment approved while manual gates remain incomplete');
+const protectionComplete=gate.githubServerSideProtectionVerified===true;
+const releaseStatus=gate.productionReleaseStatus;
+const uatStatus=uatEvidence.status;
+
+if(!['HOLD','CONDITIONAL_GO','PROD_GO'].includes(releaseStatus))errors.push(`invalid production release status: ${releaseStatus}`);
+if(uatStatus==='NOT_RUN'&&releaseStatus!=='HOLD')errors.push('NOT_RUN UAT must remain HOLD');
+if(uatStatus==='IN_PROGRESS'&&releaseStatus!=='HOLD')errors.push('IN_PROGRESS UAT must remain HOLD');
+if(releaseStatus==='CONDITIONAL_GO'&&uatStatus!=='COMPLETE')errors.push('CONDITIONAL_GO requires COMPLETE UAT evidence');
+if(releaseStatus==='PROD_GO'&&uatStatus!=='COMPLETE')errors.push('PROD_GO requires COMPLETE UAT evidence');
+if(releaseStatus==='PROD_GO'&&incomplete.length>0)errors.push('PROD_GO cannot have incomplete manual gates');
+if(releaseStatus==='PROD_GO'&&!protectionComplete)errors.push('PROD_GO requires verified server-side protection/governance');
+if(gate.productionDeploymentApproved===true&&releaseStatus!=='PROD_GO')errors.push('production deployment approval requires PROD_GO');
+if(gate.productionDeploymentApproved===true&&(incomplete.length>0||!protectionComplete))errors.push('production deployment approved while mandatory release gates remain incomplete');
 if(!uat.includes('keyboard-only navigation')||!uat.includes('Chromium, Firefox and WebKit/Safari-equivalent'))errors.push('UAT protocol lacks required accessibility/browser matrix');
 
-const result={gate:errors.length?'FAIL':'PASS',classification:'PRE_UAT_AUTOMATED_EVIDENCE_ONLY',canonicalTracks:tracks.length,structuredLearningPaths:paths.length,capstones:capstones.length,pathTrackCoverage:pathTrackIds.size,capstoneTrackCoverage:capstoneTrackIds.size,manualGatesIncomplete:incomplete,githubServerSideProtectionVerified:gate.githubServerSideProtectionVerified,productionReleaseStatus:gate.productionReleaseStatus,claimBoundary:'This automated gate does not certify browser usability, WCAG conformance, responsive behavior, funding claims, owner approval, server-side protection or production readiness.',errors};
+const result={gate:errors.length?'FAIL':'PASS',classification:'PRE_UAT_AUTOMATED_EVIDENCE_ONLY',canonicalTracks:tracks.length,structuredLearningPaths:paths.length,capstones:capstones.length,pathTrackCoverage:pathTrackIds.size,capstoneTrackCoverage:capstoneTrackIds.size,manualGatesIncomplete:incomplete,uatStatus,githubServerSideProtectionVerified:gate.githubServerSideProtectionVerified,productionReleaseStatus:releaseStatus,claimBoundary:'This automated gate does not certify browser usability, WCAG conformance, responsive behavior, funding claims, owner approval, server-side protection or production readiness.',errors};
 console.log(JSON.stringify(result,null,2));
 if(errors.length)process.exit(1);

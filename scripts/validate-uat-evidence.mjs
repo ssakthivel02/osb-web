@@ -43,9 +43,16 @@ const allPass = manualResults.every((value) => value === 'PASS');
 const openBlockingDefects = evidence.defects.filter((d) => ['P0','P1'].includes(String(d.severity)) && String(d.status).toUpperCase() !== 'CLOSED');
 
 if (evidence.status === 'NOT_RUN') {
+  if (sha !== null) fail('NOT_RUN evidence must not record a candidate sha');
   if (anyExecuted) fail('status NOT_RUN cannot contain executed manual results');
   if (evidence.decision !== 'HOLD') fail('NOT_RUN evidence must remain HOLD');
   if (evidence.ownerApproval.approved) fail('owner approval cannot be true before UAT runs');
+}
+
+if (evidence.status === 'IN_PROGRESS') {
+  if (!sha) fail('IN_PROGRESS evidence requires exact candidate sha');
+  if (evidence.decision !== 'HOLD') fail('IN_PROGRESS evidence must remain HOLD');
+  if (evidence.ownerApproval.approved) fail('owner approval is final release evidence and cannot be true while UAT is in progress');
 }
 
 if (evidence.status === 'COMPLETE') {
@@ -54,11 +61,18 @@ if (evidence.status === 'COMPLETE') {
   if (!allPass) fail('COMPLETE evidence requires all mandatory manual checks to PASS');
   if (!evidence.linksAndClaims.fundingClaimsReviewed) fail('COMPLETE evidence requires funding claim review');
   if (openBlockingDefects.length) fail('COMPLETE evidence cannot contain open P0/P1 defects');
-  if (!evidence.ownerApproval.approved) fail('COMPLETE evidence requires explicit owner approval');
-  if (!evidence.ownerApproval.approvedBy || !evidence.ownerApproval.approvedAt || !evidence.ownerApproval.evidenceRef) fail('approved evidence requires approver, timestamp and evidence reference');
 }
 
 if (evidence.decision !== 'HOLD' && evidence.status !== 'COMPLETE') fail('release decision cannot leave HOLD before UAT evidence is COMPLETE');
+
+if (evidence.decision === 'CONDITIONAL_GO' && evidence.ownerApproval.approved) {
+  fail('CONDITIONAL_GO must not carry final owner production approval; use PROD_GO only after final release approval');
+}
+
+if (evidence.decision === 'PROD_GO') {
+  if (!evidence.ownerApproval.approved) fail('PROD_GO requires explicit owner approval');
+  if (!evidence.ownerApproval.approvedBy || !evidence.ownerApproval.approvedAt || !evidence.ownerApproval.evidenceRef) fail('approved evidence requires approver, timestamp and evidence reference');
+}
 
 console.log('OSB_UAT_EVIDENCE_PASS');
 console.log(`status=${evidence.status} decision=${evidence.decision} blocking_defects=${openBlockingDefects.length}`);

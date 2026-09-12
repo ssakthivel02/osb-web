@@ -51,6 +51,11 @@ jobs:
       - name: Audit complete locked dependency graph
         run: npm audit --audit-level=high
 
+      - name: Verify production release authorization
+        env:
+          EXPECTED_DEPLOY_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: node scripts/validate-production-authorization.mjs
+
       - name: Build static site
         run: npm run build
 
