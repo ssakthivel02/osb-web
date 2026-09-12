@@ -1,0 +1,3 @@
+{"topic_id":"OSB-TOPIC-BACKUP-RECOVERY-OBJECTIVES","track_id":"OSB-TRACK-BACKUP","title":"Recovery Objectives and Protection Scope","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R13-BACKUP-DR"}
+{"topic_id":"OSB-TOPIC-BACKUP-INTEGRITY-IMMUTABILITY","track_id":"OSB-TRACK-BACKUP","title":"Backup Integrity, Immutability and Restore Assurance","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R13-BACKUP-DR"}
+{"topic_id":"OSB-TOPIC-BACKUP-DR-ORCHESTRATION","track_id":"OSB-TRACK-BACKUP","title":"Disaster Recovery Orchestration and Failback","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R13-BACKUP-DR"}

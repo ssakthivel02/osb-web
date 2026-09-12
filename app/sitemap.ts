@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+export const dynamic = 'force-static';
 import { academies } from '../lib/academy-data';
 import { careerResources } from '../lib/career-data';
 import { resourceTypes } from '../lib/resource-data';
@@ -22,11 +23,18 @@ import { architectureExplorerGuides } from '../lib/architecture-explorer-data';
 import { knowledgeGraphGuides } from '../lib/knowledge-graph-data';
 import { interviewHubGuides } from '../lib/interview-hub-data';
 import { assessmentCenterGuides } from '../lib/assessment-center-data';
+import { getTrainingAcademyCorpus } from '../lib/training-academy';
 
 const baseUrl = 'https://learn.omsaravanabhava.org';
+const trainingAcademyCorpus = getTrainingAcademyCorpus();
+const verifiedTrainingRoutes = [
+  '/training-academy/',
+  ...trainingAcademyCorpus.tracks.map((track) => `/training-academy/tracks/${encodeURIComponent(String(track.track_id))}/`),
+  ...trainingAcademyCorpus.records.map((record) => `/training-academy/${encodeURIComponent(String(record.id))}/`),
+];
 const coreRoutes = [
   '', '/academies/', '/career/', '/resources/', '/operations/', '/governance/', '/delivery/', '/leadership/', '/workshops/', '/interview/', '/interview-hub/', '/runbooks/', '/patterns/', '/architecture/', '/architecture-explorer/', '/certifications/', '/learning-plans/', '/assessments/', '/assessment-center/', '/downloads/', '/projects/', '/portfolio/', '/troubleshooting/', '/checklists/', '/labs/', '/interactive-labs/', '/scenarios/', '/commands/', '/glossary/', '/knowledge/', '/knowledge-graph/', '/ai-assistant/', '/ai-coach/', '/case-studies/', '/operations-dashboard/', '/security-playbooks/', '/finops-center/', '/architecture-diagrams/', '/infrastructure-templates/', '/architecture-studio/', '/template-library/', '/interview-simulator/', '/enterprise-documentation/', '/learning-paths/', '/skill-matrix/', '/release-readiness/', '/service-catalogue/', '/observability-center/', '/disaster-recovery/', '/compliance-center/', '/platform-operations/', '/tracks/', '/tracks/devops/', '/tracks/azure-cloud/', '/tracks/platform-engineering/', '/tracks/cloud-security/',
-  '/dashboard/', '/search/', '/login/', '/register/', '/profile/', '/settings/', '/devops/', '/devops/roadmap/', '/devops/labs/',
+  '/search/', '/devops/', '/devops/roadmap/', '/devops/labs/',
   '/devops/interview/', '/devops/glossary/', '/devops/commands/', '/devops/scenarios/', '/devops/checklist/', '/devops/git/',
   '/devops/github-actions/', '/devops/docker/', '/devops/terraform/', '/devops/kubernetes/', '/devops/azure-devops/',
   '/devops/monitoring/', '/devops/troubleshooting/',
@@ -88,7 +96,8 @@ const complianceRoutes = academies.flatMap((academy) => [`/compliance-center/${a
 const platformOperationsRoutes = academies.flatMap((academy) => [`/platform-operations/${academy.slug}/`, ...platformOperationsGuides.map((guide) => `/platform-operations/${academy.slug}/${guide.slug}/`)]);
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [...coreRoutes, ...academyRoutes, ...careerRoutes, ...resourceRoutes, ...operationsRoutes, ...governanceRoutes, ...deliveryRoutes, ...leadershipRoutes, ...workshopRoutes, ...interviewRoutes, ...interviewHubRoutes, ...runbookRoutes, ...patternRoutes, ...architectureRoutes, ...architectureExplorerRoutes, ...certificationRoutes, ...learningPlanRoutes, ...assessmentRoutes, ...assessmentCenterRoutes, ...downloadRoutes, ...projectRoutes, ...portfolioRoutes, ...troubleshootingRoutes, ...checklistRoutes, ...labRoutes, ...interactiveLabRoutes, ...scenarioRoutes, ...commandRoutes, ...glossaryRoutes, ...knowledgeRoutes, ...knowledgeGraphRoutes, ...aiAssistantRoutes, ...aiCoachRoutes, ...caseStudyRoutes, ...dashboardRoutes, ...securityPlaybookRoutes, ...finopsRoutes, ...diagramRoutes, ...infrastructureTemplateRoutes, ...architectureStudioRoutes, ...templateLibraryRoutes, ...interviewSimulatorRoutes, ...documentationRoutes, ...learningPathRoutes, ...skillMatrixRoutes, ...releaseReadinessRoutes, ...serviceCatalogueRoutes, ...observabilityRoutes, ...disasterRecoveryRoutes, ...complianceRoutes, ...platformOperationsRoutes].map((route) => ({
+  const routes = Array.from(new Set([...coreRoutes, ...verifiedTrainingRoutes, ...academyRoutes, ...careerRoutes, ...resourceRoutes, ...operationsRoutes, ...governanceRoutes, ...deliveryRoutes, ...leadershipRoutes, ...workshopRoutes, ...interviewRoutes, ...interviewHubRoutes, ...runbookRoutes, ...patternRoutes, ...architectureRoutes, ...architectureExplorerRoutes, ...certificationRoutes, ...learningPlanRoutes, ...assessmentRoutes, ...assessmentCenterRoutes, ...downloadRoutes, ...projectRoutes, ...portfolioRoutes, ...troubleshootingRoutes, ...checklistRoutes, ...labRoutes, ...interactiveLabRoutes, ...scenarioRoutes, ...commandRoutes, ...glossaryRoutes, ...knowledgeRoutes, ...knowledgeGraphRoutes, ...aiAssistantRoutes, ...aiCoachRoutes, ...caseStudyRoutes, ...dashboardRoutes, ...securityPlaybookRoutes, ...finopsRoutes, ...diagramRoutes, ...infrastructureTemplateRoutes, ...architectureStudioRoutes, ...templateLibraryRoutes, ...interviewSimulatorRoutes, ...documentationRoutes, ...learningPathRoutes, ...skillMatrixRoutes, ...releaseReadinessRoutes, ...serviceCatalogueRoutes, ...observabilityRoutes, ...disasterRecoveryRoutes, ...complianceRoutes, ...platformOperationsRoutes]));
+  return routes.map((route) => ({
     url: `${baseUrl}${route}`,
     changeFrequency: route === '' ? ('weekly' as const) : ('monthly' as const),
     priority: route === '' ? 1 : ['/academies/','/career/','/resources/','/operations/','/governance/','/delivery/','/leadership/','/workshops/','/interview/','/interview-hub/','/runbooks/','/patterns/','/architecture/','/architecture-explorer/','/certifications/','/learning-plans/','/assessments/','/assessment-center/','/downloads/','/projects/','/portfolio/','/troubleshooting/','/checklists/','/labs/','/interactive-labs/','/scenarios/','/commands/','/glossary/','/knowledge/','/knowledge-graph/','/ai-assistant/','/ai-coach/','/case-studies/','/operations-dashboard/','/security-playbooks/','/finops-center/','/architecture-diagrams/','/infrastructure-templates/','/architecture-studio/','/template-library/','/interview-simulator/','/enterprise-documentation/','/learning-paths/','/skill-matrix/','/release-readiness/','/service-catalogue/','/observability-center/','/disaster-recovery/','/compliance-center/','/platform-operations/'].includes(route) ? 0.9 : 0.8,

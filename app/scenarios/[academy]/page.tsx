@@ -2,4 +2,7 @@ import { EnterpriseAcademy, enterpriseAcademyParams } from '../../../components/
 import { scenarioGuides } from '../../../lib/reference-center-data';
 export const dynamicParams=false;
 export function generateStaticParams(){return enterpriseAcademyParams();}
-export default function ScenarioAcademyPage({params}:{params:{academy:string}}){return <EnterpriseAcademy basePath="scenarios" academySlug={params.academy} title="Scenario Center" description="Work through realistic decisions, constraints and recovery paths." guides={scenarioGuides}/>;}
+export default async function ScenarioAcademyPage(props:{params: Promise<{academy:string}>}) {
+  const params = await props.params;
+  return <EnterpriseAcademy basePath="scenarios" academySlug={params.academy} title="Scenario Center" description="Work through realistic decisions, constraints and recovery paths." guides={scenarioGuides}/>;
+}

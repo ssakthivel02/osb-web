@@ -1,0 +1,3 @@
+{"topic_id":"OSB-TOPIC-SCVMM-BAREMETAL-PROVISION","track_id":"OSB-TRACK-SCVMM","name":"SCVMM Bare-Metal Hyper-V Provisioning","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R7C-SCVMM-HOST-LIFECYCLE"}
+{"topic_id":"OSB-TOPIC-SCVMM-PXE-PROFILES","track_id":"OSB-TRACK-SCVMM","name":"PXE, BMC and Physical Computer Profiles","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R7C-SCVMM-HOST-LIFECYCLE"}
+{"topic_id":"OSB-TOPIC-SCVMM-HOST-LIFECYCLE","track_id":"OSB-TRACK-SCVMM","name":"Host Compliance, Maintenance and Cluster Servicing","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R7C-SCVMM-HOST-LIFECYCLE"}

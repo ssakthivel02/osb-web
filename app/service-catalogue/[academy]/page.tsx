@@ -2,4 +2,7 @@ import { EnterpriseAcademy, enterpriseAcademyParams } from '../../../components/
 import { serviceCatalogueGuides } from '../../../lib/platform-center-data';
 export const dynamicParams=false;
 export function generateStaticParams(){return enterpriseAcademyParams();}
-export default function ServiceCatalogueAcademyPage({params}:{params:{academy:string}}){return <EnterpriseAcademy basePath="service-catalogue" academySlug={params.academy} title="Service Catalogue" description="Define consumable, supportable and measurable technical services with accountable ownership." guides={serviceCatalogueGuides}/>;}
+export default async function ServiceCatalogueAcademyPage(props:{params: Promise<{academy:string}>}) {
+  const params = await props.params;
+  return <EnterpriseAcademy basePath="service-catalogue" academySlug={params.academy} title="Service Catalogue" description="Define consumable, supportable and measurable technical services with accountable ownership." guides={serviceCatalogueGuides}/>;
+}

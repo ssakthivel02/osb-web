@@ -1,0 +1,3 @@
+{"topic_id":"OSB-TOPIC-HV-REPLICA-DR","track_id":"OSB-TRACK-HYPERV","title":"Hyper-V Replica and Disaster Recovery","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R5E-HYPERV-DR-RECOVERY"}
+{"topic_id":"OSB-TOPIC-HV-RECOVERY-ASSURANCE","track_id":"OSB-TRACK-HYPERV","title":"Backup, Recovery Testing and RPO/RTO Assurance","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R5E-HYPERV-DR-RECOVERY"}
+{"topic_id":"OSB-TOPIC-HV-SECURITY-HANDOFF","track_id":"OSB-TRACK-HYPERV","title":"Hyper-V Security Controls and HGS Handoff","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R5E-HYPERV-DR-RECOVERY"}

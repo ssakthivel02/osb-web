@@ -1,0 +1,35 @@
+{
+  "schema": "osb.uat-preview-contract.v1",
+  "status": "PROVIDER_PENDING",
+  "candidateSha": null,
+  "source": {
+    "repository": "ssakthivel02/osb-web",
+    "branch": "agent/batch017-website-productization",
+    "workflow": "Validate Web Baseline",
+    "artifactPrefix": "osb-validated-static-export-",
+    "artifactRetentionDays": 3,
+    "requiresSuccessfulExactHeadValidation": true,
+    "consumeExistingValidatedArtifact": true,
+    "rebuildForPreviewForbidden": true
+  },
+  "isolation": {
+    "productionPagesForbidden": true,
+    "productionEnvironmentForbidden": true,
+    "productionCustomDomainForbidden": true,
+    "productionCnameForbidden": true,
+    "repositoryWritePermissionForbidden": true,
+    "previewMustBeIsolatedFromProduction": true,
+    "forbiddenHosts": [
+      "learn.omsaravanabhava.org",
+      "ssakthivel02.github.io"
+    ]
+  },
+  "hosting": {
+    "provider": null,
+    "previewUrl": null,
+    "sourceArtifactName": null,
+    "hostedAt": null
+  },
+  "promotionRule": "Before manual UAT starts, set status to HOSTED only after a real isolated preview serves the existing exact-SHA validated artifact. Record the same candidate SHA in this contract, the UAT evidence record, and the release evidence index. Do not rebuild the site for preview and do not reuse production GitHub Pages, its environment, custom domain, or CNAME.",
+  "claimBoundary": "This contract controls preview provenance and isolation. It does not itself provide hosting, prove browser or accessibility quality, complete manual UAT, or authorize production deployment."
+}

@@ -1,0 +1,3 @@
+{"topic_id":"OSB-TOPIC-HGS-ARCH-TRUST","track_id":"OSB-TRACK-HGS","title":"Guarded Fabric Architecture and HGS Trust Boundary","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R6-HGS-FOUNDATIONS"}
+{"topic_id":"OSB-TOPIC-HGS-ATTESTATION","track_id":"OSB-TRACK-HGS","title":"HGS Attestation Modes and Guarded Host Authorization","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R6-HGS-FOUNDATIONS"}
+{"topic_id":"OSB-TOPIC-HGS-SHIELDED-OPS","track_id":"OSB-TRACK-HGS","title":"Shielded VM Key Protection, Operations and Recovery","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R6-HGS-FOUNDATIONS"}
