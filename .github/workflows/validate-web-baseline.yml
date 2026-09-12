@@ -70,3 +70,15 @@ jobs:
         run: node scripts/validate-browser-smoke.mjs
       - name: Run multi-engine responsive smoke
         run: node scripts/validate-browser-matrix.mjs
+      - name: Verify validated static export artifact boundary
+        run: |
+          test -d out
+          test -f out/index.html
+          test ! -e out/CNAME
+      - name: Upload validated static export
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: osb-validated-static-export-${{ github.event.pull_request.head.sha || github.sha }}
+          path: out/
+          if-no-files-found: error
+          retention-days: 3

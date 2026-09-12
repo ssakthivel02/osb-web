@@ -26,6 +26,9 @@ deploy_workflow = (root / '.github/workflows/deploy-pages.yml').read_text()
 
 assert 'contents: read' in validate_workflow
 assert 'contents: write' not in validate_workflow
+assert 'pages: write' not in validate_workflow
+assert 'id-token: write' not in validate_workflow
+assert 'environment:' not in validate_workflow
 assert 'Verify exact candidate checkout' in validate_workflow
 assert 'npm audit --omit=dev --audit-level=high' in validate_workflow
 assert 'npm audit --audit-level=high' in validate_workflow
@@ -37,6 +40,16 @@ assert 'if-no-files-found: error' in validate_workflow
 assert 'retention-days: 7' in validate_workflow
 assert 'npm install --no-save' not in validate_workflow
 assert 'npx playwright install --with-deps chromium firefox webkit' in validate_workflow
+assert 'Verify validated static export artifact boundary' in validate_workflow
+assert 'test -d out' in validate_workflow
+assert 'test -f out/index.html' in validate_workflow
+assert 'test ! -e out/CNAME' in validate_workflow
+assert 'cp CNAME out/CNAME' not in validate_workflow
+assert 'name: osb-validated-static-export-${{ github.event.pull_request.head.sha || github.sha }}' in validate_workflow
+assert 'path: out/' in validate_workflow
+assert 'retention-days: 3' in validate_workflow
+assert validate_workflow.count('name: osb-validated-static-export-') == 1
+assert validate_workflow.index('Run multi-engine responsive smoke') < validate_workflow.index('Upload validated static export')
 
 package_json = json.loads((root / 'package.json').read_text())
 assert package_json['devDependencies']['playwright'] == '1.55.1'
@@ -49,6 +62,9 @@ assert "github.event.workflow_run.conclusion == 'success'" in deploy_workflow
 assert 'ref: ${{ github.event.workflow_run.head_sha }}' in deploy_workflow
 assert 'EXPECTED_SHA: ${{ github.event.workflow_run.head_sha }}' in deploy_workflow
 assert 'Verify exact deployment candidate' in deploy_workflow
+assert 'Verify production release authorization' in deploy_workflow
+assert 'EXPECTED_DEPLOY_SHA: ${{ github.event.workflow_run.head_sha }}' in deploy_workflow
+assert 'node scripts/validate-production-authorization.mjs' in deploy_workflow
 assert 'npm ci --no-audit --no-fund' in deploy_workflow
 assert 'npm audit --omit=dev --audit-level=high' in deploy_workflow
 assert 'npm audit --audit-level=high' in deploy_workflow
