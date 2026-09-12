@@ -4,8 +4,8 @@
   "evidenceBranch": "agent/batch017-website-productization",
   "productPr": 2,
   "automatedEvidenceSnapshot": {
-    "candidateSha": "149c566c396a100133fab6126099f457e69766e0",
-    "workflowRun": 191,
+    "candidateSha": "d22f8f7d77c4426f6d1ca1e3e6a113e83cf03172",
+    "workflowRun": 192,
     "workflowName": "Validate Web Baseline",
     "result": "SUCCESS",
     "capturedOn": "2026-09-12",
@@ -19,6 +19,7 @@
     {"id":"pre_uat_readiness","ref":"scripts/validate-pre-uat-readiness.mjs"},
     {"id":"uat_evidence_integrity","ref":"scripts/validate-uat-evidence.mjs"},
     {"id":"uat_preview_contract","ref":"scripts/validate-uat-preview-contract.mjs"},
+    {"id":"release_state_regression_cases","ref":"scripts/test-release-state-cases.mjs"},
     {"id":"served_export_runtime_smoke","ref":"scripts/validate-served-export.mjs"},
     {"id":"chromium_interaction_smoke","ref":"scripts/validate-browser-smoke.mjs"},
     {"id":"multi_engine_responsive_keyboard_smoke","ref":"scripts/validate-browser-matrix.mjs"},

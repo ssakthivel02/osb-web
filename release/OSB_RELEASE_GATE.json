@@ -14,6 +14,7 @@
     "pre_uat_readiness",
     "uat_evidence_integrity",
     "uat_preview_contract",
+    "release_state_regression_cases",
     "typescript_typecheck",
     "production_next_build",
     "served_export_runtime_smoke",
