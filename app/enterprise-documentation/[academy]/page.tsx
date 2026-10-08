@@ -2,4 +2,7 @@ import { EnterpriseAcademy, enterpriseAcademyParams } from '../../../components/
 import { documentationGuides } from '../../../lib/experience-center-data';
 export const dynamicParams=false;
 export function generateStaticParams(){return enterpriseAcademyParams();}
-export default function Page({params}:{params:{academy:string}}){return <EnterpriseAcademy basePath="enterprise-documentation" academySlug={params.academy} title="Enterprise Documentation" description="Build complete design, operations, recovery, continuity and handover documentation for production services." guides={documentationGuides}/>;}
+export default async function Page(props:{params: Promise<{academy:string}>}) {
+  const params = await props.params;
+  return <EnterpriseAcademy basePath="enterprise-documentation" academySlug={params.academy} title="Enterprise Documentation" description="Build complete design, operations, recovery, continuity and handover documentation for production services." guides={documentationGuides}/>;
+}

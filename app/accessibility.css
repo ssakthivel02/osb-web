@@ -1,0 +1,8 @@
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{box-shadow:0 0 0 3px rgba(244,185,66,.18)}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+/* OSB-SUCCESSOR-HARDENING-002 */
+.searchBox button{color:#171009}
+@media(max-width:600px){
+  .nav a:not(.navCta){display:none}
+  .card,.metricCard,.authPanel,.practiceItem,.scenarioCard,.flashcard,.careerSection,.resourceSection,.operationsSection,.module{min-width:0;overflow-wrap:anywhere}
+}
+@media(max-width:365px){h1{font-size:2.4rem}}

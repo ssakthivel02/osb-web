@@ -2,4 +2,7 @@ import { EnterpriseGuidePage, enterpriseGuideParams } from '../../../../componen
 import { portfolioGuides } from '../../../../lib/practice-center-data';
 export const dynamicParams=false;
 export function generateStaticParams(){return enterpriseGuideParams(portfolioGuides);}
-export default function PortfolioGuidePage({params}:{params:{academy:string;guide:string}}){return <EnterpriseGuidePage academySlug={params.academy} guideSlug={params.guide} category="Portfolio Center" guides={portfolioGuides}/>;}
+export default async function PortfolioGuidePage(props:{params: Promise<{academy:string;guide:string}>}) {
+  const params = await props.params;
+  return <EnterpriseGuidePage academySlug={params.academy} guideSlug={params.guide} category="Portfolio Center" guides={portfolioGuides}/>;
+}

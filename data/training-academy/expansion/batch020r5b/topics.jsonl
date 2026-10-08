@@ -1,0 +1,3 @@
+{"topic_id":"OSB-TOPIC-HV-GENERATIONS","track_id":"OSB-TRACK-HYPERV","title":"VM Generations, Boot and Security","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R5B-HYPERV-VM-LIFECYCLE"}
+{"topic_id":"OSB-TOPIC-HV-STORAGE-CHECKPOINTS","track_id":"OSB-TRACK-HYPERV","title":"VHDX, Checkpoints and VM Storage Lifecycle","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R5B-HYPERV-VM-LIFECYCLE"}
+{"topic_id":"OSB-TOPIC-HV-INTEGRATION-MOBILITY","track_id":"OSB-TRACK-HYPERV","title":"Integration Services and VM Mobility","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R5B-HYPERV-VM-LIFECYCLE"}

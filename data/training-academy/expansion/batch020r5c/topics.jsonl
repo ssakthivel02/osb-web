@@ -1,0 +1,3 @@
+{"topic_id":"OSB-TOPIC-HV-STORAGE-ARCH","track_id":"OSB-TRACK-HYPERV","title":"Hyper-V Storage Architecture and Virtual Disk Operations","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R5C-HYPERV-PRODUCTION-OPERATIONS"}
+{"topic_id":"OSB-TOPIC-HV-MEMORY-COMPUTE","track_id":"OSB-TRACK-HYPERV","title":"Dynamic Memory, NUMA and Processor Governance","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R5C-HYPERV-PRODUCTION-OPERATIONS"}
+{"topic_id":"OSB-TOPIC-HV-NETWORK-OPS","track_id":"OSB-TRACK-HYPERV","title":"Virtual Networking and Production Mobility Operations","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R5C-HYPERV-PRODUCTION-OPERATIONS"}

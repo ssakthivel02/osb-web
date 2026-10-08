@@ -1,0 +1,3 @@
+{"topic_id":"OSB-TOPIC-VMW-ARCH","track_id":"OSB-TRACK-VMW","title":"vSphere Architecture and Inventory","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R14-VMWARE"}
+{"topic_id":"OSB-TOPIC-VMW-CLUSTER","track_id":"OSB-TRACK-VMW","title":"vSphere Cluster Availability, DRS and Mobility","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R14-VMWARE"}
+{"topic_id":"OSB-TOPIC-VMW-LIFECYCLE","track_id":"OSB-TRACK-VMW","title":"ESXi Lifecycle, Maintenance and Troubleshooting","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R14-VMWARE"}

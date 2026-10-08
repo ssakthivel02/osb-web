@@ -1,0 +1,3 @@
+{"topic_id":"OSB-TOPIC-HV-CLUSTER-HA","track_id":"OSB-TRACK-HYPERV","title":"Hyper-V Failover Clustering and High Availability","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R5D-HYPERV-CLUSTER-HA"}
+{"topic_id":"OSB-TOPIC-HV-CSV-MOBILITY","track_id":"OSB-TRACK-HYPERV","title":"Cluster Shared Volumes and Workload Mobility","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R5D-HYPERV-CLUSTER-HA"}
+{"topic_id":"OSB-TOPIC-HV-MAINTENANCE","track_id":"OSB-TRACK-HYPERV","title":"Cluster Maintenance and Availability Operations","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R5D-HYPERV-CLUSTER-HA"}

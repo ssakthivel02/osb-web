@@ -2,4 +2,7 @@ import { EnterpriseGuidePage, enterpriseGuideParams } from '../../../../componen
 import { glossaryGuides } from '../../../../lib/reference-center-data';
 export const dynamicParams=false;
 export function generateStaticParams(){return enterpriseGuideParams(glossaryGuides);}
-export default function GlossaryGuidePage({params}:{params:{academy:string;guide:string}}){return <EnterpriseGuidePage academySlug={params.academy} guideSlug={params.guide} category="Glossary Center" guides={glossaryGuides}/>;}
+export default async function GlossaryGuidePage(props:{params: Promise<{academy:string;guide:string}>}) {
+  const params = await props.params;
+  return <EnterpriseGuidePage academySlug={params.academy} guideSlug={params.guide} category="Glossary Center" guides={glossaryGuides}/>;
+}

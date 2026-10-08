@@ -9,7 +9,8 @@ export function generateStaticParams() {
   return academies.flatMap((academy) => careerResources.map((resource) => ({ academy: academy.slug, resource: resource.slug })));
 }
 
-export default function CareerResourcePage({ params }: { params: { academy: string; resource: string } }) {
+export default async function CareerResourcePage(props: { params: Promise<{ academy: string; resource: string }> }) {
+  const params = await props.params;
   const result = getCareerContent(params.academy, params.resource as CareerResourceSlug);
   if (!result) notFound();
 

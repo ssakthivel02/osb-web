@@ -6,7 +6,8 @@ export function generateStaticParams() {
   return learningTracks.map((track) => ({ slug: track.slug }));
 }
 
-export default function TrackDetailPage({ params }: { params: { slug: string } }) {
+export default async function TrackDetailPage(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const track = learningTracks.find((item) => item.slug === params.slug);
   if (!track) notFound();
 
@@ -18,8 +19,8 @@ export default function TrackDetailPage({ params }: { params: { slug: string } }
         <h1>{track.title}</h1>
         <p className="lead">{track.description}</p>
         <div className="actions">
-          <a className="primary" href="/login/">Start this path</a>
-          <a className="secondary" href="/tracks/">Back to catalogue</a>
+          <a className="primary" href="/tracks/">Browse verified catalogue</a>
+          <a className="secondary" href="/training-academy/">Browse physical records</a>
         </div>
       </section>
       <section className="section">
