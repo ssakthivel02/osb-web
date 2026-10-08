@@ -105,12 +105,14 @@
     },
     "githubServerSideProtection": {
       "status": "ABSENT",
-      "reviewedOn": "2026-09-12",
+      "reviewedOn": "2026-10-08",
       "branch": "main",
       "branchProtected": false,
       "requiredStatusChecksEnforced": false,
       "rulesetsObserved": 0,
-      "claimBoundary": "Fresh GitHub evidence shows main is not protected, required status-check enforcement is off, and no repository rulesets are configured. Production must remain blocked until equivalent governance is deliberately established and independently re-verified."
+      "detailedProtectionEndpointReadable": false,
+      "detailedProtectionEndpointResult": "GitHub App returned 403 Resource not accessible by integration",
+      "claimBoundary": "Fresh 8 Oct 2026 evidence: repository branch metadata reports main protected=false and the rulesets endpoint returns zero rulesets. The detailed branch-protection endpoint is not readable by this GitHub App (403), so no finer-grained protection settings are claimed. Production remains blocked until equivalent governance is deliberately established and independently re-verified."
     }
   },
   "manualOrExternalBlockers": [
