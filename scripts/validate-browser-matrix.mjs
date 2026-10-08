@@ -10,6 +10,7 @@ const engines = [
   ['webkit', webkit],
 ];
 const viewports = [
+  ['narrow', { width: 320, height: 800 }],
   ['mobile', { width: 390, height: 844 }],
   ['tablet', { width: 768, height: 1024 }],
   ['desktop', { width: 1440, height: 900 }],
@@ -31,13 +32,46 @@ async function waitForServer() {
 }
 
 async function checkNoHorizontalOverflow(page, label) {
-  const result = await page.evaluate(() => ({
-    scrollWidth: document.documentElement.scrollWidth,
-    clientWidth: document.documentElement.clientWidth,
-  }));
+  const result = await page.evaluate(() => {
+    const root = document.documentElement;
+    const clientWidth = root.clientWidth;
+    const offenders = [...document.querySelectorAll('body *')]
+      .map((element) => {
+        const rect = element.getBoundingClientRect();
+        return {
+          tag: element.tagName.toLowerCase(),
+          className: typeof element.className === 'string' ? element.className : '',
+          text: (element.textContent ?? '').trim().replace(/\s+/g, ' ').slice(0, 90),
+          left: Math.round(rect.left),
+          right: Math.round(rect.right),
+          width: Math.round(rect.width),
+          scrollWidth: element.scrollWidth,
+          clientWidth: element.clientWidth,
+        };
+      })
+      .filter((item) => item.left < -2 || item.right > clientWidth + 2 || item.scrollWidth > item.clientWidth + 2)
+      .slice(0, 12);
+    return { scrollWidth: root.scrollWidth, clientWidth, offenders };
+  });
   if (result.scrollWidth > result.clientWidth + 2) {
-    failures.push(`${label}: horizontal overflow ${result.scrollWidth}px > ${result.clientWidth}px`);
+    failures.push(`${label}: horizontal overflow ${result.scrollWidth}px > ${result.clientWidth}px; offenders=${JSON.stringify(result.offenders)}`);
   }
+}
+
+async function checkWithinViewport(locator, label) {
+  const r = await locator.evaluate((e) => { const x=e.getBoundingClientRect(); return {left:x.left,right:x.right,width:window.innerWidth}; });
+  if (r.left < -2 || r.right > r.width + 2) failures.push(`${label}: clipped horizontally`);
+}
+
+async function checkTextContrast(locator, label, minimumRatio = 4.5) {
+  const r = await locator.evaluate((e) => {
+    const rgb=(v)=>v.match(/[\d.]+/g)?.map(Number)?.slice(0,3) ?? null;
+    const lum=(a)=>{const c=a.map(v=>{const s=v/255;return s<=.04045?s/12.92:((s+.055)/1.055)**2.4});return .2126*c[0]+.7152*c[1]+.0722*c[2]};
+    const s=getComputedStyle(e),fg=rgb(s.color),bg=rgb(s.backgroundColor); if(!fg||!bg)return {ratio:null};
+    const a=lum(fg),b=lum(bg); return {ratio:(Math.max(a,b)+.05)/(Math.min(a,b)+.05)};
+  });
+  if(r.ratio===null) failures.push(`${label}: contrast not computable`);
+  else if(r.ratio<minimumRatio) failures.push(`${label}: contrast ${r.ratio.toFixed(2)}:1 below ${minimumRatio}:1`);
 }
 
 async function checkSemanticAccessibility(page, label) {
@@ -147,9 +181,17 @@ async function runScenario(engineName, browserType, viewportName, viewport) {
     const runtimeErrors = [];
     page.on('pageerror', (error) => runtimeErrors.push(error.message));
 
+    await page.goto(`${BASE}/`, { waitUntil: 'networkidle' });
+    await checkNoHorizontalOverflow(page, `${label} home`);
+    await checkSemanticAccessibility(page, `${label} home`);
+    const homeCta = page.locator('header .navCta');
+    if (!(await homeCta.isVisible())) failures.push(`${label}: home CTA is not visible`);
+    else await checkWithinViewport(homeCta, `${label} home CTA`);
+
     await page.goto(`${BASE}/search/`, { waitUntil: 'networkidle' });
     await checkNoHorizontalOverflow(page, `${label} search`);
     await checkSemanticAccessibility(page, `${label} search`);
+    await checkTextContrast(page.locator('.searchBox button'), `${label} search button`);
     const searchInput = page.locator('#training-search');
     if (!(await focusByTab(page, searchInput, `${label} search input`))) return;
     await searchInput.fill('Azure');
@@ -215,7 +257,7 @@ const result = {
   classification: 'AUTOMATED_MULTI_ENGINE_RESPONSIVE_KEYBOARD_SEMANTIC_SMOKE_ONLY',
   engines: engines.map(([name]) => name),
   viewports: viewports.map(([name, viewport]) => ({ name, ...viewport })),
-  scenarios: 9,
+  scenarios: engines.length * viewports.length,
   checks: [
     'hydrated search and aria-live update',
     'Tab reachability for search, track and learner-record controls',

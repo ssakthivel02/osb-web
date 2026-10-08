@@ -15,6 +15,8 @@
   "releaseStatus": "HOLD",
   "automatedEvidence": [
     {"id":"corpus_integrity","ref":"scripts/validate-training-academy.mjs"},
+    {"id":"funding_freshness","ref":"scripts/validate-funding-freshness.mjs"},
+    {"id":"funding_freshness_regression","ref":"scripts/test-funding-freshness.mjs"},
     {"id":"learner_journey_closure","ref":"scripts/audit-training-academy-closure.mjs"},
     {"id":"pre_uat_readiness","ref":"scripts/validate-pre-uat-readiness.mjs"},
     {"id":"uat_evidence_integrity","ref":"scripts/validate-uat-evidence.mjs"},
@@ -46,7 +48,7 @@
   "externalEvidenceReviews": {
     "fundingPublicSchemeFacts": {
       "status": "RECHECKED",
-      "reviewedOn": "2026-09-11",
+      "reviewedOn": "2026-10-08",
       "evidenceRef": "lib/funding-data.ts",
       "claimBoundary": "No OSB eligibility, provider approval, partnership, application approval or funding award is asserted."
     },

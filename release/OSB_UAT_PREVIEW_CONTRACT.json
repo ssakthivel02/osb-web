@@ -7,7 +7,7 @@
     "branch": "agent/batch017-website-productization",
     "workflow": "Validate Web Baseline",
     "artifactPrefix": "osb-validated-static-export-",
-    "artifactRetentionDays": 3,
+    "artifactRetentionDays": 7,
     "requiresSuccessfulExactHeadValidation": true,
     "consumeExistingValidatedArtifact": true,
     "rebuildForPreviewForbidden": true

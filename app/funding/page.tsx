@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 const statusLabel = {
-  open: 'OPEN NOW',
+  open: 'OPEN AT LAST REVIEW',
   upcoming: 'UPCOMING',
   'ongoing-route': 'ONGOING ROUTE',
 } as const;

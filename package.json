@@ -8,6 +8,8 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "validate:corpus": "node scripts/validate-training-academy.mjs",
+    "validate:funding-freshness": "node scripts/validate-funding-freshness.mjs",
+    "test:funding-freshness": "node scripts/test-funding-freshness.mjs",
     "validate:closure": "node scripts/audit-training-academy-closure.mjs",
     "validate:release": "node scripts/validate-release-gate.mjs",
     "validate:readiness": "node scripts/validate-pre-uat-readiness.mjs",
@@ -17,7 +19,7 @@
     "validate:served-export": "node scripts/validate-served-export.mjs"
   },
   "dependencies": {
-    "next": "15.5.24",
+    "next": "15.5.27",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },

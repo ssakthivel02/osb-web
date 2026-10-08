@@ -16,7 +16,7 @@ if (contract.source?.repository !== 'ssakthivel02/osb-web') fail('source reposit
 if (contract.source?.branch !== 'agent/batch017-website-productization') fail('source branch mismatch');
 if (contract.source?.workflow !== 'Validate Web Baseline') fail('source workflow mismatch');
 if (contract.source?.artifactPrefix !== 'osb-validated-static-export-') fail('unexpected validated export artifact prefix');
-if (contract.source?.artifactRetentionDays !== 3) fail('validated export retention must remain 3 days');
+if (contract.source?.artifactRetentionDays !== 7) fail('validated export retention must remain 7 days');
 if (contract.source?.requiresSuccessfulExactHeadValidation !== true) fail('exact-head validation requirement missing');
 if (contract.source?.consumeExistingValidatedArtifact !== true) fail('preview must consume the existing validated artifact');
 if (contract.source?.rebuildForPreviewForbidden !== true) fail('preview rebuild must remain forbidden');
@@ -38,7 +38,7 @@ for (const host of ['learn.omsaravanabhava.org', 'ssakthivel02.github.io']) {
 }
 
 if (!workflow.includes('name: osb-validated-static-export-${{ github.event.pull_request.head.sha || github.sha }}')) fail('validation workflow lacks exact-SHA static export artifact');
-if (!workflow.includes('retention-days: 3')) fail('validation workflow artifact retention mismatch');
+if ((workflow.match(/retention-days: 7/g) ?? []).length < 2) fail('validation workflow must retain SBOM and static export for 7 days');
 if (!workflow.includes('test ! -e out/CNAME')) fail('validation workflow must reject CNAME from validated export');
 if (!workflow.includes('permissions:\n  contents: read')) fail('validation workflow must remain read-only');
 if (workflow.includes('pages: write') || workflow.includes('id-token: write')) fail('validation workflow must not gain deployment permissions');

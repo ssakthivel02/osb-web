@@ -22,6 +22,8 @@ const requiredChecks = [
   'web_safety_cases',
   'dependency_install',
   'corpus_integrity',
+  'funding_freshness',
+  'funding_freshness_regression',
   'learner_journey_closure',
   'pre_uat_readiness',
   'uat_evidence_integrity',
@@ -40,7 +42,7 @@ for (const check of requiredChecks) {
 
 const fundingReview = gate.evidenceReviews?.fundingClaimsOfficialSourceReview;
 if (fundingReview?.complete !== true) fail('funding public-source evidence review must be recorded');
-if (fundingReview.reviewedOn !== '2026-09-11') fail('unexpected funding review date');
+if (fundingReview.reviewedOn !== '2026-10-08') fail('unexpected funding review date');
 if (fundingReview.evidenceRef !== 'lib/funding-data.ts') fail('funding review evidence reference mismatch');
 
 if (index.schema !== 'osb.release-evidence-index.v2') fail('release evidence index schema mismatch');
@@ -70,6 +72,8 @@ if (gate.productionReleaseStatus !== index.releaseStatus) fail('release gate and
 
 const requiredEvidenceIds = [
   'corpus_integrity',
+  'funding_freshness',
+  'funding_freshness_regression',
   'learner_journey_closure',
   'pre_uat_readiness',
   'uat_evidence_integrity',

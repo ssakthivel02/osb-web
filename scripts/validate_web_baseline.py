@@ -38,6 +38,8 @@ assert "s.bomFormat!=='CycloneDX'" in validate_workflow
 assert 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' in validate_workflow
 assert 'if-no-files-found: error' in validate_workflow
 assert 'retention-days: 7' in validate_workflow
+assert 'npm run validate:funding-freshness' in validate_workflow
+assert 'npm run test:funding-freshness' in validate_workflow
 assert 'npm install --no-save' not in validate_workflow
 assert 'npx playwright install --with-deps chromium firefox webkit' in validate_workflow
 assert 'Verify validated static export artifact boundary' in validate_workflow
@@ -47,7 +49,7 @@ assert 'test ! -e out/CNAME' in validate_workflow
 assert 'cp CNAME out/CNAME' not in validate_workflow
 assert 'name: osb-validated-static-export-${{ github.event.pull_request.head.sha || github.sha }}' in validate_workflow
 assert 'path: out/' in validate_workflow
-assert 'retention-days: 3' in validate_workflow
+assert validate_workflow.count('retention-days: 7') >= 2
 assert validate_workflow.count('name: osb-validated-static-export-') == 1
 assert validate_workflow.index('Run multi-engine responsive smoke') < validate_workflow.index('Upload validated static export')
 

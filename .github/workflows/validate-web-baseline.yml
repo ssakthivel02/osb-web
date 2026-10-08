@@ -40,6 +40,10 @@ jobs:
           cache: 'npm'
           cache-dependency-path: package-lock.json
       - run: npm ci --no-audit --no-fund
+      - name: Syntax-check browser validators
+        run: |
+          node --check scripts/validate-browser-smoke.mjs
+          node --check scripts/validate-browser-matrix.mjs
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
       - name: Audit complete locked dependency graph
@@ -56,6 +60,8 @@ jobs:
           if-no-files-found: error
           retention-days: 7
       - run: npm run validate:corpus
+      - run: npm run validate:funding-freshness
+      - run: npm run test:funding-freshness
       - run: npm run validate:closure
       - run: npm run validate:release
       - run: npm run validate:readiness
@@ -83,4 +89,4 @@ jobs:
           name: osb-validated-static-export-${{ github.event.pull_request.head.sha || github.sha }}
           path: out/
           if-no-files-found: error
-          retention-days: 3
+          retention-days: 7

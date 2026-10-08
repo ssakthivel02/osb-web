@@ -5,6 +5,8 @@ export type FundingRoute = {
   routeType: 'grant' | 'local-commissioning' | 'employer-funded' | 'innovation-partnership';
   geography: string;
   status: 'open' | 'upcoming' | 'ongoing-route';
+  opensAt?: string;
+  closesAt?: string;
   fit: 'strong' | 'conditional' | 'partnership';
   amount: string;
   keyDate: string;
@@ -25,16 +27,17 @@ export const fundingRoutes: FundingRoute[] = [
     routeType: 'grant',
     geography: 'UK adult vocational learning',
     status: 'upcoming',
+    opensAt: '2027-01-05T00:00:00Z',
     fit: 'strong',
     amount: '£30,000–£60,000 for projects lasting 3–12 months',
-    keyDate: 'Stage 1 opens 5 January 2027 and closes 2 February 2027 at 5pm GMT',
+    keyDate: 'Stage 1 opens 5 January 2027; the current official page states an early-February 2027 Stage 1 deadline at 5pm GMT. Re-check the exact closing date when full 2027 guidance is published.',
     eligibilitySummary: 'Technology-enabled projects must address an evidenced workforce-skills need and improve adult vocational learning. Ufi states that full 2027 scope and criteria will be published later in 2026 and may change year to year.',
     osbUseCase: 'Best current grant route for piloting and evaluating an evidence-backed digital vocational-learning capability within OSB Training Academy.',
     nextAction: 'Build the problem evidence, target learner profile, measurable outcomes, technical plan, delivery milestones and budget now; re-check the published 2027 guidance before submission.',
     sourceUrl: 'https://ufi.co.uk/grant-funding/voctech-activate/',
     sourceLabel: 'Ufi VocTech Activate official page',
-    reviewedOn: '2026-09-11',
-    evidenceNote: 'Official Ufi page re-checked 11 September 2026. Upcoming opportunity only; this entry is not an eligibility decision or funding award.',
+    reviewedOn: '2026-10-08',
+    evidenceNote: 'Official Ufi page re-checked 8 October 2026. The current page confirms a 5 January 2027 opening and an early-February Stage 1 deadline at 5pm GMT; exact 2027 closing date/full criteria remain subject to publication. Upcoming opportunity only; this entry is not an eligibility decision or funding award.',
   },
   {
     id: 'solent-skills-bootcamps-2026-27',
@@ -51,8 +54,8 @@ export const fundingRoutes: FundingRoute[] = [
     nextAction: 'Track Portsmouth/Solent commissioning notices, map OSB courses to priority skills needs, prepare employer evidence and determine whether to bid directly or through an eligible training-provider partner.',
     sourceUrl: 'https://www.gov.uk/government/publications/skills-bootcamps-funding-allocations/skills-bootcamps-funding-allocations-2026-to-2027',
     sourceLabel: 'GOV.UK Skills Bootcamps funding allocations 2026–27',
-    reviewedOn: '2026-09-11',
-    evidenceNote: 'Official GOV.UK allocation table re-checked 11 September 2026. Allocation evidence only; it does not prove an open procurement, provider eligibility or award.',
+    reviewedOn: '2026-10-08',
+    evidenceNote: 'Official GOV.UK allocation table re-checked 8 October 2026. Portsmouth City Council (Solent) remains listed at £1.5 million maximum allocation including £400,000 ringfenced construction. Allocation evidence only; it does not prove an open procurement, provider eligibility or award.',
   },
   {
     id: 'apprenticeship-levy-transfer-england-2026',
@@ -69,8 +72,8 @@ export const fundingRoutes: FundingRoute[] = [
     nextAction: 'Do not market OSB as levy-funded yet. First identify a suitable apprenticeship standard and delivery partnership, then verify provider eligibility, funding-band and employer-transfer requirements.',
     sourceUrl: 'https://www.gov.uk/guidance/transferring-your-apprenticeship-levy-to-another-business',
     sourceLabel: 'GOV.UK apprenticeship levy transfer guidance',
-    reviewedOn: '2026-09-11',
-    evidenceNote: 'Official GOV.UK transfer guidance and August 2026–July 2027 funding rules re-checked 11 September 2026. Funding mechanism only; no OSB provider eligibility is claimed.',
+    reviewedOn: '2026-10-08',
+    evidenceNote: 'Official GOV.UK levy-transfer guidance re-checked 8 October 2026. Current guidance still states a 50% transfer allowance from the previous financial year’s apprenticeship levy funds. Funding mechanism only; no OSB provider eligibility is claimed.',
   },
   {
     id: 'ktp-2026-27-round-3',
@@ -79,6 +82,8 @@ export const fundingRoutes: FundingRoute[] = [
     routeType: 'innovation-partnership',
     geography: 'United Kingdom',
     status: 'open',
+    opensAt: '2026-08-13T00:00:00Z',
+    closesAt: '2026-10-14T10:00:00Z',
     fit: 'partnership',
     amount: 'Round budget up to £12.5 million; eligible project costs are partially grant funded',
     keyDate: 'Opened 13 August 2026; closes 14 October 2026 at 11:00am UK time',
@@ -87,13 +92,14 @@ export const fundingRoutes: FundingRoute[] = [
     nextAction: 'Only pursue if a qualifying UK business entity, knowledge-base partner and specific strategic innovation project can be evidenced quickly enough for the current round; otherwise target a later KTP round.',
     sourceUrl: 'https://apply-for-innovation-funding.service.gov.uk/competition/2514/overview/81b3dcb8-7d03-42ed-8b97-5e6e51c4d1ed',
     sourceLabel: 'Innovate UK Innovation Funding Service — KTP Round 3',
-    reviewedOn: '2026-09-11',
-    evidenceNote: 'Official Innovation Funding Service competition page re-checked 11 September 2026. Open competition evidence only; no eligibility, partnership or award is claimed.',
+    reviewedOn: '2026-10-08',
+    evidenceNote: 'Official Innovation Funding Service competition page re-checked 8 October 2026. It confirms opening 13 August 2026 and closing 14 October 2026 at 11:00am UK time. Open competition evidence only; no eligibility, partnership or award is claimed.',
   },
 ];
 
 export const fundingEvidencePolicy = {
-  reviewedOn: '2026-09-11',
+  reviewedOn: '2026-10-08',
+  maxReviewAgeDays: 30,
   rule: 'Every funding route is advisory research only until the official source is re-checked immediately before outreach or application.',
   prohibitedClaims: [
     'OSB is eligible',

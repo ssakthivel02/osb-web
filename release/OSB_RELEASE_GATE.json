@@ -10,6 +10,8 @@
     "web_safety_cases",
     "dependency_install",
     "corpus_integrity",
+    "funding_freshness",
+    "funding_freshness_regression",
     "learner_journey_closure",
     "pre_uat_readiness",
     "uat_evidence_integrity",
@@ -24,7 +26,7 @@
   "evidenceReviews": {
     "fundingClaimsOfficialSourceReview": {
       "complete": true,
-      "reviewedOn": "2026-09-11",
+      "reviewedOn": "2026-10-08",
       "scope": [
         "ufi-voctech-activate-2027",
         "solent-skills-bootcamps-2026-27",
