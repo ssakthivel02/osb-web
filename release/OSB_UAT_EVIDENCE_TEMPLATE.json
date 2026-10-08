@@ -3,7 +3,7 @@
   "status": "NOT_RUN",
   "candidate": {
     "repository": "ssakthivel02/osb-web",
-    "branch": "agent/batch017-website-productization",
+    "branch": "agent/osb-successor-hardening-002-20261008",
     "sha": null,
     "previewUrl": null,
     "testedAt": null,

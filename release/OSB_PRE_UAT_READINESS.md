@@ -5,9 +5,9 @@ Status: **AUTOMATED PRE-UAT ONLY — PRODUCTION HOLD**
 ## Verified baseline before this control
 
 - Repository: `ssakthivel02/osb-web`
-- Evidence branch: `agent/batch017-website-productization`
-- Last fully validated head before this control: `cf2daf753685b189df28797251c301c1862eb3c6`
-- GitHub Actions run #137: PASS
+- Evidence branch: `agent/osb-successor-hardening-002-20261008`
+- Last fully validated head before this control: `ab278cfdcd6f6cd1c200a96f77a1606738d213a6`
+- GitHub Actions run #200: PASS
 - 334 physical learner records
 - 219 registered sources
 - 19/19 canonical tracks populated

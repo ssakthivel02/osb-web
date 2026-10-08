@@ -15,7 +15,7 @@ const fail = (message) => {
 if (gate.control !== 'OSB-RELEASE-GATE-001') fail('unexpected control id');
 if (gate.canonicalRepository !== 'ssakthivel02/osb-web') fail('canonical repository mismatch');
 if (gate.integrationBranch !== 'main') fail('integration branch mismatch');
-if (gate.productPr !== 2) fail('product PR mismatch');
+if (gate.productPr !== 3) fail('product PR mismatch');
 
 const requiredChecks = [
   'web_baseline_validation',

@@ -4,7 +4,7 @@
   "candidateSha": null,
   "source": {
     "repository": "ssakthivel02/osb-web",
-    "branch": "agent/batch017-website-productization",
+    "branch": "agent/osb-successor-hardening-002-20261008",
     "workflow": "Validate Web Baseline",
     "artifactPrefix": "osb-validated-static-export-",
     "artifactRetentionDays": 7,

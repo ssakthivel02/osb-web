@@ -13,7 +13,7 @@ const fail = (message) => {
 if (contract.schema !== 'osb.uat-preview-contract.v1') fail('unexpected schema');
 if (!['PROVIDER_PENDING', 'HOSTED'].includes(contract.status)) fail('invalid contract status');
 if (contract.source?.repository !== 'ssakthivel02/osb-web') fail('source repository mismatch');
-if (contract.source?.branch !== 'agent/batch017-website-productization') fail('source branch mismatch');
+if (contract.source?.branch !== 'agent/osb-successor-hardening-002-20261008') fail('source branch mismatch');
 if (contract.source?.workflow !== 'Validate Web Baseline') fail('source workflow mismatch');
 if (contract.source?.artifactPrefix !== 'osb-validated-static-export-') fail('unexpected validated export artifact prefix');
 if (contract.source?.artifactRetentionDays !== 7) fail('validated export retention must remain 7 days');

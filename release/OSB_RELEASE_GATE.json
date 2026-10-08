@@ -3,8 +3,8 @@
   "canonicalRepository": "ssakthivel02/osb-web",
   "integrationBranch": "main",
   "currentMainAtCreation": "f093af5a8f29cb5015b05ea6e25301a4cb727fcd",
-  "productPr": 2,
-  "evidenceBranch": "agent/batch017-website-productization",
+  "productPr": 3,
+  "evidenceBranch": "agent/osb-successor-hardening-002-20261008",
   "verifiedAutomatedChecks": [
     "web_baseline_validation",
     "web_safety_cases",
@@ -46,7 +46,7 @@
     "ownerReleaseApproval": false
   },
   "manualGateClarification": {
-    "fundingClaimsReviewedAgainstOfficialSources": "Remains false until the exact release candidate receives the final human/application-context claim review. The separate evidenceReviews field records the completed 2026-09-11 public-source research refresh."
+    "fundingClaimsReviewedAgainstOfficialSources": "Remains false until the exact release candidate receives the final human/application-context claim review. The separate evidenceReviews field records the completed 2026-10-08 public-source research refresh."
   },
   "githubServerSideProtectionVerified": false,
   "productionDeploymentApproved": false,

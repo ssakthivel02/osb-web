@@ -10,7 +10,7 @@ if (evidence.schema !== 'osb.uat-evidence.v1') fail('unexpected schema');
 if (!['NOT_RUN','IN_PROGRESS','COMPLETE'].includes(evidence.status)) fail('invalid status');
 if (!['HOLD','CONDITIONAL_GO','PROD_GO'].includes(evidence.decision)) fail('invalid decision');
 if (evidence.candidate?.repository !== 'ssakthivel02/osb-web') fail('candidate repository mismatch');
-if (evidence.candidate?.branch !== 'agent/batch017-website-productization') fail('candidate branch mismatch');
+if (evidence.candidate?.branch !== 'agent/osb-successor-hardening-002-20261008') fail('candidate branch mismatch');
 
 const sha = evidence.candidate?.sha;
 if (sha !== null && !/^[0-9a-f]{40}$/i.test(String(sha))) fail('candidate sha must be null or an exact 40-character commit sha');
