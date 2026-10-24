@@ -18,12 +18,13 @@ if(!Number.isFinite(now.getTime()))errors.push('invalid OSB_FUNDING_NOW');
 if(!Number.isFinite(maxAge)||maxAge<1||maxAge>90)errors.push('maxReviewAgeDays must be 1..90');
 const ids=new Set();
 for(const r of routes){const id=String(r.id||'');if(!id)errors.push('route missing id');if(ids.has(id))errors.push('duplicate route: '+id);ids.add(id);
-if(!['open','upcoming','ongoing-route'].includes(r.status))errors.push(id+': invalid status');
+if(!['open','upcoming','ongoing-route','closed'].includes(r.status))errors.push(id+': invalid status');
 if(typeof r.sourceUrl!=='string'||!r.sourceUrl.startsWith('https://'))errors.push(id+': sourceUrl must be HTTPS');
 if(!/^\d{4}-\d{2}-\d{2}$/.test(String(r.reviewedOn||'')))errors.push(id+': invalid reviewedOn');
 const reviewedEnd=new Date(String(r.reviewedOn)+'T23:59:59.999Z'),age=(now-reviewedEnd)/86400000;if(Number.isFinite(age)&&age>maxAge)errors.push(id+': official-source review is stale');
 const opens=r.opensAt?new Date(r.opensAt):null,closes=r.closesAt?new Date(r.closesAt):null;if(opens&&!Number.isFinite(opens.getTime()))errors.push(id+': invalid opensAt');if(closes&&!Number.isFinite(closes.getTime()))errors.push(id+': invalid closesAt');if(opens&&closes&&opens>=closes)errors.push(id+': opensAt must precede closesAt');
 if(r.status==='open'){if(!closes)errors.push(id+': open route requires closesAt');else if(now>=closes)errors.push(id+': status=open is stale because closesAt has passed');}
-if(r.status==='upcoming'){if(!opens)errors.push(id+': upcoming route requires opensAt');else if(now>=opens)errors.push(id+': status=upcoming is stale because opensAt has arrived');}}
+if(r.status==='upcoming'){if(!opens)errors.push(id+': upcoming route requires opensAt');else if(now>=opens)errors.push(id+': status=upcoming is stale because opensAt has arrived');}
+if(r.status==='closed'){if(!closes)errors.push(id+': closed route requires closesAt');else if(now<closes)errors.push(id+': status=closed is premature because closesAt is in the future');}}
 if(routes.some(r=>r.reviewedOn!==policy.reviewedOn))errors.push('route/policy reviewedOn mismatch');
 console.log(JSON.stringify({gate:errors.length?'FAIL':'PASS',now:now.toISOString(),routes:routes.length,policyReviewedOn:policy.reviewedOn,maxReviewAgeDays:maxAge,errors,claimBoundary:'Freshness only; no eligibility, provider, partnership or award claim.'},null,2));if(errors.length)process.exit(1);

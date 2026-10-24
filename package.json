@@ -19,7 +19,7 @@
     "validate:served-export": "node scripts/validate-served-export.mjs"
   },
   "dependencies": {
-    "next": "15.5.27",
+    "next": "15.5.28",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },

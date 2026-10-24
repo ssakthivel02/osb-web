@@ -10,6 +10,7 @@ const statusLabel = {
   open: 'OPEN AT LAST REVIEW',
   upcoming: 'UPCOMING',
   'ongoing-route': 'ONGOING ROUTE',
+  closed: 'CLOSED — HISTORICAL OPPORTUNITY',
 } as const;
 
 export default function FundingPage() {
@@ -35,7 +36,7 @@ export default function FundingPage() {
         </section>
 
         <section className="section" aria-labelledby="funding-routes-heading">
-          <p className="eyebrow">Current candidate routes</p>
+          <p className="eyebrow">Tracked funding routes</p>
           <h2 id="funding-routes-heading">Prioritised opportunities</h2>
           <div className="grid">
             {fundingRoutes.map((route) => (

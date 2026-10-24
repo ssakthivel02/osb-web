@@ -4,7 +4,7 @@ export type FundingRoute = {
   provider: string;
   routeType: 'grant' | 'local-commissioning' | 'employer-funded' | 'innovation-partnership';
   geography: string;
-  status: 'open' | 'upcoming' | 'ongoing-route';
+  status: 'open' | 'upcoming' | 'ongoing-route' | 'closed';
   opensAt?: string;
   closesAt?: string;
   fit: 'strong' | 'conditional' | 'partnership';
@@ -22,22 +22,23 @@ export type FundingRoute = {
 export const fundingRoutes: FundingRoute[] = [
   {
     id: 'ufi-voctech-activate-2027',
-    name: 'VocTech Activate 2027',
+    name: 'VocTech Activate — latest published 2026 round',
     provider: 'Ufi VocTech Trust',
     routeType: 'grant',
     geography: 'UK adult vocational learning',
-    status: 'upcoming',
-    opensAt: '2027-01-05T00:00:00Z',
+    status: 'closed',
+    opensAt: '2026-01-06T00:00:00Z',
+    closesAt: '2026-02-03T17:00:00Z',
     fit: 'strong',
     amount: '£30,000–£60,000 for projects lasting 3–12 months',
-    keyDate: 'Stage 1 opens 5 January 2027; the current official page states an early-February 2027 Stage 1 deadline at 5pm GMT. Re-check the exact closing date when full 2027 guidance is published.',
-    eligibilitySummary: 'Technology-enabled projects must address an evidenced workforce-skills need and improve adult vocational learning. Ufi states that full 2027 scope and criteria will be published later in 2026 and may change year to year.',
+    keyDate: 'Last published round: Stage 1 opened 6 January 2026 and closed 3 February 2026 at 5pm GMT. No 2027 application dates are confirmed on the currently available official page.',
+    eligibilitySummary: 'The last published 2026 call supported innovative technology addressing evidence-backed problems in UK adult vocational learning. Future-round eligibility and dates require new official guidance.',
     osbUseCase: 'Best current grant route for piloting and evaluating an evidence-backed digital vocational-learning capability within OSB Training Academy.',
-    nextAction: 'Build the problem evidence, target learner profile, measurable outcomes, technical plan, delivery milestones and budget now; re-check the published 2027 guidance before submission.',
+    nextAction: 'Monitor Ufi for an officially announced future call; prepare learner evidence and a measurable pilot, but do not advertise a 2027 opening or claim eligibility without published confirmation.',
     sourceUrl: 'https://ufi.co.uk/grant-funding/voctech-activate/',
     sourceLabel: 'Ufi VocTech Activate official page',
-    reviewedOn: '2026-10-08',
-    evidenceNote: 'Official Ufi page re-checked 8 October 2026. The current page confirms a 5 January 2027 opening and an early-February Stage 1 deadline at 5pm GMT; exact 2027 closing date/full criteria remain subject to publication. Upcoming opportunity only; this entry is not an eligibility decision or funding award.',
+    reviewedOn: '2026-10-24',
+    evidenceNote: 'Official Ufi VocTech Activate page checked 24 October 2026: applications currently closed; displayed dates are for the 2026 round (6 January to 3 February). No official 2027 opening was established. No OSB eligibility or award is claimed.',
   },
   {
     id: 'solent-skills-bootcamps-2026-27',
@@ -54,8 +55,8 @@ export const fundingRoutes: FundingRoute[] = [
     nextAction: 'Track Portsmouth/Solent commissioning notices, map OSB courses to priority skills needs, prepare employer evidence and determine whether to bid directly or through an eligible training-provider partner.',
     sourceUrl: 'https://www.gov.uk/government/publications/skills-bootcamps-funding-allocations/skills-bootcamps-funding-allocations-2026-to-2027',
     sourceLabel: 'GOV.UK Skills Bootcamps funding allocations 2026–27',
-    reviewedOn: '2026-10-08',
-    evidenceNote: 'Official GOV.UK allocation table re-checked 8 October 2026. Portsmouth City Council (Solent) remains listed at £1.5 million maximum allocation including £400,000 ringfenced construction. Allocation evidence only; it does not prove an open procurement, provider eligibility or award.',
+    reviewedOn: '2026-10-24',
+    evidenceNote: 'Official GOV.UK allocation table re-checked 24 October 2026. Portsmouth City Council (Solent) remains listed at £1.5 million maximum allocation including £400,000 ringfenced construction. Allocation evidence only; it does not prove an open procurement, provider eligibility or award.',
   },
   {
     id: 'apprenticeship-levy-transfer-england-2026',
@@ -72,8 +73,8 @@ export const fundingRoutes: FundingRoute[] = [
     nextAction: 'Do not market OSB as levy-funded yet. First identify a suitable apprenticeship standard and delivery partnership, then verify provider eligibility, funding-band and employer-transfer requirements.',
     sourceUrl: 'https://www.gov.uk/guidance/transferring-your-apprenticeship-levy-to-another-business',
     sourceLabel: 'GOV.UK apprenticeship levy transfer guidance',
-    reviewedOn: '2026-10-08',
-    evidenceNote: 'Official GOV.UK levy-transfer guidance re-checked 8 October 2026. Current guidance still states a 50% transfer allowance from the previous financial year’s apprenticeship levy funds. Funding mechanism only; no OSB provider eligibility is claimed.',
+    reviewedOn: '2026-10-24',
+    evidenceNote: 'Official GOV.UK levy-transfer guidance re-checked 24 October 2026. Current guidance still states a 50% transfer allowance from the previous financial year’s apprenticeship levy funds. Funding mechanism only; no OSB provider eligibility is claimed.',
   },
   {
     id: 'ktp-2026-27-round-3',
@@ -81,7 +82,7 @@ export const fundingRoutes: FundingRoute[] = [
     provider: 'Innovate UK',
     routeType: 'innovation-partnership',
     geography: 'United Kingdom',
-    status: 'open',
+    status: 'closed',
     opensAt: '2026-08-13T00:00:00Z',
     closesAt: '2026-10-14T10:00:00Z',
     fit: 'partnership',
@@ -89,16 +90,16 @@ export const fundingRoutes: FundingRoute[] = [
     keyDate: 'Opened 13 August 2026; closes 14 October 2026 at 11:00am UK time',
     eligibilitySummary: 'Each application must be led by an eligible UK knowledge base working with a UK registered business and a Knowledge Transfer Adviser. The business cannot apply alone.',
     osbUseCase: 'Possible innovation route for a genuine R&D project around adaptive vocational learning, assessment, AI-assisted labs or training analytics, provided a suitable knowledge-base partner and qualifying business case exist.',
-    nextAction: 'Only pursue if a qualifying UK business entity, knowledge-base partner and specific strategic innovation project can be evidenced quickly enough for the current round; otherwise target a later KTP round.',
+    nextAction: 'Round 3 is closed. Investigate a later KTP round only with a qualifying UK business, knowledge-base partner, Knowledge Transfer Adviser and strategic innovation project; re-check its separate competition brief and deadline.',
     sourceUrl: 'https://apply-for-innovation-funding.service.gov.uk/competition/2514/overview/81b3dcb8-7d03-42ed-8b97-5e6e51c4d1ed',
     sourceLabel: 'Innovate UK Innovation Funding Service — KTP Round 3',
-    reviewedOn: '2026-10-08',
-    evidenceNote: 'Official Innovation Funding Service competition page re-checked 8 October 2026. It confirms opening 13 August 2026 and closing 14 October 2026 at 11:00am UK time. Open competition evidence only; no eligibility, partnership or award is claimed.',
+    reviewedOn: '2026-10-24',
+    evidenceNote: 'Official Innovation Funding Service and UKRI pages checked 24 October 2026: Round 3 closed on 14 October 2026. Future KTP rounds have separate eligibility and deadlines; no OSB eligibility, partnership or award is claimed.',
   },
 ];
 
 export const fundingEvidencePolicy = {
-  reviewedOn: '2026-10-08',
+  reviewedOn: '2026-10-24',
   maxReviewAgeDays: 30,
   rule: 'Every funding route is advisory research only until the official source is re-checked immediately before outreach or application.',
   prohibitedClaims: [
