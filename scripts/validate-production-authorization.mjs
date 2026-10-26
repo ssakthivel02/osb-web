@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { verifyProductionPromotion } from './lib/verify-production-promotion.mjs';
 
 const gate = JSON.parse(readFileSync(new URL('../release/OSB_RELEASE_GATE.json', import.meta.url), 'utf8'));
 const index = JSON.parse(readFileSync(new URL('../release/OSB_RELEASE_EVIDENCE_INDEX.json', import.meta.url), 'utf8'));
@@ -26,7 +27,14 @@ if (!uat.ownerApproval?.approvedBy || !uat.ownerApproval?.approvedAt || !uat.own
 const candidateSha = index.exactManualUatCandidateSha;
 if (!/^[0-9a-f]{40}$/i.test(String(candidateSha ?? ''))) fail('release evidence index lacks exact manual UAT candidate SHA');
 if (uat.candidate?.sha !== candidateSha) fail('UAT evidence SHA does not match release evidence index');
-if (candidateSha !== expectedSha) fail(`authorized candidate ${candidateSha} does not match deployment SHA ${expectedSha}`);
+let promotion;
+try {
+  promotion = verifyProductionPromotion({ candidateSha, deploymentSha: expectedSha });
+} catch (error) {
+  fail(error.message);
+}
 
 console.log('OSB_PRODUCTION_AUTH_PASS');
-console.log(`authorized_sha=${expectedSha}`);
+console.log(`tested_candidate_sha=${promotion.testedCandidateSha}`);
+console.log(`authorized_deployment_sha=${promotion.deploymentSha}`);
+console.log(`approval_only_files=${promotion.changedFiles.join(',')}`);

@@ -68,6 +68,8 @@ jobs:
       - run: npm run validate:uat-evidence
       - run: npm run validate:uat-preview-contract
       - run: npm run test:release-states
+      - run: node scripts/test-production-promotion.mjs
+      - run: node --check scripts/verify-live-production.mjs
       - run: npm run typecheck
       - run: npm run build
       - run: npm run validate:served-export
