@@ -160,10 +160,11 @@ function prodGoState() {
   return state;
 }
 
-function assertLegal(name, state, { productionAuth = false } = {}) {
+function assertLegal(name, state) {
   writeState(state);
   for (const [validatorName, script] of validators) expectPass(`${name}/${validatorName}`, script);
-  if (productionAuth) expectPass(`${name}/production-auth`, 'scripts/validate-production-authorization.mjs', { EXPECTED_DEPLOY_SHA: SHA });
+  // Production promotion involves real Git ancestry; tested separately in
+  // scripts/test-production-promotion.mjs with isolated Git commits.
 }
 
 function assertIllegal(name, state, script, env = {}) {
@@ -176,7 +177,11 @@ try {
   assertLegal('PRE_UAT_HOLD', baseState());
   assertLegal('UAT_IN_PROGRESS_HOLD_PARTIAL_MANUAL', inProgressState());
   assertLegal('UAT_COMPLETE_CONDITIONAL_GO', conditionalState());
-  assertLegal('UAT_COMPLETE_PROD_GO', prodGoState(), { productionAuth: true });
+  assertLegal('UAT_COMPLETE_PROD_GO', prodGoState());
+  {
+    const state = prodGoState();
+    assertIllegal('PROD_GO_REQUIRES_POST_UAT_APPROVAL_COMMIT', state, 'scripts/validate-production-authorization.mjs', { EXPECTED_DEPLOY_SHA: SHA });
+  }
 
   {
     const state = baseState();
@@ -231,7 +236,7 @@ try {
   }
 
   console.log('OSB_RELEASE_STATE_REGRESSION_PASS');
-  console.log('legal_cases=4 illegal_cases=9');
+  console.log('legal_cases=4 illegal_cases=10');
 } catch (error) {
   caught = error;
 } finally {
