@@ -77,6 +77,7 @@ jobs:
       - run: npm run validate:uat-preview-contract
       - run: npm run test:release-states
       - run: node scripts/test-murugan-library.mjs
+      - run: node scripts/test-murugan-publication-gate.mjs
       - run: node scripts/test-production-promotion.mjs
       - run: node --check scripts/verify-live-production.mjs
       - run: npm run typecheck

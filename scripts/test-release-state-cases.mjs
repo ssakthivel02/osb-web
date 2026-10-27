@@ -9,6 +9,7 @@ const PATHS = {
   index: path.join(RELEASE_DIR, 'OSB_RELEASE_EVIDENCE_INDEX.json'),
   uat: path.join(RELEASE_DIR, 'OSB_UAT_EVIDENCE_TEMPLATE.json'),
   preview: path.join(RELEASE_DIR, 'OSB_UAT_PREVIEW_CONTRACT.json'),
+  library: path.join(ROOT, 'lib/murugan-library.json'),
 };
 const ORIGINALS = Object.fromEntries(Object.entries(PATHS).map(([key, file]) => [key, fs.readFileSync(file, 'utf8')]));
 const BASE = Object.fromEntries(Object.entries(ORIGINALS).map(([key, raw]) => [key, JSON.parse(raw)]));
@@ -34,6 +35,7 @@ function writeState(state) {
   writeJson(PATHS.index, state.index);
   writeJson(PATHS.uat, state.uat);
   writeJson(PATHS.preview, state.preview);
+  writeJson(PATHS.library, state.library);
 }
 
 function run(script, env = {}) {
@@ -139,6 +141,9 @@ function conditionalState() {
 
 function prodGoState() {
   const state = completeState('PROD_GO');
+  // Synthetic human approval is solely a regression fixture. No real data is approved.
+  state.library.productionContentApproval = true;
+  for (const entry of state.library.texts) entry.humanPublicationApproval = true;
   state.gate.manualGates.ownerReleaseApproval = true;
   state.gate.githubServerSideProtectionVerified = true;
   state.gate.productionDeploymentApproved = true;
@@ -206,6 +211,16 @@ try {
   }
   {
     const state = prodGoState();
+    state.library.productionContentApproval = false;
+    assertIllegal('PROD_GO_WITH_UNAPPROVED_TAMIL_LIBRARY', state, 'scripts/validate-release-gate.mjs');
+  }
+  {
+    const state = prodGoState();
+    state.library.texts[0].humanPublicationApproval = false;
+    assertIllegal('PROD_GO_WITH_UNREVIEWED_TAMIL_TEXT', state, 'scripts/validate-release-gate.mjs');
+  }
+  {
+    const state = prodGoState();
     state.gate.githubServerSideProtectionVerified = false;
     state.index.externalEvidenceReviews.githubServerSideProtection = {
       status: 'ABSENT', reviewedOn: '2026-09-12', branch: 'main', branchProtected: false,
@@ -236,7 +251,7 @@ try {
   }
 
   console.log('OSB_RELEASE_STATE_REGRESSION_PASS');
-  console.log('legal_cases=4 illegal_cases=10');
+  console.log('legal_cases=4 illegal_cases=12');
 } catch (error) {
   caught = error;
 } finally {

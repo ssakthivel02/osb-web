@@ -1,4 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs';
+import { assertMuruganPublicationReady } from './lib/verify-murugan-publication.mjs';
 
 const gateUrl = new URL('../release/OSB_RELEASE_GATE.json', import.meta.url);
 const indexUrl = new URL('../release/OSB_RELEASE_EVIDENCE_INDEX.json', import.meta.url);
@@ -137,6 +138,11 @@ if (index.releaseStatus === 'CONDITIONAL_GO') {
 }
 
 if (index.releaseStatus === 'PROD_GO') {
+  try {
+    assertMuruganPublicationReady(JSON.parse(readFileSync(new URL('../lib/murugan-library.json', import.meta.url), 'utf8')));
+  } catch (error) {
+    fail(error.message);
+  }
   if (uat.status !== 'COMPLETE') fail('PROD_GO requires COMPLETE UAT evidence');
   if (!exactUatSha) fail('PROD_GO requires exact candidate SHA');
   if (!allManualComplete) fail('PROD_GO requires every manual release gate');

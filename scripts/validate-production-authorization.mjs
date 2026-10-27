@@ -1,9 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { verifyProductionPromotion } from './lib/verify-production-promotion.mjs';
+import { assertMuruganPublicationReady } from './lib/verify-murugan-publication.mjs';
 
 const gate = JSON.parse(readFileSync(new URL('../release/OSB_RELEASE_GATE.json', import.meta.url), 'utf8'));
 const index = JSON.parse(readFileSync(new URL('../release/OSB_RELEASE_EVIDENCE_INDEX.json', import.meta.url), 'utf8'));
 const uat = JSON.parse(readFileSync(new URL('../release/OSB_UAT_EVIDENCE_TEMPLATE.json', import.meta.url), 'utf8'));
+const murugan = JSON.parse(readFileSync(new URL('../lib/murugan-library.json', import.meta.url), 'utf8'));
 
 const fail = (message) => {
   console.error(`OSB_PRODUCTION_AUTH_FAIL: ${message}`);
@@ -21,6 +23,11 @@ if (gate.productionDeploymentApproved !== true) fail('productionDeploymentApprov
 if (gate.githubServerSideProtectionVerified !== true) fail('server-side protection/governance must be verified');
 if (index.externalEvidenceReviews?.githubServerSideProtection?.status !== 'VERIFIED') fail('evidence index must record VERIFIED server-side protection/governance');
 if (!Object.values(gate.manualGates ?? {}).length || !Object.values(gate.manualGates).every((value) => value === true)) fail('all manual release gates must be true');
+try {
+  assertMuruganPublicationReady(murugan);
+} catch (error) {
+  fail(error.message);
+}
 if (!uat.ownerApproval?.approved) fail('final owner release approval is required');
 if (!uat.ownerApproval?.approvedBy || !uat.ownerApproval?.approvedAt || !uat.ownerApproval?.evidenceRef) fail('owner approval metadata is incomplete');
 
