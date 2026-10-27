@@ -9,17 +9,19 @@ export default function Catalogue({ texts, pending, modern }: {
   texts: MuruganText[]; pending: PendingWork[]; modern: ModernSong[];
 }) {
   const [query, setQuery] = useState('');
-  const q = query.trim().toLocaleLowerCase('ta');
-  const matches = (name: string) => name.toLocaleLowerCase('ta').includes(q);
-  const visible = texts.filter((work) => matches(work.titleTa) || matches(work.titleEn) || matches(work.collection));
+  const normalize = (value: string) => value.normalize('NFC').toLocaleLowerCase('ta');
+  const terms = normalize(query).trim().split(/\s+/u).filter(Boolean);
+  const matches = (text: string) => terms.every((term) => normalize(text).includes(term));
+  const matchesVerse = (work: MuruganText) => terms.length > 0 && matches(work.text);
+  const visible = texts.filter((work) => matches(work.titleTa) || matches(work.titleEn) || matches(work.collection) || matchesVerse(work));
   const pendingVisible = pending.filter((work) => matches(work.titleTa) || matches(work.titleEn));
   const modernVisible = modern.filter((work) => matches(work.titleTa));
   return (
     <section className={styles.catalogue} aria-labelledby="works-title">
       <h2 id="works-title" className={styles.sectionTitle}>பாடல்கள் மற்றும் நூல்கள்</h2>
       <div className={styles.searchBox}>
-        <label htmlFor="murugan-query">தமிழ் / English தலைப்பைத் தேடுக</label>
-        <input id="murugan-query" type="search" value={query} onChange={(e)=>setQuery(e.target.value)} placeholder="எ.கா. முத்தைத்தரு / Kandar" autoComplete="off"/>
+        <label htmlFor="murugan-query">தமிழ் பாடல்வரிகள் / தலைப்பைத் தேடுக</label>
+        <input id="murugan-query" type="search" value={query} onChange={(e)=>setQuery(e.target.value)} placeholder="எ.கா. முத்தைத்தரு / சரவண / Kandar" autoComplete="off"/>
         <p role="status" aria-live="polite">{visible.length} உரைகள் · {pendingVisible.length} ஆய்விலுள்ள நூல்கள் · {modernVisible.length} அனுமதி தேவைப்படும் பாடல்கள்</p>
       </div>
       {visible.length>0 && (
