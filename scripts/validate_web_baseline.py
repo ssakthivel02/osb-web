@@ -41,7 +41,11 @@ assert 'retention-days: 7' in validate_workflow
 assert 'npm run validate:funding-freshness' in validate_workflow
 assert 'npm run test:funding-freshness' in validate_workflow
 assert 'npm install --no-save' not in validate_workflow
-assert 'npx playwright install --with-deps chromium firefox webkit' in validate_workflow
+# Browser engines must be installed and exercised. The CI runner can provide
+# OS libraries already, so don't mandate slow apt --with-deps installation.
+assert 'npx playwright install chromium firefox webkit' in validate_workflow
+assert 'node scripts/validate-browser-smoke.mjs' in validate_workflow
+assert 'node scripts/validate-browser-matrix.mjs' in validate_workflow
 assert 'Verify validated static export artifact boundary' in validate_workflow
 assert 'test -d out' in validate_workflow
 assert 'test -f out/index.html' in validate_workflow
