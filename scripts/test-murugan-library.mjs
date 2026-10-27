@@ -36,4 +36,7 @@ for (const required of ["'speechSynthesis' in window", "startsWith('ta')", 'synt
 assert.ok(!/https?:\/\/[^\s"']+/.test(tools), 'reader tools must not contact external sites');
 
 assert.ok(pages[0].includes('index: false'),'pending editorial review must not be indexed');
+assert.ok(pages[1].includes('matches(work.text)'), 'verified Tamil verse bodies must be searchable locally');
+assert.ok(pages[1].includes("normalize('NFC')"), 'Tamil verse search must normalize Unicode');
+assert.ok(data.texts.some(work => work.text.includes('சரவண')), 'Tamil full-text search needs a real verse fixture');
 console.log('OSB_MURUGAN_LIBRARY_INTEGRITY_PASS: 12 Tamil songs + 1 reviewed opening extract, 16 metadata-only works, 6 modern rights-held titles');
