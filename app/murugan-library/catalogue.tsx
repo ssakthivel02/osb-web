@@ -10,7 +10,7 @@ export default function Catalogue({ texts, pending, modern }: {
 }) {
   const [query, setQuery] = useState('');
   const normalize = (value: string) => value.normalize('NFC').toLocaleLowerCase('ta');
-  const terms = normalize(query).trim().split(/\s+/u).filter(Boolean);
+  const terms = normalize(query).trim().split(/\s+/).filter(Boolean);
   const matches = (text: string) => terms.every((term) => normalize(text).includes(term));
   const matchesVerse = (work: MuruganText) => terms.length > 0 && matches(work.text);
   const visible = texts.filter((work) => matches(work.titleTa) || matches(work.titleEn) || matches(work.collection) || matchesVerse(work));
