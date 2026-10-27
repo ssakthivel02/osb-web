@@ -16,6 +16,11 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    # Match the locked Playwright 1.55.1 browsers and required system libraries.
+    # This avoids slow runner apt downloads while retaining three-engine tests.
+    container:
+      image: mcr.microsoft.com/playwright:v1.55.1-noble
+      options: --ipc=host
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4

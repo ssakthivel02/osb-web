@@ -44,6 +44,7 @@ assert 'npm install --no-save' not in validate_workflow
 # Browser engines must be installed and exercised. The CI runner can provide
 # OS libraries already, so don't mandate slow apt --with-deps installation.
 assert 'npx playwright install chromium firefox webkit' in validate_workflow
+assert 'image: mcr.microsoft.com/playwright:v1.55.1-noble' in validate_workflow
 assert 'node scripts/validate-browser-smoke.mjs' in validate_workflow
 assert 'node scripts/validate-browser-matrix.mjs' in validate_workflow
 assert 'Verify validated static export artifact boundary' in validate_workflow
