@@ -1,0 +1,289 @@
+{
+  "schema": "osb.murugan-source-intake.v1",
+  "scope": "editorial-metadata-only",
+  "productionImportApproved": false,
+  "reviewedAsOf": "2026-10-27",
+  "policy": "Research references are NOT authorization to copy text. Complete source credits, contributor permissions, Tamil proofreading and owner evidence must be approved before ANY text ingestion. Do not change site links.",
+  "coordinatorPermission": "not-received",
+  "sources": [
+    {
+      "id": "PM-0023",
+      "url": "https://projectmadurai.org/pm_etexts/utf8/pmuni0023.html",
+      "candidateWorks": [
+        "Kandar Anubhuti",
+        "Kandar Alankaram",
+        "Vel Virutham",
+        "Mayil Virutham",
+        "Seval Virutham"
+      ],
+      "redistributionPermission": "pending-written-confirmation",
+      "creditsVerified": false,
+      "editionHashSha256": null
+    },
+    {
+      "id": "PM-0034-01",
+      "url": "https://projectmadurai.org/pm_etexts/utf8/pmuni0034_01.html",
+      "candidateWorks": [
+        "Kandar Kalivenba",
+        "Shanmuga Kavasam"
+      ],
+      "redistributionPermission": "pending-written-confirmation",
+      "creditsVerified": false,
+      "editionHashSha256": null
+    },
+    {
+      "id": "PM-0034-02",
+      "url": "https://projectmadurai.org/pm_etexts/utf8/pmuni0034_02.html",
+      "candidateWorks": [],
+      "redistributionPermission": "pending-written-confirmation",
+      "creditsVerified": false,
+      "editionHashSha256": null
+    },
+    {
+      "id": "PM-0067",
+      "url": "https://projectmadurai.org/pm_etexts/utf8/pmuni0067.html",
+      "candidateWorks": [
+        "Tirumurukatrupadai"
+      ],
+      "redistributionPermission": "pending-written-confirmation",
+      "creditsVerified": false,
+      "editionHashSha256": null
+    },
+    {
+      "id": "PM-0144",
+      "url": "https://projectmadurai.org/pm_etexts/utf8/pmuni0144.html",
+      "candidateWorks": [
+        "Kandar Kalivenba"
+      ],
+      "redistributionPermission": "pending-written-confirmation",
+      "creditsVerified": false,
+      "editionHashSha256": null
+    },
+    {
+      "id": "PM-0180",
+      "url": "https://projectmadurai.org/pm_etexts/utf8/pmuni0180.html",
+      "candidateWorks": [],
+      "redistributionPermission": "pending-written-confirmation",
+      "creditsVerified": false,
+      "editionHashSha256": null
+    },
+    {
+      "id": "PM-0187",
+      "url": "https://projectmadurai.org/pm_etexts/utf8/pmuni0187.html",
+      "candidateWorks": [],
+      "redistributionPermission": "pending-written-confirmation",
+      "creditsVerified": false,
+      "editionHashSha256": null
+    },
+    {
+      "id": "PM-0189",
+      "url": "https://projectmadurai.org/pm_etexts/utf8/pmuni0189.html",
+      "candidateWorks": [],
+      "redistributionPermission": "pending-written-confirmation",
+      "creditsVerified": false,
+      "editionHashSha256": null
+    },
+    {
+      "id": "PM-0191",
+      "url": "https://projectmadurai.org/pm_etexts/utf8/pmuni0191.html",
+      "candidateWorks": [],
+      "redistributionPermission": "pending-written-confirmation",
+      "creditsVerified": false,
+      "editionHashSha256": null
+    },
+    {
+      "id": "PM-0239",
+      "url": "https://projectmadurai.org/pm_etexts/utf8/pmuni0239.html",
+      "candidateWorks": [
+        "Kanda Puranam"
+      ],
+      "redistributionPermission": "pending-written-confirmation",
+      "creditsVerified": false,
+      "editionHashSha256": null
+    }
+  ],
+  "pendingWorks": [
+    {
+      "titleTa": "கந்தர் அனுபூதி",
+      "titleEn": "Kandar Anubhuti",
+      "sourceIds": [
+        "PM-0023"
+      ],
+      "editorialReview": "not-started",
+      "permission": "not-cleared",
+      "approvedCompleteEdition": false,
+      "sourceSha256": null
+    },
+    {
+      "titleTa": "கந்தர் அலங்காரம்",
+      "titleEn": "Kandar Alankaram",
+      "sourceIds": [
+        "PM-0023"
+      ],
+      "editorialReview": "not-started",
+      "permission": "not-cleared",
+      "approvedCompleteEdition": false,
+      "sourceSha256": null
+    },
+    {
+      "titleTa": "கந்தர் அந்தாதி",
+      "titleEn": "Kandar Andhadhi",
+      "sourceIds": [],
+      "editorialReview": "not-started",
+      "permission": "not-cleared",
+      "approvedCompleteEdition": false,
+      "sourceSha256": null
+    },
+    {
+      "titleTa": "கந்தர் கலிவெண்பா",
+      "titleEn": "Kandar Kalivenba",
+      "sourceIds": [
+        "PM-0034-01",
+        "PM-0144"
+      ],
+      "editorialReview": "not-started",
+      "permission": "not-cleared",
+      "approvedCompleteEdition": false,
+      "sourceSha256": null
+    },
+    {
+      "titleTa": "திருமுருகாற்றுப்படை",
+      "titleEn": "Tirumurukatrupadai",
+      "sourceIds": [
+        "PM-0067"
+      ],
+      "editorialReview": "not-started",
+      "permission": "not-cleared",
+      "approvedCompleteEdition": false,
+      "sourceSha256": null
+    },
+    {
+      "titleTa": "சுப்பிரமணிய புஜங்கம்",
+      "titleEn": "Subramanya Bhujangam",
+      "sourceIds": [],
+      "editorialReview": "not-started",
+      "permission": "not-cleared",
+      "approvedCompleteEdition": false,
+      "sourceSha256": null
+    },
+    {
+      "titleTa": "சண்முகக் கவசம்",
+      "titleEn": "Shanmuga Kavasam",
+      "sourceIds": [
+        "PM-0034-01"
+      ],
+      "editorialReview": "not-started",
+      "permission": "not-cleared",
+      "approvedCompleteEdition": false,
+      "sourceSha256": null
+    },
+    {
+      "titleTa": "வேல் விருத்தம்",
+      "titleEn": "Vel Virutham",
+      "sourceIds": [
+        "PM-0023"
+      ],
+      "editorialReview": "not-started",
+      "permission": "not-cleared",
+      "approvedCompleteEdition": false,
+      "sourceSha256": null
+    },
+    {
+      "titleTa": "மயில் விருத்தம்",
+      "titleEn": "Mayil Virutham",
+      "sourceIds": [
+        "PM-0023"
+      ],
+      "editorialReview": "not-started",
+      "permission": "not-cleared",
+      "approvedCompleteEdition": false,
+      "sourceSha256": null
+    },
+    {
+      "titleTa": "சேவல் விருத்தம்",
+      "titleEn": "Seval Virutham",
+      "sourceIds": [
+        "PM-0023"
+      ],
+      "editorialReview": "not-started",
+      "permission": "not-cleared",
+      "approvedCompleteEdition": false,
+      "sourceSha256": null
+    },
+    {
+      "titleTa": "திருவகுப்பு",
+      "titleEn": "Thiruvaguppu",
+      "sourceIds": [],
+      "editorialReview": "not-started",
+      "permission": "not-cleared",
+      "approvedCompleteEdition": false,
+      "sourceSha256": null
+    },
+    {
+      "titleTa": "வேல் மாறல்",
+      "titleEn": "Vel Maaral",
+      "sourceIds": [],
+      "editorialReview": "not-started",
+      "permission": "not-cleared",
+      "approvedCompleteEdition": false,
+      "sourceSha256": null
+    },
+    {
+      "titleTa": "குமாரஸ்தவம்",
+      "titleEn": "Kumarastavam",
+      "sourceIds": [],
+      "editorialReview": "not-started",
+      "permission": "not-cleared",
+      "approvedCompleteEdition": false,
+      "sourceSha256": null
+    },
+    {
+      "titleTa": "பரிபூரண பஞ்சாமிர்த வண்ணம்",
+      "titleEn": "Panchaamirtha Vannam",
+      "sourceIds": [],
+      "editorialReview": "not-started",
+      "permission": "not-cleared",
+      "approvedCompleteEdition": false,
+      "sourceSha256": null
+    },
+    {
+      "titleTa": "கந்த புராணம்",
+      "titleEn": "Kanda Puranam",
+      "sourceIds": [
+        "PM-0239"
+      ],
+      "editorialReview": "not-started",
+      "permission": "not-cleared",
+      "approvedCompleteEdition": false,
+      "sourceSha256": null
+    },
+    {
+      "titleTa": "முருகன் அஷ்டோத்திரம்",
+      "titleEn": "Murugan Ashtothram",
+      "sourceIds": [],
+      "editorialReview": "not-started",
+      "permission": "not-cleared",
+      "approvedCompleteEdition": false,
+      "sourceSha256": null
+    }
+  ],
+  "tiruppugazhCollection": {
+    "volumes": [
+      "PM-0180",
+      "PM-0187",
+      "PM-0189",
+      "PM-0191"
+    ],
+    "claimedEditionNumbers": "1-1326",
+    "numberingVerified": false,
+    "permissionsGranted": false,
+    "additionalVersesApprovedForImport": 0
+  },
+  "modernSongs": {
+    "catalogueTitles": 6,
+    "lyricsPermission": "not-cleared",
+    "audioPermission": "not-cleared",
+    "lyricsImported": 0,
+    "recordingsImported": 0
+  }
+}
