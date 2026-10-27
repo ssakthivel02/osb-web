@@ -1,7 +1,7 @@
 // Passive, read-only production smoke. Must never mutate deployed content.
 const ORIGIN = 'https://learn.omsaravanabhava.org';
 const cases = [
-  { path: '/', marker: 'OmSaravanaBhava Learning Ecosystem' },
+  { path: '/', marker: 'OSB Platform Release 001' },
   { path: '/training-academy/', marker: 'Training Academy' },
 ];
 let failed = false;

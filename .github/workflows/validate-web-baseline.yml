@@ -75,7 +75,9 @@ jobs:
       - run: npm run validate:served-export
       - name: Install browser engines for locked Playwright dependency
         run: |
-          npx playwright install --with-deps chromium firefox webkit
+          # Hosted Ubuntu image already has browser OS libraries. Avoid very slow
+          # apt --with-deps downloads; the three real browser tests below stay mandatory.
+          npx playwright install chromium firefox webkit
       - name: Run pinned Chromium interaction smoke
         run: node scripts/validate-browser-smoke.mjs
       - name: Run multi-engine responsive smoke
