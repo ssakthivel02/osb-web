@@ -89,6 +89,8 @@ jobs:
       - name: Run pinned Chromium interaction smoke
         run: node scripts/validate-browser-smoke.mjs
       - name: Run multi-engine responsive smoke
+        env:
+          HOME: /root # Playwright Firefox requires HOME owned by running root user
         run: node scripts/validate-browser-matrix.mjs
       - name: Verify validated static export artifact boundary
         run: |
