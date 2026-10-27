@@ -28,5 +28,12 @@ for (const page of pages) {
   assert.ok(!/https?:\/\/[^\s"']+/.test(page),'no external links in new reader routes');
 }
 assert.ok(pages[2].includes('generateStaticParams'),'all reading routes must export statically');
+const tools = readFileSync(new URL('../app/murugan-library/reader-tools.tsx', import.meta.url), 'utf8');
+assert.ok(pages[2].includes('<ReaderTools title={entry.titleTa} text={entry.text}/>'), 'reader must use on-site Tamil text');
+for (const required of ["'speechSynthesis' in window", "startsWith('ta')", 'synthesizer.cancel()', 'aria-live="polite"', 'window.print()', 'aria-pressed={paperMode}']) {
+  assert.ok(tools.includes(required),'missing accessible reader control '+required);
+}
+assert.ok(!/https?:\/\/[^\s"']+/.test(tools), 'reader tools must not contact external sites');
+
 assert.ok(pages[0].includes('index: false'),'pending editorial review must not be indexed');
 console.log('OSB_MURUGAN_LIBRARY_INTEGRITY_PASS: 12 Tamil songs + 1 reviewed opening extract, 16 metadata-only works, 6 modern rights-held titles');

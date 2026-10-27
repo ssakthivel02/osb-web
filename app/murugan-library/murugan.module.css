@@ -36,3 +36,19 @@
 .sourceBox h2{font-size:1.45rem;line-height:1.45;letter-spacing:0}
 .sourceBox p{font-size:.95rem}
 @media(max-width:700px){.shell,.readerShell{padding:20px 16px 64px}.hero{padding:25px}.stats span{font-size:.85rem}.verses{padding:12px}}
+
+.readerTools{margin-top:28px}
+.toolRow{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.toolRow button{border:1px solid #d2ac74;border-radius:10px;background:#30291e;color:#fff4e5;padding:10px 14px;font:inherit;cursor:pointer}
+.toolRow button:focus-visible{outline:3px solid #ffd18a;outline-offset:3px}
+.toolRow button:disabled{opacity:.42;cursor:not-allowed}
+.speechStatus{font-size:.9rem;color:#c3cada;min-height:1.8em}
+.versesPaper{margin:36px 0;padding:clamp(18px,3vw,35px);background:#fff7e8;color:#20190d;border-inline-start:4px solid #8a5e21;border-radius:5px}
+.versesPaper p{line-height:2.2;white-space:pre-line;color:#25190a;overflow-wrap:anywhere;margin:0 0 26px}
+@media print{
+ .siteHeader,.toolRow,.speechStatus,.back{display:none!important}
+ .readerShell,.reader{max-width:100%;margin:0;padding:0;background:white;color:black;border:0;box-shadow:none}
+ .verses,.versesPaper{background:white!important;color:black!important;border:0}
+ .verses p,.versesPaper p{color:black!important}
+ .sourceBox p{color:black!important}
+}

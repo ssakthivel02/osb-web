@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import SiteHeader from '../../../components/site-header';
 import { findMuruganText, muruganTexts } from '../../../lib/murugan-library';
 import styles from '../murugan.module.css';
+import ReaderTools from '../reader-tools';
 
 export function generateStaticParams() {
   return muruganTexts.map(({ slug }) => ({ slug }));
@@ -30,11 +31,7 @@ export default async function TamilReader({ params }: { params: Promise<{ slug: 
           <h1 className={styles.readerTitle}>{entry.titleTa}</h1>
           <p className={styles.author}>{entry.authorTa} · {entry.titleEn}</p>
           {entry.publicationStatus==='reviewed-opening-only' && <p className={styles.notice}>இது தொடக்கப் பகுதி மட்டுமே; முழுப் பதிப்பு அல்ல.</p>}
-          <div className={styles.verses}>
-            {entry.text.split(/\n{2,}/).map((verse,i)=>(
-              <p key={i} lang="ta">{verse}</p>
-            ))}
-          </div>
+          <ReaderTools title={entry.titleTa} text={entry.text}/>
           <section className={styles.sourceBox} aria-label="உரை ஆதாரம் மற்றும் மதிப்பாய்வு நிலை">
             <h2>மூலமும் பதிப்பு குறிப்பும்</h2>
             <p>{entry.provenance}</p>
