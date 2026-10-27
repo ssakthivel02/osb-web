@@ -64,7 +64,7 @@ export function SiteHeader() {
             <a href="/compliance-center/">Compliance</a>
             <a href="/platform-operations/">Platform Ops</a>
             <a href="/dashboard/">Dashboard</a>
-            <a href="/login/">Sign in</a>
+            <a href="/login/">Access status</a>
           </div>
         </details>
         <a className="navCta" href="/training-academy/">Explore academy</a>
