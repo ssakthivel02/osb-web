@@ -30,6 +30,9 @@ jobs:
         env:
           EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
+          # Container image user can differ from GitHub workspace owner.
+          # Trust only this exact checked-out GitHub Actions workspace.
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
           ACTUAL_SHA="$(git rev-parse HEAD)"
           echo "Expected candidate SHA: ${EXPECTED_SHA}"
           echo "Checked-out HEAD SHA: ${ACTUAL_SHA}"
