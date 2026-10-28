@@ -1,0 +1,23 @@
+name: Monitor OSB Production
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '29 5,17 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: osb-production-monitor
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '20'
+      - run: node scripts/verify-live-production.mjs

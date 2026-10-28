@@ -2,4 +2,7 @@ import { EnterpriseGuidePage, enterpriseGuideParams } from '../../../../componen
 import { knowledgeGuides } from '../../../../lib/intelligence-center-data';
 export const dynamicParams=false;
 export function generateStaticParams(){return enterpriseGuideParams(knowledgeGuides);}
-export default function KnowledgeGuidePage({params}:{params:{academy:string;guide:string}}){return <EnterpriseGuidePage academySlug={params.academy} guideSlug={params.guide} category="Knowledge Base" guides={knowledgeGuides}/>;}
+export default async function KnowledgeGuidePage(props:{params: Promise<{academy:string;guide:string}>}) {
+  const params = await props.params;
+  return <EnterpriseGuidePage academySlug={params.academy} guideSlug={params.guide} category="Knowledge Base" guides={knowledgeGuides}/>;
+}

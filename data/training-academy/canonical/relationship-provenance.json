@@ -1,0 +1,15 @@
+{
+  "schema_id": "osb.relationship.provenance.v1",
+  "source_artifact": "OSB_TRAINING_ACADEMY_REAL_CORPUS_COWORK.zip",
+  "source_zip_sha256": "a1d53ee3f4650e3304ea32d38d830d79743d01e17cb6ce628c662d195f58b0ce",
+  "source_relationship_file": "02_CANONICAL/relationships.jsonl",
+  "source_relationship_file_bytes": 28600,
+  "source_relationship_file_sha256": "321ff03683441ff8d0aa75abdaa70a4dd98d9f41ad6dd4550efda9b5bd79ec58",
+  "relationship_count": 142,
+  "relationship_type_counts": {
+    "PREREQUISITE_OF": 50,
+    "CROSS_LINK": 92
+  },
+  "derivation": "Sort physical learner records lexicographically by id; for each record emit prerequisites as PREREQUISITE_OF edges and related_ids as CROSS_LINK edges, preserving array order. This reproduces the exact 142 semantic edges in the verified seed relationship export.",
+  "integrity_rule": "Every endpoint must resolve to a physical learner record. Missing endpoints fail CI; edges are never silently dropped or invented."
+}

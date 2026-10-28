@@ -10,7 +10,8 @@ export function generateStaticParams() {
   );
 }
 
-export default function AcademyTopicPage({ params }: { params: { academy: string; topic: string } }) {
+export default async function AcademyTopicPage(props: { params: Promise<{ academy: string; topic: string }> }) {
+  const params = await props.params;
   const academy = academyMap[params.academy];
   const topic = academy?.topics.find((item) => item.slug === params.topic);
   if (!academy || !topic) notFound();

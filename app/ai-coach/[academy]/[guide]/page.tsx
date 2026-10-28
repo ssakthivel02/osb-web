@@ -3,6 +3,7 @@ import { aiCoachGuides } from '../../../../lib/ai-coach-data';
 
 export const dynamicParams=false;
 export function generateStaticParams(){return enterpriseGuideParams(aiCoachGuides);}
-export default function AiCoachGuidePage({params}:{params:{academy:string;guide:string}}){
+export default async function AiCoachGuidePage(props:{params: Promise<{academy:string;guide:string}>}) {
+  const params = await props.params;
   return <EnterpriseGuidePage academySlug={params.academy} guideSlug={params.guide} category="AI Coach Platform" guides={aiCoachGuides}/>;
 }

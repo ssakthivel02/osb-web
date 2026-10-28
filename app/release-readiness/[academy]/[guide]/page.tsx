@@ -2,4 +2,7 @@ import { EnterpriseGuidePage, enterpriseGuideParams } from '../../../../componen
 import { releaseReadinessGuides } from '../../../../lib/platform-center-data';
 export const dynamicParams=false;
 export function generateStaticParams(){return enterpriseGuideParams(releaseReadinessGuides);}
-export default function ReleaseReadinessGuidePage({params}:{params:{academy:string;guide:string}}){return <EnterpriseGuidePage academySlug={params.academy} guideSlug={params.guide} category="Release Readiness" guides={releaseReadinessGuides}/>;}
+export default async function ReleaseReadinessGuidePage(props:{params: Promise<{academy:string;guide:string}>}) {
+  const params = await props.params;
+  return <EnterpriseGuidePage academySlug={params.academy} guideSlug={params.guide} category="Release Readiness" guides={releaseReadinessGuides}/>;
+}

@@ -1,0 +1,3 @@
+{"topic_id":"OSB-TOPIC-PS-OBJECTS-PIPELINE","track_id":"OSB-TRACK-PS","name":"PowerShell Objects, Pipeline and Reusable Code","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R8-POWERSHELL-FOUNDATIONS"}
+{"topic_id":"OSB-TOPIC-PS-REMOTE-SECURITY","track_id":"OSB-TRACK-PS","name":"PowerShell Remoting, WinRM and Security Boundaries","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R8-POWERSHELL-FOUNDATIONS"}
+{"topic_id":"OSB-TOPIC-PS-AUTOMATION-QUALITY","track_id":"OSB-TRACK-PS","name":"Production Automation, Error Handling and Operational Quality","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R8-POWERSHELL-FOUNDATIONS"}

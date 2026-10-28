@@ -1,0 +1,3 @@
+{"topic_id":"OSB-TOPIC-DEVOPS-REPOS-PR","track_id":"OSB-TRACK-DEVOPS","name":"Source Control, Pull Requests and Branch Governance","status":"CANONICAL_CANDIDATE"}
+{"topic_id":"OSB-TOPIC-DEVOPS-PIPELINES-DELIVERY","track_id":"OSB-TRACK-DEVOPS","name":"CI/CD Pipelines, Artifacts and Deployment Controls","status":"CANONICAL_CANDIDATE"}
+{"topic_id":"OSB-TOPIC-DEVOPS-OBSERVABILITY-SECURITY","track_id":"OSB-TRACK-DEVOPS","name":"Secure DevOps Operations, Observability and Recovery","status":"CANONICAL_CANDIDATE"}

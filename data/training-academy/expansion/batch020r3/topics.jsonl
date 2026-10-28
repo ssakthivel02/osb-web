@@ -1,0 +1,4 @@
+{"topic_id":"OSB-TOPIC-AD-DNS","track_id":"OSB-TRACK-AD","name":"AD-integrated DNS and DC Locator","created_batch":"BATCH-020R3-AD-EXPANSION"}
+{"topic_id":"OSB-TOPIC-AD-GROUP-POLICY","track_id":"OSB-TRACK-AD","name":"Group Policy Architecture and Processing","created_batch":"BATCH-020R3-AD-EXPANSION"}
+{"topic_id":"OSB-TOPIC-AD-SITES","track_id":"OSB-TRACK-AD","name":"Sites Subnets and Replication Topology","created_batch":"BATCH-020R3-AD-EXPANSION"}
+{"topic_id":"OSB-TOPIC-AD-LDAP-SECURITY","track_id":"OSB-TRACK-AD","name":"LDAP Signing Channel Binding and AD Security","created_batch":"BATCH-020R3-AD-EXPANSION"}
