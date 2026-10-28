@@ -81,6 +81,7 @@ jobs:
       - run: node scripts/test-murugan-source-intake.mjs
       - run: node scripts/test-preserved-navigation.mjs
       - run: node scripts/test-production-promotion.mjs
+      - run: node scripts/test-emergency-rollback-lineage.mjs
       - run: node --check scripts/verify-live-production.mjs
       - run: npm run typecheck
       - run: npm run build
