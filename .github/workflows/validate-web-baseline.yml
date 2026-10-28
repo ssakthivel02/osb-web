@@ -85,6 +85,8 @@ jobs:
       - run: npm run typecheck
       - run: npm run build
       - run: npm run validate:served-export
+      - name: Verify every exported local website link
+        run: python scripts/audit_static_links.py out
       - name: Install browser engines for locked Playwright dependency
         run: |
           # Hosted Ubuntu image already has browser OS libraries. Avoid very slow
