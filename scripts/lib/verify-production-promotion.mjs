@@ -82,3 +82,16 @@ export function verifyProductionPromotion({ candidateSha, deploymentSha, repoDir
   }
   return { testedCandidateSha: candidateSha, deploymentSha, changedFiles: changes.map(([, path]) => path) };
 }
+
+/**
+ * Read a file's content as it stood at a specific commit, via `git show`.
+ * Returns null if the file did not exist at that commit (never throws) so
+ * callers can distinguish "absent" from "present but unreadable JSON".
+ */
+export function readFileAtCommit(sha, relPath, repoDir = process.cwd()) {
+  try {
+    return git(repoDir, ['show', `${sha}:${relPath}`]);
+  } catch {
+    return null;
+  }
+}

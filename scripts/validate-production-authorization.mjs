@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { verifyProductionPromotion } from './lib/verify-production-promotion.mjs';
+import { verifyProductionPromotion, readFileAtCommit } from './lib/verify-production-promotion.mjs';
 import { assertMuruganPublicationReady } from './lib/verify-murugan-publication.mjs';
 
 const gate = JSON.parse(readFileSync(new URL('../release/OSB_RELEASE_GATE.json', import.meta.url), 'utf8'));
@@ -39,6 +39,38 @@ try {
   promotion = verifyProductionPromotion({ candidateSha, deploymentSha: expectedSha });
 } catch (error) {
   fail(error.message);
+}
+
+// Non-self-reference: the UAT-tested candidate commit, as it stood at the
+// point it was actually tested, must NOT already assert production
+// approval/completion. verifyProductionPromotion() confirms the deploy SHA
+// only changes the allowed release-metadata files relative to the
+// candidate - it does not (and structurally cannot, since it is
+// schema-agnostic) check what those files said at the candidate commit
+// itself. Without this check, a single commit could claim to be both "the
+// thing UAT tested" and "the thing that approved itself", with the
+// required later commit doing nothing but a cosmetic edit.
+const parseAtCandidate = (relPath, label) => {
+  const text = readFileAtCommit(candidateSha, relPath);
+  if (text === null) fail(`could not read ${label} from the UAT-tested candidate commit`);
+  try {
+    return JSON.parse(text);
+  } catch {
+    fail(`${label} at the UAT-tested candidate commit is not valid JSON`);
+  }
+};
+const gateAtCandidate = parseAtCandidate('release/OSB_RELEASE_GATE.json', 'release gate');
+const indexAtCandidate = parseAtCandidate('release/OSB_RELEASE_EVIDENCE_INDEX.json', 'release evidence index');
+const uatAtCandidate = parseAtCandidate('release/OSB_UAT_EVIDENCE_TEMPLATE.json', 'UAT evidence');
+if (
+  gateAtCandidate.productionDeploymentApproved === true ||
+  gateAtCandidate.productionReleaseStatus === 'PROD_GO' ||
+  indexAtCandidate.releaseStatus === 'PROD_GO' ||
+  uatAtCandidate.status === 'COMPLETE' ||
+  uatAtCandidate.decision === 'PROD_GO' ||
+  uatAtCandidate.ownerApproval?.approved === true
+) {
+  fail('UAT-tested candidate commit already asserted production approval/UAT-completion at the point it was tested - approval must be recorded only in a later, separate promotion commit (self-referential promotion rejected)');
 }
 
 console.log('OSB_PRODUCTION_AUTH_PASS');
