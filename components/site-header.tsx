@@ -14,7 +14,7 @@ export function SiteHeader() {
         <details className="navArchiveMenu">
           <summary>All sections</summary>
           <div className="navArchiveGrid" aria-label="Preserved OSB site navigation">
-            <a href="/murugan-library/">முருகன் தமிழ் நூலகம்</a>
+            <a href="/murugan-library/" lang="ta">முருகன் தமிழ் நூலகம்</a>
             <a href="/academies/">Academies</a>
             <a href="/operations/">Operations</a>
             <a href="/governance/">Governance</a>
