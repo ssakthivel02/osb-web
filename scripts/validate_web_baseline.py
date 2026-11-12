@@ -66,6 +66,13 @@ assert 'workflows: ["Validate Web Baseline"]' in deploy_workflow
 assert 'branches: [main]' in deploy_workflow
 assert 'workflow_dispatch:' not in deploy_workflow
 assert "github.event.workflow_run.conclusion == 'success'" in deploy_workflow
+# Privileged workflow_run may follow an untrusted PR run. Require same-repo,
+# push-only main provenance and reject stale main both before build and deploy.
+assert "github.event.workflow_run.event == 'push'" in deploy_workflow
+assert "github.event.workflow_run.head_branch == 'main'" in deploy_workflow
+assert "github.event.workflow_run.head_repository.full_name == github.repository" in deploy_workflow
+assert deploy_workflow.count("git ls-remote origin refs/heads/main") == 2
+assert deploy_workflow.index('Reject superseded main before Pages deployment') < deploy_workflow.index('name: Deploy to GitHub Pages')
 assert 'ref: ${{ github.event.workflow_run.head_sha }}' in deploy_workflow
 assert 'EXPECTED_SHA: ${{ github.event.workflow_run.head_sha }}' in deploy_workflow
 assert 'Verify exact deployment candidate' in deploy_workflow
