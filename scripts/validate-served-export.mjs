@@ -1,6 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
+import { runInNewContext } from 'node:vm';
+import ts from 'typescript';
 
 const ROOT = process.cwd();
 const OUT = path.join(ROOT, 'out');
@@ -126,11 +128,59 @@ async function verifyPublishedSitemapRoutes(locations, concurrency = 24) {
   await Promise.all(workers);
 }
 
+function testAcademyRouteUniqueness() {
+  // Test the actual TypeScript validator with the real registry and bad copies.
+  const source = fs.readFileSync(path.join(ROOT, 'lib', 'academy-data.ts'), 'utf8');
+  const compiled = ts.transpileModule(source, {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
+  }).outputText;
+  const sandbox = { exports: {} };
+  runInNewContext(compiled, sandbox, { timeout: 2000, filename: 'academy-data.cjs' });
+  const { academies, assertUniqueAcademyRoutes } = sandbox.exports;
+  if (!Array.isArray(academies) || typeof assertUniqueAcademyRoutes !== 'function') {
+    throw new Error('Academy route validator is missing from source');
+  }
+  const clone = () => JSON.parse(JSON.stringify(academies));
+  const expectedRoutes = 124;
+  const count = assertUniqueAcademyRoutes(clone());
+  if (count !== expectedRoutes) throw new Error(`Expected ${expectedRoutes} distinct declared academy routes; got ${count}`);
+  for (const [label, inject] of [
+    ['topic/practice collision', (registry) => { registry[1].topics[0].slug = 'interview'; }],
+    ['topic/topic collision', (registry) => { registry[1].topics[1].slug = registry[1].topics[0].slug; }],
+    ['duplicate academy slug', (registry) => { registry[1].slug = registry[0].slug; }],
+  ]) {
+    const invalid = clone();
+    inject(invalid);
+    let rejected = false;
+    try { assertUniqueAcademyRoutes(invalid); }
+    catch (err) {
+      if (String(err).includes('Academy route collision:')) rejected = true;
+      else throw err;
+    }
+    if (!rejected) throw new Error(`Negative route-registry case was NOT rejected: ${label}`);
+  }
+}
+
 try {
+  testAcademyRouteUniqueness();
   await waitForServer();
 
   await verifyRoute('/training-academy/', 'Verified Training Academy');
   await verifyRoute('/search/', 'Search all 19 Training Academy tracks');
+
+  // Both dedicated practice and module-detail URLs must be owned correctly.
+  await verifyRoute('/terraform/interview/', 'Senior interview drills');
+  await verifyRoute('/terraform/labs/', 'Hands-on lab briefs');
+  await verifyRoute('/terraform/interview-module/', '<h1>Terraform Interviews</h1>');
+  await verifyRoute('/terraform/labs-module/', '<h1>Terraform Labs</h1>');
+  const terraformOverview = await fetch(`${BASE}/terraform/`);
+  const terraformOverviewHtml = await terraformOverview.text();
+  if (terraformOverview.status !== 200) errors.push(`/terraform/ returned ${terraformOverview.status}`);
+  for (const slug of ['interview-module', 'labs-module']) {
+    if (!terraformOverviewHtml.includes(`href="/terraform/${slug}/"`)) {
+      errors.push(`Terraform academy module card missing distinct link: /terraform/${slug}/`);
+    }
+  }
 
   const robotsResponse = await fetch(`${BASE}/robots.txt`);
   const robotsBody = await robotsResponse.text();
@@ -144,6 +194,13 @@ try {
   const sitemapBody = await sitemapResponse.text();
   const sitemapLocations = [...sitemapBody.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
   const uniqueSitemapLocations = new Set(sitemapLocations);
+  for (const route of [
+    '/terraform/interview/', '/terraform/labs/',
+    '/terraform/interview-module/', '/terraform/labs-module/',
+  ]) {
+    const occurrences = sitemapLocations.filter((url) => url === `${PUBLIC_BASE}${route}`).length;
+    if (occurrences !== 1) errors.push(`Terraform sitemap route ${route} appears ${occurrences} times; expected 1`);
+  }
   const expectedTrainingLocations = EXPECTED_PHYSICAL_LEARNER_ROUTES + tracks.length + 1;
   if (sitemapResponse.status !== 200) errors.push(`/sitemap.xml returned ${sitemapResponse.status}`);
   if (sitemapLocations.length !== uniqueSitemapLocations.size) errors.push(`sitemap contains duplicate URLs: ${sitemapLocations.length} entries / ${uniqueSitemapLocations.size} unique URLs`);
@@ -180,9 +237,9 @@ try {
     publishedSitemapRoutesChecked: sitemapLocations.length,
     inactiveIdentityRoutesChecked: INACTIVE_IDENTITY_ROUTES.length,
     robotsTxtChecked: true,
-    fixedRoutesChecked: 3,
+    fixedRoutesChecked: 7,
     invalidRouteBoundaryChecked: true,
-    totalSuccessfulSurfaceExpected: tracks.length + uniqueRecords.length + INACTIVE_IDENTITY_ROUTES.length + 4,
+    totalSuccessfulSurfaceExpected: tracks.length + uniqueRecords.length + INACTIVE_IDENTITY_ROUTES.length + 8,
     claimBoundary: 'This validates the served production export over HTTP, including generated crawl controls. It does not certify client-side interaction, keyboard usability, WCAG conformance, responsive layout, cross-browser behavior, or manual UAT.',
     errors,
   };

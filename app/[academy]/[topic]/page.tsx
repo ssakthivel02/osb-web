@@ -1,10 +1,12 @@
 import { notFound } from 'next/navigation';
 import SiteHeader from '../../../components/site-header';
-import { academies, academyMap } from '../../../lib/academy-data';
+import { academies, academyMap, assertUniqueAcademyRoutes } from '../../../lib/academy-data';
 
 export const dynamicParams = false;
 
+// Validate all declared academy URLs before Next's export and sitemap deduplication.
 export function generateStaticParams() {
+  assertUniqueAcademyRoutes(academies);
   return academies.flatMap((academy) =>
     academy.topics.map((topic) => ({ academy: academy.slug, topic: topic.slug })),
   );

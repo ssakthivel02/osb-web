@@ -59,8 +59,8 @@ export const academies: Academy[] = [
       topic('workspaces','Environments and Workspaces','Separate environments safely and understand the limits of CLI workspaces.',['Compare separation models','Prevent cross-environment impact','Select repository boundaries'],'Propose environment isolation for dev, test and production.','Why are workspaces not always sufficient for production separation?'),
       topic('azure-provider','Azure Provider','Authenticate securely and provision Azure resources with azurerm and azapi.',['Use workload identity','Manage provider features','Handle unsupported API capability'],'Configure OIDC authentication from GitHub Actions to Azure.','When would you use AzAPI alongside AzureRM?'),
       topic('best-practices','Production Practices','Apply formatting, validation, policy, testing, reviews and controlled applies.',['Build a quality gate','Limit blast radius','Plan rollback and recovery'],'Create a pull-request pipeline with plan review and protected apply.','Why should production apply run from automation?'),
-      topic('interview','Terraform Interviews','Explain state, modules, dependencies, imports and failure recovery clearly.',['Answer scenario questions','Describe trade-offs','Use evidence-based troubleshooting'],'Practise ten senior Terraform scenarios.','How would you recover from a partially failed apply?'),
-      topic('labs','Terraform Labs','Build progressively from local experimentation to remote, modular delivery.',['Complete guided labs','Capture evidence','Explain each design decision'],'Deploy a modular Azure workload using remote state and CI.','What did your lab prove beyond successful deployment?'),
+      topic('interview-module','Terraform Interviews','Explain state, modules, dependencies, imports and failure recovery clearly.',['Answer scenario questions','Describe trade-offs','Use evidence-based troubleshooting'],'Practise ten senior Terraform scenarios.','How would you recover from a partially failed apply?'),
+      topic('labs-module','Terraform Labs','Build progressively from local experimentation to remote, modular delivery.',['Complete guided labs','Capture evidence','Explain each design decision'],'Deploy a modular Azure workload using remote state and CI.','What did your lab prove beyond successful deployment?'),
     ],
   },
   {
@@ -177,3 +177,27 @@ export const academies: Academy[] = [
 ];
 
 export const academyMap = Object.fromEntries(academies.map((academy) => [academy.slug, academy])) as Record<string, Academy>;
+
+// Validate declared URLs before sitemap Set deduplication can conceal collisions.
+// Errors identify both route owners for actionable diagnosis.
+export function assertUniqueAcademyRoutes(registry: Academy[]): number {
+  const owners = new Map<string, string>();
+  const register = (route: string, owner: string) => {
+    const previous = owners.get(route);
+    if (previous !== undefined) {
+      throw new Error(`Academy route collision: ${route} owned by ${previous} and ${owner}`);
+    }
+    owners.set(route, owner);
+  };
+  for (const [academyIndex, academy] of registry.entries()) {
+    register(`/${academy.slug}/`, `academy ${academyIndex}: ${academy.name}`);
+    for (const [topicIndex, topic] of academy.topics.entries()) {
+      register(`/${academy.slug}/${topic.slug}/`, `topic ${academyIndex}:${topicIndex}: ${topic.title}`);
+    }
+    for (const practice of ['assessment', 'flashcards', 'labs', 'interview', 'scenarios']) {
+      register(`/${academy.slug}/${practice}/`, `practice ${academyIndex}: ${practice}`);
+    }
+  }
+  return owners.size;
+}
+
