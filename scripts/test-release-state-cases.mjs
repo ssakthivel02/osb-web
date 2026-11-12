@@ -110,7 +110,7 @@ function completeState(decision) {
   state.uat.candidate.testedAt = '2026-09-12T20:15:00Z';
   state.uat.candidate.tester = 'release-state-fixture';
   state.uat.candidate.environment = 'isolated-uat-preview';
-  state.uat.criticalJourneys = [{ id: 'fixture-journey', result: 'PASS' }];
+  state.uat.criticalJourneys = [{ id: 'fixture-journey', result: 'PASS', evidenceRefs: ['fixture://learner-journey-screen-capture'] }];
   setAllManualResults(state.uat, 'PASS');
   state.uat.linksAndClaims.fundingClaimsReviewed = true;
   // Fixture-only references; must not be mistaken for real human UAT evidence.
@@ -271,6 +271,26 @@ try {
   }
   {
     const state = prodGoState();
+    state.uat.criticalJourneys = [];
+    assertIllegal('COMPLETE_WITHOUT_CRITICAL_JOURNEYS', state, 'scripts/validate-uat-evidence.mjs');
+  }
+  {
+    const state = prodGoState();
+    state.uat.criticalJourneys[0].result = 'FAIL';
+    assertIllegal('COMPLETE_WITH_FAILED_CRITICAL_JOURNEY', state, 'scripts/validate-uat-evidence.mjs');
+  }
+  {
+    const state = prodGoState();
+    state.uat.criticalJourneys[0].evidenceRefs = [];
+    assertIllegal('COMPLETE_WITHOUT_CRITICAL_JOURNEY_PROOF', state, 'scripts/validate-uat-evidence.mjs');
+  }
+  {
+    const state = prodGoState();
+    state.uat.criticalJourneys.push({ ...state.uat.criticalJourneys[0] });
+    assertIllegal('COMPLETE_WITH_DUPLICATE_CRITICAL_JOURNEY_ID', state, 'scripts/validate-uat-evidence.mjs');
+  }
+  {
+    const state = prodGoState();
     assertIllegal('DEPLOYMENT_SHA_MISMATCH', state, 'scripts/validate-production-authorization.mjs', { EXPECTED_DEPLOY_SHA: OTHER_SHA });
   }
   {
@@ -287,7 +307,7 @@ try {
   }
 
   console.log('OSB_RELEASE_STATE_REGRESSION_PASS');
-  console.log('legal_cases=4 illegal_cases=17');
+  console.log('legal_cases=4 illegal_cases=21');
 } catch (error) {
   caught = error;
 } finally {

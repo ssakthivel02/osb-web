@@ -61,6 +61,21 @@ if (evidence.status === 'COMPLETE') {
   if (!sha) fail('COMPLETE evidence requires exact candidate sha');
   if (!evidence.candidate.previewUrl || !evidence.candidate.testedAt || !evidence.candidate.tester || !evidence.candidate.environment) fail('COMPLETE evidence requires candidate preview/test metadata');
   if (!allPass) fail('COMPLETE evidence requires all mandatory manual checks to PASS');
+  // A completed UAT must include independently traceable PASS evidence for
+  // the critical learner journeys, not an empty list or an unchecked Boolean.
+  if (evidence.criticalJourneys.length === 0) fail('COMPLETE requires recorded critical learner journeys');
+  const journeyIds = new Set();
+  for (const journey of evidence.criticalJourneys) {
+    if (!journey || typeof journey.id !== 'string' || !journey.id.trim()) {
+      fail('COMPLETE critical learner journey requires a nonblank id');
+    }
+    if (journeyIds.has(journey.id)) fail('COMPLETE critical learner journey ids must be unique');
+    journeyIds.add(journey.id);
+    if (journey.result !== 'PASS') fail(`COMPLETE critical learner journey ${journey.id} must PASS`);
+    if (!validEvidenceRefs(journey.evidenceRefs) || journey.evidenceRefs.length === 0) {
+      fail(`COMPLETE critical learner journey ${journey.id} requires evidenceRefs`);
+    }
+  }
   if (!evidence.linksAndClaims.fundingClaimsReviewed) fail('COMPLETE evidence requires funding claim review');
   // A Boolean PASS is not a source record. Require evidence references for
   // each human UAT discipline, including an explicitly identified funding
