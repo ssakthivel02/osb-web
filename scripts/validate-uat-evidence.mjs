@@ -16,18 +16,20 @@ const sha = evidence.candidate?.sha;
 if (sha !== null && !/^[0-9a-f]{40}$/i.test(String(sha))) fail('candidate sha must be null or an exact 40-character commit sha');
 
 const allowedResult = new Set(['NOT_RUN','PASS','FAIL','BLOCKED']);
+const validEvidenceRefs = (refs) =>
+  Array.isArray(refs) && refs.every((ref) => typeof ref === 'string' && ref.trim().length > 0);
 for (const [sectionName, section] of Object.entries({ accessibility: evidence.accessibility, responsive: evidence.responsive, browsers: evidence.browsers })) {
   if (!section || typeof section !== 'object') fail(`${sectionName} section missing`);
   for (const [key, value] of Object.entries(section)) {
     if (key === 'evidenceRefs') continue;
     if (!allowedResult.has(value)) fail(`${sectionName}.${key} has invalid result ${value}`);
   }
-  if (!Array.isArray(section.evidenceRefs)) fail(`${sectionName}.evidenceRefs must be an array`);
+  if (!validEvidenceRefs(section.evidenceRefs)) fail(`${sectionName}.evidenceRefs must contain only nonblank strings`);
 }
 
 if (!Array.isArray(evidence.criticalJourneys)) fail('criticalJourneys must be an array');
 if (!Array.isArray(evidence.defects)) fail('defects must be an array');
-if (!evidence.linksAndClaims || !Array.isArray(evidence.linksAndClaims.evidenceRefs)) fail('linksAndClaims evidenceRefs missing');
+if (!evidence.linksAndClaims || !validEvidenceRefs(evidence.linksAndClaims.evidenceRefs)) fail('linksAndClaims.evidenceRefs must contain only nonblank strings');
 if (!evidence.ownerApproval || typeof evidence.ownerApproval.approved !== 'boolean') fail('ownerApproval missing');
 
 const manualResults = [
@@ -60,6 +62,20 @@ if (evidence.status === 'COMPLETE') {
   if (!evidence.candidate.previewUrl || !evidence.candidate.testedAt || !evidence.candidate.tester || !evidence.candidate.environment) fail('COMPLETE evidence requires candidate preview/test metadata');
   if (!allPass) fail('COMPLETE evidence requires all mandatory manual checks to PASS');
   if (!evidence.linksAndClaims.fundingClaimsReviewed) fail('COMPLETE evidence requires funding claim review');
+  // A Boolean PASS is not a source record. Require evidence references for
+  // each human UAT discipline, including an explicitly identified funding
+  // source/eligibility review. This checks the record, NOT its authenticity.
+  for (const [name, refs] of Object.entries({
+    accessibility: evidence.accessibility.evidenceRefs,
+    responsive: evidence.responsive.evidenceRefs,
+    browsers: evidence.browsers.evidenceRefs,
+    linksAndClaims: evidence.linksAndClaims.evidenceRefs,
+  })) {
+    if (refs.length === 0) fail(`COMPLETE requires ${name}.evidenceRefs`);
+  }
+  if (!evidence.linksAndClaims.evidenceRefs.some((ref) => /\bfunding\b/i.test(ref))) {
+    fail('COMPLETE funding claim review needs a funding-specific evidence reference');
+  }
   if (openBlockingDefects.length) fail('COMPLETE evidence cannot contain open P0/P1 defects');
 }
 

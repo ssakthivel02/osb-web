@@ -113,6 +113,14 @@ function completeState(decision) {
   state.uat.criticalJourneys = [{ id: 'fixture-journey', result: 'PASS' }];
   setAllManualResults(state.uat, 'PASS');
   state.uat.linksAndClaims.fundingClaimsReviewed = true;
+  // Fixture-only references; must not be mistaken for real human UAT evidence.
+  for (const group of ['accessibility', 'responsive', 'browsers']) {
+    state.uat[group].evidenceRefs = [`fixture://${group}-review`];
+  }
+  state.uat.linksAndClaims.evidenceRefs = [
+    'fixture://internal-and-official-link-review',
+    'fixture://funding-source-and-eligibility-review',
+  ];
   state.gate.manualGates.previewUatComplete = true;
   state.gate.manualGates.accessibilityReviewComplete = true;
   state.gate.manualGates.responsiveCrossBrowserReviewComplete = true;
@@ -235,6 +243,34 @@ try {
   }
   {
     const state = prodGoState();
+    state.uat.accessibility.evidenceRefs = [];
+    assertIllegal('COMPLETE_WITHOUT_ACCESSIBILITY_PROOF_REF', state, 'scripts/validate-uat-evidence.mjs');
+  }
+  {
+    const state = prodGoState();
+    state.uat.responsive.evidenceRefs = [];
+    assertIllegal('COMPLETE_WITHOUT_RESPONSIVE_PROOF_REF', state, 'scripts/validate-uat-evidence.mjs');
+  }
+  {
+    const state = prodGoState();
+    state.uat.browsers.evidenceRefs = ['  '];
+    assertIllegal('COMPLETE_WITH_BLANK_BROWSER_PROOF_REF', state, 'scripts/validate-uat-evidence.mjs');
+  }
+  {
+    const state = prodGoState();
+    state.uat.linksAndClaims.evidenceRefs = ['fixture://official-source-review-without-funding'];
+    // "funding" is present in this misleading label, so use a strict absence
+    // test below rather than an external-looking phrase with the keyword.
+    state.uat.linksAndClaims.evidenceRefs = ['fixture://general-link-check'];
+    assertIllegal('COMPLETE_WITHOUT_FUNDING_SPECIFIC_REF', state, 'scripts/validate-uat-evidence.mjs');
+  }
+  {
+    const state = prodGoState();
+    state.uat.linksAndClaims.evidenceRefs = [];
+    assertIllegal('COMPLETE_WITHOUT_LINKS_CLAIMS_PROOF_REF', state, 'scripts/validate-uat-evidence.mjs');
+  }
+  {
+    const state = prodGoState();
     assertIllegal('DEPLOYMENT_SHA_MISMATCH', state, 'scripts/validate-production-authorization.mjs', { EXPECTED_DEPLOY_SHA: OTHER_SHA });
   }
   {
@@ -251,7 +287,7 @@ try {
   }
 
   console.log('OSB_RELEASE_STATE_REGRESSION_PASS');
-  console.log('legal_cases=4 illegal_cases=12');
+  console.log('legal_cases=4 illegal_cases=17');
 } catch (error) {
   caught = error;
 } finally {
