@@ -189,9 +189,11 @@ export function assertUniqueAcademyRoutes(registry: Academy[]): number {
     }
     owners.set(route, owner);
   };
-  for (const [academyIndex, academy] of registry.entries()) {
+  for (let academyIndex = 0; academyIndex < registry.length; academyIndex += 1) {
+    const academy = registry[academyIndex];
     register(`/${academy.slug}/`, `academy ${academyIndex}: ${academy.name}`);
-    for (const [topicIndex, topic] of academy.topics.entries()) {
+    for (let topicIndex = 0; topicIndex < academy.topics.length; topicIndex += 1) {
+      const topic = academy.topics[topicIndex];
       register(`/${academy.slug}/${topic.slug}/`, `topic ${academyIndex}:${topicIndex}: ${topic.title}`);
     }
     for (const practice of ['assessment', 'flashcards', 'labs', 'interview', 'scenarios']) {
