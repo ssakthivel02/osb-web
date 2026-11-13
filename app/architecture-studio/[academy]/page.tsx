@@ -2,4 +2,7 @@ import { EnterpriseAcademy, enterpriseAcademyParams } from '../../../components/
 import { architectureStudioGuides } from '../../../lib/experience-center-data';
 export const dynamicParams=false;
 export function generateStaticParams(){return enterpriseAcademyParams();}
-export default function ArchitectureStudioAcademyPage({params}:{params:{academy:string}}){return <EnterpriseAcademy basePath="architecture-studio" academySlug={params.academy} title="Interactive Architecture Studio" description="Build reviewable architecture models and validate boundaries, flows, controls and failure behaviour." guides={architectureStudioGuides}/>;}
+export default async function ArchitectureStudioAcademyPage(props:{params: Promise<{academy:string}>}) {
+  const params = await props.params;
+  return <EnterpriseAcademy basePath="architecture-studio" academySlug={params.academy} title="Interactive Architecture Studio" description="Build reviewable architecture models and validate boundaries, flows, controls and failure behaviour." guides={architectureStudioGuides}/>;
+}

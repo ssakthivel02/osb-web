@@ -2,4 +2,7 @@ import { EnterpriseAcademy, enterpriseAcademyParams } from '../../../components/
 import { certificationGuides } from '../../../lib/learning-center-data';
 export const dynamicParams=false;
 export function generateStaticParams(){return enterpriseAcademyParams();}
-export default function CertificationAcademyPage({params}:{params:{academy:string}}){return <EnterpriseAcademy basePath="certifications" academySlug={params.academy} title="Certification preparation" description="Convert the exam blueprint into practical evidence, revision controls and a defensible readiness decision." guides={certificationGuides}/>;}
+export default async function CertificationAcademyPage(props:{params: Promise<{academy:string}>}) {
+  const params = await props.params;
+  return <EnterpriseAcademy basePath="certifications" academySlug={params.academy} title="Certification preparation" description="Convert the exam blueprint into practical evidence, revision controls and a defensible readiness decision." guides={certificationGuides}/>;
+}

@@ -1,0 +1,224 @@
+{
+  "schema": "osb.navigation-baseline.v1",
+  "baseCommit": "f093af5a8f29cb5015b05ea6e25301a4cb727fcd",
+  "source": "components/site-header.tsx",
+  "preservation": "Original main-branch navigation hrefs remain unchanged; new routes may be added.",
+  "navigation": [
+    {
+      "href": "/academies/",
+      "label": "Academies"
+    },
+    {
+      "href": "/career/",
+      "label": "Career"
+    },
+    {
+      "href": "/resources/",
+      "label": "Resources"
+    },
+    {
+      "href": "/operations/",
+      "label": "Operations"
+    },
+    {
+      "href": "/governance/",
+      "label": "Governance"
+    },
+    {
+      "href": "/delivery/",
+      "label": "Delivery"
+    },
+    {
+      "href": "/leadership/",
+      "label": "Leadership"
+    },
+    {
+      "href": "/workshops/",
+      "label": "Workshops"
+    },
+    {
+      "href": "/interview/",
+      "label": "Interview"
+    },
+    {
+      "href": "/interview-hub/",
+      "label": "Interview Hub"
+    },
+    {
+      "href": "/runbooks/",
+      "label": "Runbooks"
+    },
+    {
+      "href": "/patterns/",
+      "label": "Patterns"
+    },
+    {
+      "href": "/architecture/",
+      "label": "Architecture"
+    },
+    {
+      "href": "/architecture-explorer/",
+      "label": "Architecture Explorer"
+    },
+    {
+      "href": "/certifications/",
+      "label": "Certifications"
+    },
+    {
+      "href": "/learning-plans/",
+      "label": "Learning Plans"
+    },
+    {
+      "href": "/assessments/",
+      "label": "Assessments"
+    },
+    {
+      "href": "/assessment-center/",
+      "label": "Assessment Center"
+    },
+    {
+      "href": "/downloads/",
+      "label": "Downloads"
+    },
+    {
+      "href": "/projects/",
+      "label": "Projects"
+    },
+    {
+      "href": "/portfolio/",
+      "label": "Portfolio"
+    },
+    {
+      "href": "/troubleshooting/",
+      "label": "Troubleshooting"
+    },
+    {
+      "href": "/checklists/",
+      "label": "Checklists"
+    },
+    {
+      "href": "/labs/",
+      "label": "Labs"
+    },
+    {
+      "href": "/interactive-labs/",
+      "label": "Interactive Labs"
+    },
+    {
+      "href": "/scenarios/",
+      "label": "Scenarios"
+    },
+    {
+      "href": "/commands/",
+      "label": "Commands"
+    },
+    {
+      "href": "/glossary/",
+      "label": "Glossary"
+    },
+    {
+      "href": "/knowledge/",
+      "label": "Knowledge"
+    },
+    {
+      "href": "/knowledge-graph/",
+      "label": "Knowledge Graph"
+    },
+    {
+      "href": "/ai-assistant/",
+      "label": "AI Assistant"
+    },
+    {
+      "href": "/ai-coach/",
+      "label": "AI Coach"
+    },
+    {
+      "href": "/case-studies/",
+      "label": "Case Studies"
+    },
+    {
+      "href": "/operations-dashboard/",
+      "label": "Ops Dashboard"
+    },
+    {
+      "href": "/security-playbooks/",
+      "label": "Security"
+    },
+    {
+      "href": "/finops-center/",
+      "label": "FinOps"
+    },
+    {
+      "href": "/architecture-diagrams/",
+      "label": "Diagrams"
+    },
+    {
+      "href": "/infrastructure-templates/",
+      "label": "Templates"
+    },
+    {
+      "href": "/architecture-studio/",
+      "label": "Studio"
+    },
+    {
+      "href": "/template-library/",
+      "label": "Template Library"
+    },
+    {
+      "href": "/interview-simulator/",
+      "label": "Simulator"
+    },
+    {
+      "href": "/enterprise-documentation/",
+      "label": "Documentation"
+    },
+    {
+      "href": "/learning-paths/",
+      "label": "Learning Paths"
+    },
+    {
+      "href": "/skill-matrix/",
+      "label": "Skill Matrix"
+    },
+    {
+      "href": "/release-readiness/",
+      "label": "Release Readiness"
+    },
+    {
+      "href": "/service-catalogue/",
+      "label": "Service Catalogue"
+    },
+    {
+      "href": "/observability-center/",
+      "label": "Observability"
+    },
+    {
+      "href": "/disaster-recovery/",
+      "label": "Disaster Recovery"
+    },
+    {
+      "href": "/compliance-center/",
+      "label": "Compliance"
+    },
+    {
+      "href": "/platform-operations/",
+      "label": "Platform Ops"
+    },
+    {
+      "href": "/tracks/",
+      "label": "Tracks"
+    },
+    {
+      "href": "/search/",
+      "label": "Search"
+    },
+    {
+      "href": "/dashboard/",
+      "label": "Dashboard"
+    },
+    {
+      "href": "/login/",
+      "label": "Sign in"
+    }
+  ]
+}

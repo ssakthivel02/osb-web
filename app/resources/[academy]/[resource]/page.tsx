@@ -10,7 +10,8 @@ export function generateStaticParams() {
   );
 }
 
-export default function ResourcePage({ params }: { params: { academy: string; resource: string } }) {
+export default async function ResourcePage(props: { params: Promise<{ academy: string; resource: string }> }) {
+  const params = await props.params;
   const academy = resourceAcademyMap[params.academy];
   const resource = resourceTypeMap[params.resource];
   if (!academy || !resource) notFound();

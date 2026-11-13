@@ -1,0 +1,3 @@
+{"topic_id":"OSB-TOPIC-AD-TRUSTS","track_id":"OSB-TRACK-AD","name":"AD Trusts, Trust Boundaries and Selective Authentication","created_batch":"BATCH-020R3C-AD-SECURITY-HARDENING"}
+{"topic_id":"OSB-TOPIC-AD-PRIVILEGED-ACCESS","track_id":"OSB-TRACK-AD","name":"Privileged Access, Tiering and Authentication Policy Silos","created_batch":"BATCH-020R3C-AD-SECURITY-HARDENING"}
+{"topic_id":"OSB-TOPIC-AD-DC-HARDENING","track_id":"OSB-TRACK-AD","name":"Domain Controller Hardening and Windows Server 2025 Security Defaults","created_batch":"BATCH-020R3C-AD-SECURITY-HARDENING"}

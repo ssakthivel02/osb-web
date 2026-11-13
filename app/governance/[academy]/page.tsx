@@ -9,7 +9,8 @@ export function generateStaticParams() {
   return academies.map((academy) => ({ academy: academy.slug }));
 }
 
-export default function GovernanceAcademyPage({ params }: { params: { academy: string } }) {
+export default async function GovernanceAcademyPage(props: { params: Promise<{ academy: string }> }) {
+  const params = await props.params;
   const academy = academyMap[params.academy];
   if (!academy) notFound();
 

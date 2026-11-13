@@ -1,0 +1,51 @@
+{
+  "schema": "osb.learningpath.v1",
+  "note": "This file only claims milestones backed by physical repository records. CORE_CONTENT_COMPLETE means the evidence-backed core path is coherent and physically represented; it does not assert exhaustive coverage of every vendor feature, organization-specific procedure, or workload edge case.",
+  "paths": [
+    {
+      "path_id": "OSB-PATH-AD-SPECIALIST",
+      "title": "Active Directory Specialist / Senior Wintel Engineer",
+      "target_role": "AD Specialist / Senior Wintel Engineer / Infrastructure Engineer",
+      "entry_prerequisites": ["Working knowledge of Windows Server administration, TCP/IP and enterprise change control"],
+      "milestones": [
+        {"milestone_id":"M1","record_ids":["OSB-AD-EASY-0001","OSB-AD-LESSON-0001","OSB-AD-DEEP-0001","OSB-AD-LAB-0001","OSB-AD-TS-0001","OSB-AD-LESSON-0018","OSB-AD-TS-0011"],"rationale":"Start with replication because AD consistency, DNS-integrated data, Group Policy and recovery all depend on understanding convergence and failure age."},
+        {"milestone_id":"M2","record_ids":["OSB-AD-EASY-0006","OSB-AD-LESSON-0006","OSB-AD-DEEP-0006","OSB-AD-LAB-0006","OSB-AD-TS-0006","OSB-AD-LESSON-0008"],"rationale":"Add DNS/DC Locator and site/subnet topology so authentication and replication symptoms can be traced through their network dependencies."},
+        {"milestone_id":"M3","record_ids":["OSB-AD-EASY-0002","OSB-AD-LESSON-0002","OSB-AD-DEEP-0002","OSB-AD-LAB-0002","OSB-AD-TS-0002","OSB-AD-LESSON-0016","OSB-AD-LAB-0009"],"rationale":"Build operations-master and time-hierarchy competence before advanced lifecycle or recovery decisions."},
+        {"milestone_id":"M4","record_ids":["OSB-AD-EASY-0004","OSB-AD-LESSON-0004","OSB-AD-DEEP-0004","OSB-AD-LAB-0004","OSB-AD-TS-0004","OSB-AD-LESSON-0017","OSB-AD-TS-0010"],"rationale":"Combine Kerberos and secure-channel evidence so learners can separate identity, time, DNS and machine-trust failures."},
+        {"milestone_id":"M5","record_ids":["OSB-AD-LESSON-0007","OSB-AD-LESSON-0009","OSB-AD-LESSON-0011"],"rationale":"Cover Group Policy architecture, LDAP protections and delegated OU administration as the main policy and least-privilege control plane."},
+        {"milestone_id":"M6","record_ids":["OSB-AD-EASY-0005","OSB-AD-LESSON-0005","OSB-AD-DEEP-0005","OSB-AD-LAB-0005","OSB-AD-TS-0005"],"rationale":"Develop service-account hygiene and automation-aware identity administration with gMSA."},
+        {"milestone_id":"M7","record_ids":["OSB-AD-LESSON-0014","OSB-AD-EASY-0009","OSB-AD-DEEP-0009","OSB-AD-LESSON-0015","OSB-AD-TS-0009"],"rationale":"Cover branch RODC design, functional levels, Global Catalog considerations and domain-controller lifecycle/metadata-cleanup boundaries."},
+        {"milestone_id":"M8","record_ids":["OSB-AD-EASY-0003","OSB-AD-LESSON-0003","OSB-AD-DEEP-0003","OSB-AD-LAB-0003","OSB-AD-TS-0003","OSB-AD-LESSON-0010","OSB-AD-EASY-0007","OSB-AD-DEEP-0007","OSB-AD-LAB-0007","OSB-AD-TS-0007"],"rationale":"Finish technical progression with trusted backups, object/domain recovery semantics and forest-recovery readiness."},
+        {"milestone_id":"M9","record_ids":["OSB-AD-ASSESS-0011","OSB-AD-ASSESS-0012","OSB-AD-ASSESS-0013","OSB-AD-ASSESS-0014","OSB-AD-INTERVIEW-0006","OSB-AD-INTERVIEW-0007","OSB-AD-INTERVIEW-0008","OSB-AD-INTERVIEW-0009","OSB-AD-INTERVIEW-0010","OSB-AD-CAPSTONE-0001"],"rationale":"Conclude with cross-domain assessment, senior interview judgement and an enterprise health/recovery capstone rather than isolated factual recall."}
+      ],
+      "dependency_notes": "M1-M4 establish core directory, discovery, FSMO/time and authentication reasoning. M5-M7 add policy, security and lifecycle design. M8 is intentionally late because recovery is high-impact and assumes the learner can reason about replication, DNS, FSMO and authentication dependencies. M9 is the integrated evidence gate.",
+      "capstone_id": "OSB-AD-CAPSTONE-0001",
+      "assessment_ids": ["OSB-AD-ASSESS-0001","OSB-AD-ASSESS-0002","OSB-AD-ASSESS-0003","OSB-AD-ASSESS-0004","OSB-AD-ASSESS-0005","OSB-AD-ASSESS-0006","OSB-AD-ASSESS-0007","OSB-AD-ASSESS-0008","OSB-AD-ASSESS-0009","OSB-AD-ASSESS-0010","OSB-AD-ASSESS-0011","OSB-AD-ASSESS-0012","OSB-AD-ASSESS-0013","OSB-AD-ASSESS-0014"],
+      "interview_ids": ["OSB-AD-INTERVIEW-0001","OSB-AD-INTERVIEW-0002","OSB-AD-INTERVIEW-0003","OSB-AD-INTERVIEW-0004","OSB-AD-INTERVIEW-0005","OSB-AD-INTERVIEW-0006","OSB-AD-INTERVIEW-0007","OSB-AD-INTERVIEW-0008","OSB-AD-INTERVIEW-0009","OSB-AD-INTERVIEW-0010"],
+      "estimated_effort_hours": 28,
+      "status": "CORE_CONTENT_COMPLETE",
+      "status_rationale": "The path has physical coverage across replication, DNS/DC Locator, sites/subnets, FSMO, time hierarchy, Kerberos, secure channels, Group Policy, LDAP security, OU delegation, gMSA, RODC, functional levels/Global Catalog, DC lifecycle, backup/restore and forest recovery, with integrated assessments, interviews and capstone evidence. Organization-specific procedures and the long tail of AD DS features remain future enrichment."
+    },
+    {
+      "path_id": "OSB-PATH-WIN-SPECIALIST",
+      "title": "Windows Server / Wintel Specialist",
+      "target_role": "Windows Server Engineer / Senior Wintel Engineer / Infrastructure Engineer",
+      "entry_prerequisites": ["Basic TCP/IP, virtualization and enterprise change-control awareness"],
+      "milestones": [
+        {"milestone_id":"W1","record_ids":["OSB-WIN-EASY-0001","OSB-WIN-LESSON-0001","OSB-WIN-DEEP-0001","OSB-WIN-LAB-0001","OSB-WIN-TS-0001"],"rationale":"Establish supported Windows Server installation, role, lifecycle and evidence-collection fundamentals before deeper operations."},
+        {"milestone_id":"W2","record_ids":["OSB-WIN-EASY-0002","OSB-WIN-LESSON-0003","OSB-WIN-DEEP-0002","OSB-WIN-LAB-0002","OSB-WIN-TS-0002","OSB-WIN-LESSON-0004"],"rationale":"Build servicing, WSUS/update, event, service and remote-management operational discipline."},
+        {"milestone_id":"W3","record_ids":["OSB-WIN-LESSON-0005","OSB-WIN-DEEP-0003","OSB-WIN-LESSON-0006","OSB-WIN-LAB-0003","OSB-WIN-TS-0003","OSB-WIN-LESSON-0007"],"rationale":"Develop storage/filesystem, networking and time-series performance troubleshooting competence."},
+        {"milestone_id":"W4","record_ids":["OSB-WIN-EASY-0003","OSB-WIN-LESSON-0008","OSB-WIN-DEEP-0004","OSB-WIN-LAB-0004","OSB-WIN-TS-0004","OSB-WIN-LESSON-0009"],"rationale":"Add SMB/file-service security, Storage Spaces, Windows Server 2025 role-aware hardening and crash-evidence preservation."},
+        {"milestone_id":"W5","record_ids":["OSB-WIN-EASY-0004","OSB-WIN-LESSON-0010","OSB-WIN-DEEP-0005","OSB-WIN-LAB-0005","OSB-WIN-TS-0005","OSB-WIN-LESSON-0011"],"rationale":"Finish technical progression with VSS-aware backup/recovery engineering and failover-cluster evidence-based operations."},
+        {"milestone_id":"W6","record_ids":["OSB-WIN-ASSESS-0001","OSB-WIN-ASSESS-0002","OSB-WIN-ASSESS-0003","OSB-WIN-ASSESS-0004","OSB-WIN-ASSESS-0005","OSB-WIN-INTERVIEW-0001","OSB-WIN-INTERVIEW-0002","OSB-WIN-INTERVIEW-0003","OSB-WIN-INTERVIEW-0004","OSB-WIN-INTERVIEW-0005","OSB-WIN-CAPSTONE-0001"],"rationale":"Conclude with cumulative assessment, senior incident judgement and a non-production operations/security/recovery capstone."}
+      ],
+      "dependency_notes": "W1-W2 establish platform and servicing operations. W3 adds core storage/network/performance troubleshooting. W4 adds security and advanced operations. W5 adds recovery and clustering only after core operational reasoning is established. W6 is the integrated evidence gate.",
+      "capstone_id": "OSB-WIN-CAPSTONE-0001",
+      "assessment_ids": ["OSB-WIN-ASSESS-0001","OSB-WIN-ASSESS-0002","OSB-WIN-ASSESS-0003","OSB-WIN-ASSESS-0004","OSB-WIN-ASSESS-0005"],
+      "interview_ids": ["OSB-WIN-INTERVIEW-0001","OSB-WIN-INTERVIEW-0002","OSB-WIN-INTERVIEW-0003","OSB-WIN-INTERVIEW-0004","OSB-WIN-INTERVIEW-0005"],
+      "estimated_effort_hours": 24,
+      "status": "CORE_CONTENT_COMPLETE",
+      "status_rationale": "The evidence-backed Windows/Wintel core now spans installation/lifecycle, servicing, operational management, storage/filesystems, networking, performance, SMB/security hardening, crash diagnostics, backup/VSS/system recovery and failover-cluster operations, with five assessments, five senior interview modules and an integrated capstone. Product-specific application administration and the long tail of Windows roles remain future enrichment."
+    }
+  ]
+}

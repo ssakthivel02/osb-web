@@ -1,0 +1,3 @@
+{"topic_id":"OSB-TOPIC-SCVMM-UPGRADE-PATH","track_id":"OSB-TRACK-SCVMM","name":"SCVMM Upgrade Eligibility and Sequencing","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R7B-SCVMM-UPGRADE"}
+{"topic_id":"OSB-TOPIC-SCVMM-DB-KEYS","track_id":"OSB-TRACK-SCVMM","name":"VMM Database, Service Identity and Encryption-Key Preservation","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R7B-SCVMM-UPGRADE"}
+{"topic_id":"OSB-TOPIC-SCVMM-POST-UPGRADE","track_id":"OSB-TRACK-SCVMM","name":"Post-Upgrade Agents, Integrations and Validation","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R7B-SCVMM-UPGRADE"}

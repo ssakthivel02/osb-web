@@ -1,2 +1,28 @@
 import SiteHeader from '../../components/site-header';
-export default function Profile(){return <><SiteHeader/><main><section className="pageHero compactHero"><p className="eyebrow">Learner profile</p><h1>Your capability evidence.</h1><p className="lead">A production profile will combine completed modules, lab evidence, assessment results, certifications and current learning goals.</p></section><section className="section"><div className="dashboardGrid"><article className="metricCard"><span>Primary path</span><strong>DevOps</strong><p>Cloud delivery, automation and operational resilience.</p></article><article className="metricCard"><span>Modules completed</span><strong>0 / 8</strong><p>Progress becomes persistent after authentication integration.</p></article><article className="metricCard"><span>Evidence items</span><strong>0</strong><p>Lab reports, pipeline runs and architecture decisions will appear here.</p></article></div></section></main></>}
+
+export const metadata = { robots: { index: false, follow: false } };
+
+export default function Profile() {
+  return (
+    <>
+      <SiteHeader />
+      <main>
+        <section className="pageHero compactHero">
+          <p className="eyebrow">Profile preview</p>
+          <h1>Learner profiles are not enabled yet.</h1>
+          <p className="lead">This static release candidate does not identify learners, record completions or store capability evidence.</p>
+        </section>
+        <section className="section">
+          <div className="authPanel">
+            <h2>No personal record exists on this page.</h2>
+            <p>Profiles will remain unavailable until identity, privacy, evidence-storage and account-recovery controls pass their release gates.</p>
+            <div className="actions">
+              <a className="primary" href="/training-academy/">Explore the public academy</a>
+              <a className="secondary" href="/tracks/">Browse learning tracks</a>
+            </div>
+          </div>
+        </section>
+      </main>
+    </>
+  );
+}

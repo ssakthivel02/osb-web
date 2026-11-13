@@ -2,4 +2,7 @@ import { EnterpriseGuidePage, enterpriseGuideParams } from '../../../../componen
 import { aiAssistantGuides } from '../../../../lib/intelligence-center-data';
 export const dynamicParams=false;
 export function generateStaticParams(){return enterpriseGuideParams(aiAssistantGuides);}
-export default function AiAssistantGuidePage({params}:{params:{academy:string;guide:string}}){return <EnterpriseGuidePage academySlug={params.academy} guideSlug={params.guide} category="AI Assistant Center" guides={aiAssistantGuides}/>;}
+export default async function AiAssistantGuidePage(props:{params: Promise<{academy:string;guide:string}>}) {
+  const params = await props.params;
+  return <EnterpriseGuidePage academySlug={params.academy} guideSlug={params.guide} category="AI Assistant Center" guides={aiAssistantGuides}/>;
+}

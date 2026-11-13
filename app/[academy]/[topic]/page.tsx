@@ -1,16 +1,19 @@
 import { notFound } from 'next/navigation';
 import SiteHeader from '../../../components/site-header';
-import { academies, academyMap } from '../../../lib/academy-data';
+import { academies, academyMap, assertUniqueAcademyRoutes } from '../../../lib/academy-data';
 
 export const dynamicParams = false;
 
+// Validate all declared academy URLs before Next's export and sitemap deduplication.
 export function generateStaticParams() {
+  assertUniqueAcademyRoutes(academies);
   return academies.flatMap((academy) =>
     academy.topics.map((topic) => ({ academy: academy.slug, topic: topic.slug })),
   );
 }
 
-export default function AcademyTopicPage({ params }: { params: { academy: string; topic: string } }) {
+export default async function AcademyTopicPage(props: { params: Promise<{ academy: string; topic: string }> }) {
+  const params = await props.params;
   const academy = academyMap[params.academy];
   const topic = academy?.topics.find((item) => item.slug === params.topic);
   if (!academy || !topic) notFound();

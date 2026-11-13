@@ -1,0 +1,3 @@
+{"topic_id":"OSB-TOPIC-SCVMM-ARCH-PLATFORM","track_id":"OSB-TRACK-SCVMM","title":"SCVMM 2025 Architecture, Roles and Platform Support","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R7-SCVMM-FOUNDATIONS"}
+{"topic_id":"OSB-TOPIC-SCVMM-COMPUTE-FABRIC","track_id":"OSB-TRACK-SCVMM","title":"SCVMM Compute Fabric, Host Groups and Hyper-V Onboarding","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R7-SCVMM-FOUNDATIONS"}
+{"topic_id":"OSB-TOPIC-SCVMM-NET-STORAGE-LIBRARY","track_id":"OSB-TRACK-SCVMM","title":"SCVMM Networking, Storage and Library Fabric","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R7-SCVMM-FOUNDATIONS"}

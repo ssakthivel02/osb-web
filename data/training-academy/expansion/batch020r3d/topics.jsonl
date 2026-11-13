@@ -1,0 +1,4 @@
+{"topic_id":"OSB-TOPIC-AD-RODC","track_id":"OSB-TRACK-AD","name":"Read-Only Domain Controllers and Branch-Site Security","created_batch":"BATCH-020R3D-AD-TRACK-CLOSURE"}
+{"topic_id":"OSB-TOPIC-AD-FUNCTIONAL-GC","track_id":"OSB-TRACK-AD","name":"Forest and Domain Functional Levels, Global Catalog and Windows Server 2025","created_batch":"BATCH-020R3D-AD-TRACK-CLOSURE"}
+{"topic_id":"OSB-TOPIC-AD-TIME","track_id":"OSB-TRACK-AD","name":"Windows Time Hierarchy and PDC Emulator Time Authority","created_batch":"BATCH-020R3D-AD-TRACK-CLOSURE"}
+{"topic_id":"OSB-TOPIC-AD-DC-LIFECYCLE","track_id":"OSB-TRACK-AD","name":"Domain Controller Demotion, Forced Removal and Metadata Cleanup","created_batch":"BATCH-020R3D-AD-TRACK-CLOSURE"}

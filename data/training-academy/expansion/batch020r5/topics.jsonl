@@ -1,0 +1,3 @@
+{"topic_id":"OSB-TOPIC-HV-FOUNDATIONS","track_id":"OSB-TRACK-HYPERV","name":"Hyper-V Architecture, Host Requirements and Role Installation","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R5-HYPERV-FOUNDATION"}
+{"topic_id":"OSB-TOPIC-HV-VM-LIFECYCLE","track_id":"OSB-TRACK-HYPERV","name":"Virtual Machine Lifecycle, Generations and Operational Boundaries","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R5-HYPERV-FOUNDATION"}
+{"topic_id":"OSB-TOPIC-HV-NETWORKING","track_id":"OSB-TRACK-HYPERV","name":"Hyper-V Virtual Switch and Network Design","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R5-HYPERV-FOUNDATION"}

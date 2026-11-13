@@ -1,0 +1,3 @@
+{"topic_id":"OSB-TOPIC-HGS-OPS-LIFECYCLE","track_id":"OSB-TRACK-HGS","title":"HGS Production Operations, Patching and Policy Lifecycle","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R6B-HGS-OPERATIONS-RECOVERY"}
+{"topic_id":"OSB-TOPIC-HGS-RECOVERY-KEYS","track_id":"OSB-TRACK-HGS","title":"HGS Backup, Key Recovery and Disaster Recovery","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R6B-HGS-OPERATIONS-RECOVERY"}
+{"topic_id":"OSB-TOPIC-HGS-SHIELDING-DATA","track_id":"OSB-TRACK-HGS","title":"Shielding Data, Guardians and Tenant Recovery Ownership","status":"CANONICAL_CANDIDATE","created_batch":"BATCH-020R6B-HGS-OPERATIONS-RECOVERY"}

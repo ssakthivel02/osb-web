@@ -2,4 +2,7 @@ import { EnterpriseGuidePage, enterpriseGuideParams } from '../../../../componen
 import { skillMatrixGuides } from '../../../../lib/platform-center-data';
 export const dynamicParams=false;
 export function generateStaticParams(){return enterpriseGuideParams(skillMatrixGuides);}
-export default function SkillMatrixGuidePage({params}:{params:{academy:string;guide:string}}){return <EnterpriseGuidePage academySlug={params.academy} guideSlug={params.guide} category="Skill Matrix" guides={skillMatrixGuides}/>;}
+export default async function SkillMatrixGuidePage(props:{params: Promise<{academy:string;guide:string}>}) {
+  const params = await props.params;
+  return <EnterpriseGuidePage academySlug={params.academy} guideSlug={params.guide} category="Skill Matrix" guides={skillMatrixGuides}/>;
+}

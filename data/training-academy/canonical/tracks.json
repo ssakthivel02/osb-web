@@ -1,0 +1,35 @@
+{
+  "schema": "osb.tracks.v1",
+  "note": "Canonical taxonomy of the 19 required tracks per 041R spec. content_record_count fields are computed from physical files only, never asserted — see 18_REPORTS/REAL_BUILD_COUNTS.json for the authoritative rollup, regenerated each batch.",
+  "tracks": [
+    {"track_id": "OSB-TRACK-PMP", "name": "PMP / Project Management", "code": "PMP"},
+    {"track_id": "OSB-TRACK-PMO", "name": "PMO", "code": "PMO"},
+    {"track_id": "OSB-TRACK-SCRUM", "name": "Scrum", "code": "SCRUM"},
+    {"track_id": "OSB-TRACK-AGILE", "name": "Agile", "code": "AGILE"},
+    {"track_id": "OSB-TRACK-ITIL", "name": "ITIL / IT Service Management", "code": "ITIL"},
+    {"track_id": "OSB-TRACK-DEVOPS", "name": "DevOps / AZ-400", "code": "DEVOPS"},
+    {"track_id": "OSB-TRACK-WIN", "name": "Windows Server / Wintel", "code": "WIN"},
+    {"track_id": "OSB-TRACK-AD", "name": "Active Directory / DNS / DHCP / Group Policy", "code": "AD"},
+    {"track_id": "OSB-TRACK-HYPERV", "name": "Hyper-V", "code": "HYPERV"},
+    {"track_id": "OSB-TRACK-SCVMM", "name": "SCVMM", "code": "SCVMM"},
+    {"track_id": "OSB-TRACK-HGS", "name": "HGS / Shielded VMs", "code": "HGS"},
+    {"track_id": "OSB-TRACK-VMW", "name": "VMware / Broadcom", "code": "VMW"},
+    {"track_id": "OSB-TRACK-PS", "name": "PowerShell", "code": "PS"},
+    {"track_id": "OSB-TRACK-AZ", "name": "Microsoft Azure", "code": "AZ"},
+    {"track_id": "OSB-TRACK-AWS", "name": "AWS", "code": "AWS"},
+    {"track_id": "OSB-TRACK-HYBRID", "name": "Hybrid / Multi-cloud", "code": "HYBRID"},
+    {"track_id": "OSB-TRACK-BACKUP", "name": "Backup / Disaster Recovery", "code": "BACKUP"},
+    {"track_id": "OSB-TRACK-FINOPS", "name": "FinOps", "code": "FINOPS"},
+    {"track_id": "OSB-TRACK-ARCH", "name": "Infrastructure Architecture / SRE / Operations", "code": "ARCH"}
+  ],
+  "cross_cutting_topics_not_separate_tracks": [
+    "Terraform", "Docker", "Kubernetes", "AKS", "EKS", "Git/GitHub", "CI/CD",
+    "Identity", "Networking", "Storage", "Monitoring/Observability", "Security",
+    "Migration", "Automation", "Governance"
+  ],
+  "pilot_batch_scope": {
+    "batch_id": "BATCH-001-AD-PILOT",
+    "track_id": "OSB-TRACK-AD",
+    "reason": "Active Directory chosen as the first real, source-backed pilot batch: high professional value, matches deep operator expertise, and has stable, well-documented Microsoft Learn primary sources to verify against."
+  }
+}
