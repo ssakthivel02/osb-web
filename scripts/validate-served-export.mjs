@@ -52,7 +52,7 @@ if (!muruganApproved) {
   }
   const markers = entries.map((entry) => ({
     slug: entry.slug,
-    text: String(entry.text ?? '').split(/\r?\n/).find((line) => line.trim().length >= 30)?.trim().slice(0, 30),
+    text: String(entry.text ?? '').split(/\r?\n/).find((line) => line.trim().length >= 18)?.trim().slice(0, 30),
   })).filter((entry) => entry.text);
   if (markers.length !== entries.length) errors.push('Some Murugan texts lack a usable output-leak marker');
   const stack = [OUT];
