@@ -6,8 +6,13 @@ import { findMuruganText, muruganTexts } from '../../../lib/murugan-library';
 import styles from '../murugan.module.css';
 import ReaderTools from '../reader-tools';
 
+const PENDING_SLUG = 'publication-pending';
+
 export function generateStaticParams() {
-  return muruganTexts.map(({ slug }) => ({ slug }));
+  const approved = muruganTexts.map(({ slug }) => ({ slug }));
+  // Next.js static export requires a concrete param for the dynamic route.
+  // Emit one non-sensitive holding page rather than any unapproved verse.
+  return approved.length ? approved : [{ slug: PENDING_SLUG }];
 }
 export const dynamicParams = false;
 
@@ -20,6 +25,20 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function TamilReader({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const entry = findMuruganText(slug);
+  if (!entry && slug === PENDING_SLUG && muruganTexts.length === 0) {
+    return (
+      <>
+        <SiteHeader/>
+        <main className={styles.readerShell} lang="ta" id="main-content">
+          <Link className={styles.back} href="/murugan-library/">← முருகன் நூலகம்</Link>
+          <article className={styles.reader}>
+            <h1 className={styles.readerTitle}>வெளியீட்டு ஒப்புதல் நிலுவையில்</h1>
+            <p className={styles.notice}>மனித உரைச் சரிபார்ப்பும் வெளியீட்டு உரிமை ஒப்புதலும் நிறைவடைந்த பிறகே பாடல்கள் கிடைக்கும்.</p>
+          </article>
+        </main>
+      </>
+    );
+  }
   if (!entry) notFound();
   return (
     <>
