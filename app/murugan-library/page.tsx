@@ -18,10 +18,10 @@ export default function MuruganLibrary() {
         <section className={styles.hero} aria-labelledby="murugan-title">
           <div className={styles.kicker}>OSB · தமிழ் பாரம்பரிய வாசிப்பு</div>
           <h1 className={styles.title} id="murugan-title">முருகன் தமிழ் நூலகம்</h1>
-          <p className={styles.intro}>திருப்புகழ் பாடல்கள் மற்றும் முருக பக்தி இலக்கியங்களை இத்தளத்திலேயே வாசிக்கலாம். மூலச் சான்றுள்ள உரை மட்டுமே முழுப் பாடலாகக் காட்டப்படுகிறது.</p>
+          <p className={styles.intro}>திருப்புகழ் பாடல்கள் மற்றும் முருக பக்தி இலக்கியங்களை இத்தளத்திலேயே வாசிக்கலாம். தனி மனித உரை/உரிமை ஒப்புதல் பெற்ற பின்னரே முழுப் பாடல் இங்கு காட்டப்படும்.</p>
           <div className={styles.stats}>
             <span><strong>{muruganTexts.filter(t=>t.publicationStatus==='source-linked-text').length}</strong> தமிழ்ப் பாடல்கள்</span>
-            <span><strong>1</strong> கவசத் தொடக்கப் பகுதி</span>
+            <span><strong>{muruganTexts.filter(t => t.publicationStatus === 'reviewed-opening-only').length}</strong> கவசத் தொடக்கப் பகுதி</span>
             <span><strong>{pendingMuruganWorks.length}</strong> நூல்கள் ஆய்வில்</span>
           </div>
         </section>

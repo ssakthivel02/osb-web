@@ -37,6 +37,42 @@ if (!fs.existsSync(OUT)) {
   process.exit(1);
 }
 
+// Fail closed: publication flags must constrain deployable content, not just GO.
+const muruganCatalogue = readJson('lib/murugan-library.json');
+const muruganApproved = Boolean(muruganCatalogue.productionContentApproval) &&
+  Array.isArray(muruganCatalogue.texts) &&
+  muruganCatalogue.texts.length > 0 &&
+  muruganCatalogue.texts.every((entry) => Boolean(entry.humanPublicationApproval));
+if (!muruganApproved) {
+  const entries = muruganCatalogue.texts ?? [];
+  for (const entry of entries) {
+    if (fs.existsSync(path.join(OUT, 'murugan-library', entry.slug, 'index.html'))) {
+      errors.push(`Unapproved Murugan reader route exported: ${entry.slug}`);
+    }
+  }
+  const markers = entries.map((entry) => ({
+    slug: entry.slug,
+    text: String(entry.text ?? '').split(/\r?\n/).find((line) => line.trim().length >= 30)?.trim().slice(0, 30),
+  })).filter((entry) => entry.text);
+  if (markers.length !== entries.length) errors.push('Some Murugan texts lack a usable output-leak marker');
+  const stack = [OUT];
+  const extensions = /\.(?:html|rsc|js|json|txt|xml|css)$/i;
+  while (stack.length) {
+    const dir = stack.pop();
+    for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, item.name);
+      if (item.isDirectory()) { stack.push(full); continue; }
+      if (!item.isFile() || !extensions.test(item.name)) continue;
+      const content = fs.readFileSync(full, 'utf8');
+      for (const marker of markers) {
+        if (content.includes(marker.text)) {
+          errors.push(`Unapproved Tamil excerpt in exported asset: ${path.relative(OUT, full)} (${marker.slug})`);
+        }
+      }
+    }
+  }
+}
+
 const tracks = readJson('data/training-academy/canonical/tracks.json').tracks;
 const seedRecordFiles = [
   'lessons/lessons.jsonl',
